@@ -50,7 +50,19 @@
 <node CREATED="1300869155056" HGAP="100" ID="ID_1349686072" MODIFIED="1300960205978" TEXT="VehicleRoad" VSHIFT="-11"/>
 <node CREATED="1300869174571" HGAP="116" ID="ID_209666169" MODIFIED="1300960210946" TEXT="Walkway" VSHIFT="-15"/>
 <node CREATED="1300870558274" HGAP="118" ID="ID_1743054649" MODIFIED="1300960212493" TEXT="Ground" VSHIFT="-128">
-<node CREATED="1300870566478" ID="ID_1460658137" MODIFIED="1300870571587" TEXT="Google Map"/>
+<node CREATED="1300870566478" ID="ID_1460658137" MODIFIED="1300870571587" TEXT="Google Map">
+<node CREATED="1301288751912" ID="ID_603456465" LINK="http://code.google.com/intl/zh-CN/apis/maps/documentation/staticmaps/#MapTypes" MODIFIED="1301288751912">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <a href="http://code.google.com/intl/zh-CN/apis/maps/documentation/staticmaps/#MapTypes">http://code.google.com/intl/zh-CN/apis/maps/documentation/staticmaps/#MapTypes</a>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
 <node CREATED="1300934820259" ID="ID_1893701661" MODIFIED="1300934825524" TEXT="terrain"/>
 </node>
 </node>
