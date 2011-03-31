@@ -1,54 +1,53 @@
 #pragma once
-#include <OgrePrerequisites.h>
+#include "ogrelitePrefix.h"
 /*the object represent a render pass to the viewport
 */
-namespace Ogre
-{
-
-
-class RendererProcess
+BEGIN_NAMESPACE_OGRELITE
+///virtual base class represent a render operation to 
+class RenderProcess
 {
 public:
-	virtual void doJob()=0;
-	virtual ~RendererProcess(){}
+	void doRender()
+	{
+		begin();
+		doJob();
+		end();
+	}
+
+	virtual ~RenderProcess(){}
+protected:
+	virtual void doJob(){}
+	virtual void begin(){}
+	virtual void end(){}
+
 	String sDesc;
 };
 
-// a group of render pass of the viewport
-class RendererProcessSquence : public RendererProcess
+// a group of render process
+class RenderProcessSquence : public RenderProcess
 {
-public:	
+protected:	
 	//bool m_bParalle; //no effect yet
-
 	virtual void doJob();
-	typedef std::vector<RendererProcess*> SquenceList;
+
+protected:
+	typedef std::vector<RenderProcess*> SquenceList;
 	SquenceList mCompositions;
-	
-
 };
-
-//the method class the represent how to render a frame and swap to show
-class RenderOneFrameMethod
+//a render queue form ogre
+class RenderQueue : public RenderProcess
 {
 public:
-	RenderOneFrameMethod():mRenderJob(NULL){}
-	RendererProcess* mRenderJob;
-
-	void Do()
-	{
-		if(mRenderJob)
-		{
-			mRenderJob->doJob();
-		}
-	}
-	//
-	void Load();//read from xml script
-	void Save();//save to xml script
-
-public://signal
-	
 
 };
 
 
-}
+//a group of process render to one render target, switch context
+class RenderTargetProcess : public RenderProcessSquence 
+{
+public:
+	virtual void begin(){}
+	virtual void end(){}
+};
+
+END_NAMESPACE_OGRELITE

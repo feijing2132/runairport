@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "OgreRenderQueue.h"
 #include "OgreAxisAlignedBox.h"
 #include "OgreSphere.h"
-#include "OgreRenderable.h"
+//#include "OgreRenderable.h"
 //#include "OgreShadowCaster.h"
 //#include "OgreFactoryObj.h"
 //#include "OgreAnimable.h"
@@ -62,48 +62,48 @@ namespace Ogre {
     public:
         /** Listener which gets called back on MovableObject events. should use signal slot ?
         */
-        class _OgreExport Listener
-        {
-        public:
-            Listener(void) {}
-            virtual ~Listener() {}
-            /** MovableObject is being destroyed */
-            virtual void objectDestroyed(MovableObject*) {}
-            /** MovableObject has been attached to a node */
-            virtual void objectAttached(MovableObject*) {}
-            /** MovableObject has been detached from a node */
-            virtual void objectDetached(MovableObject*) {}
-            /** MovableObject has been moved */
-            virtual void objectMoved(MovableObject*) {}
-            /** Called when the movable object of the camera to be used for rendering.
-            @returns
-                true if allows queue for rendering, false otherwise.
-            */
-            virtual bool objectRendering(const MovableObject*, const Camera*) { return true; }
-            /** Called when the movable object needs to query a light list.
-            @remarks
-                If you want to customize light finding for this object, you should override 
-				this method and hook into MovableObject via MovableObject::setListener.
-				Be aware that the default method caches results within a frame to 
-				prevent unnecessary recalculation, so if you override this you 
-				should provide your own caching to maintain performance.
-			@note
-				If you use texture shadows, there is an additional restriction - 
-				since the lights which should have shadow textures rendered for
-				them are determined based on the entire frustum, and not per-object,
-				it is important that the lights returned at the start of this 
-				list (up to the number of shadow textures available) are the same 
-				lights that were used to generate the shadow textures, 
-				and they are in the same order (particularly for additive effects).
-			@note
-				This method will not be called for additive stencil shadows since the
-				light list cannot be varied per object with this technique.
-            @returns
-                A pointer to a light list if you populated the light list yourself, or
-                NULL to fall back on the default finding process.
-            */
-            virtual const LightList* objectQueryLights(const MovableObject*) { return 0; }
-        };
+   //     class _OgreExport Listener
+   //     {
+   //     public:
+   //         Listener(void) {}
+   //         virtual ~Listener() {}
+   //         /** MovableObject is being destroyed */
+   //         virtual void objectDestroyed(MovableObject*) {}
+   //         /** MovableObject has been attached to a node */
+   //         virtual void objectAttached(MovableObject*) {}
+   //         /** MovableObject has been detached from a node */
+   //         virtual void objectDetached(MovableObject*) {}
+   //         /** MovableObject has been moved */
+   //         virtual void objectMoved(MovableObject*) {}
+   //         /** Called when the movable object of the camera to be used for rendering.
+   //         @returns
+   //             true if allows queue for rendering, false otherwise.
+   //         */
+   //         virtual bool objectRendering(const MovableObject*, const Camera*) { return true; }
+   //         /** Called when the movable object needs to query a light list.
+   //         @remarks
+   //             If you want to customize light finding for this object, you should override 
+			//	this method and hook into MovableObject via MovableObject::setListener.
+			//	Be aware that the default method caches results within a frame to 
+			//	prevent unnecessary recalculation, so if you override this you 
+			//	should provide your own caching to maintain performance.
+			//@note
+			//	If you use texture shadows, there is an additional restriction - 
+			//	since the lights which should have shadow textures rendered for
+			//	them are determined based on the entire frustum, and not per-object,
+			//	it is important that the lights returned at the start of this 
+			//	list (up to the number of shadow textures available) are the same 
+			//	lights that were used to generate the shadow textures, 
+			//	and they are in the same order (particularly for additive effects).
+			//@note
+			//	This method will not be called for additive stencil shadows since the
+			//	light list cannot be varied per object with this technique.
+   //         @returns
+   //             A pointer to a light list if you populated the light list yourself, or
+   //             NULL to fall back on the default finding process.
+   //         */
+   //         virtual const LightList* objectQueryLights(const MovableObject*) { return 0; }
+   //     };
 
     protected:
 		/// Name of this object
@@ -150,12 +150,12 @@ namespace Ogre {
         /// Does rendering this object disabled by listener?
         bool mRenderingDisabled;
         /// MovableObject listener - only one allowed (no list) for size & performance reasons. */
-        Listener* mListener;
+        //Listener* mListener;
 
         /// List of lights for this object
-        mutable LightList mLightList;
+        //mutable LightList mLightList;
         /// The last frame that this light list was updated in
-        mutable ulong mLightListUpdated;
+        ///mutable ulong mLightListUpdated;
 
 		/// the light mask defined for this movable. This will be taken into consideration when deciding which light should affect this movable
 		uint32 mLightMask;
@@ -425,11 +425,11 @@ namespace Ogre {
             Note for size and performance reasons only one listener per object
             is allowed.
         */
-        virtual void setListener(Listener* listener) { mListener = listener; }
+       // virtual void setListener(Listener* listener) { mListener = listener; }
 
         /** Gets the current listener for this object.
         */
-        virtual Listener* getListener(void) const { return mListener; }
+      //  virtual Listener* getListener(void) const { return mListener; }
 
         /** Gets a list of lights, ordered relative to how close they are to this movable object.
         @remarks
@@ -449,7 +449,7 @@ namespace Ogre {
             the renderable is a part of the movable.
         @returns The list of lights use to lighting this object.
         */
-        virtual const LightList& queryLights(void) const;
+        //virtual const LightList& queryLights(void) const;
 
 		/** Get a bitwise mask which will filter the lights affecting this object
 		@remarks
@@ -470,7 +470,7 @@ namespace Ogre {
 			(say if you want to use it to implement this method, and use the pointer
 			as a return value) and for reading it's only accurate as at the last frame.
 		*/
-		virtual LightList* _getLightList() { return &mLightList; }
+		//virtual LightList* _getLightList() { return &mLightList; }
 
 		/// Define a default implementation of method from ShadowCaster which implements no shadows
         EdgeData* getEdgeList(void) { return NULL; }
@@ -531,8 +531,8 @@ namespace Ogre {
 			(those for normal display). If true, debug renderables will be
 			included too.
 		*/
-		virtual void visitRenderables(Renderable::Visitor* visitor, 
-			bool debugRenderables = false) = 0;
+		//virtual void visitRenderables(Renderable::Visitor* visitor, 
+		//	bool debugRenderables = false) = 0;
 
 		/** Sets whether or not the debug display of this object is enabled.
 		@remarks
@@ -542,9 +542,9 @@ namespace Ogre {
 			disables that debug display. Objects that are not visible never display
 			debug geometry regardless of this setting.
 		*/
-		virtual void setDebugDisplayEnabled(bool enabled) { mDebugDisplay = enabled; }
+		//virtual void setDebugDisplayEnabled(bool enabled) { mDebugDisplay = enabled; }
 		/// Gets whether debug display of this object is enabled. 
-		virtual bool isDebugDisplayEnabled(void) const { return mDebugDisplay; }
+		//virtual bool isDebugDisplayEnabled(void) const { return mDebugDisplay; }
 
 
 
