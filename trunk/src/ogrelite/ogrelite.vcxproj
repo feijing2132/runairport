@@ -78,14 +78,18 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MovableObject.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="RenderViewportPass.cpp" />
     <ClCompile Include="src\OgreNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MovableObject.h" />
+    <ClInclude Include="ogrelitePrefix.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="RenderViewportPass.h" />
     <ClInclude Include="src\OgreNode.h" />
+    <ClInclude Include="src\OgreRenderable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
