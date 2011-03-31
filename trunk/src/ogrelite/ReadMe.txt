@@ -35,3 +35,10 @@ AppWizard uses "TODO:" comments to indicate parts of the source code you
 should add to or customize.
 
 /////////////////////////////////////////////////////////////////////////////
+
+
+This Project is going to do
+1. Remove the Listener
+2. Remove Singleton
+3. Seperate the Hardware with softlayer
+4. redesign the rendersystem
