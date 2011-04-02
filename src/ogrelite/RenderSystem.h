@@ -1,17 +1,25 @@
 #pragma once
 
+#include "ogrelitePrefix.h"
+#include "OgreRenderTarget.h"
+#include "RenderViewportPass.h"
 
-class TextureManager
-{
-public:
 
-};
 
+BEGIN_NAMESPACE_OGRELITE
+
+
+
+//RenderSystem own the resource
+///control all graphic card resource 
 class RenderSystem
 {
 public:
-	RenderSystem(void);
-	~RenderSystem(void);
-	//
+	
 
 };
+
+
+
+END_NAMESPACE_OGRELITE
+

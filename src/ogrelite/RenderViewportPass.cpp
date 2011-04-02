@@ -2,13 +2,19 @@
 
 BEGIN_NAMESPACE_OGRELITE
 
-void RenderProcessSquence::doJob()
+void RenderProcessSquence::processSeq()
 {	
-	for(SquenceList::iterator itr= mCompositions.begin();itr!=mCompositions.end();++itr)
+	for(SequenceProcessList::iterator itr= mSequenceProcesses.begin();itr!=mSequenceProcesses.end();++itr)
 	{
-		(*itr)->doRender();
+		(*itr)->process();
 	}	
 }
 
+void RenderProcessSquence::process()
+{
+	preProcessSeq();
+	processSeq();
+	postProcessSeq();
+}
 
 END_NAMESPACE_OGRELITE
