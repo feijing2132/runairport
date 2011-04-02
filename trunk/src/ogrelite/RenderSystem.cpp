@@ -1,11 +1,7 @@
 #include "RenderSystem.h"
 
 
-RenderSystem::RenderSystem(void)
-{
-}
+BEGIN_NAMESPACE_OGRELITE
 
 
-RenderSystem::~RenderSystem(void)
-{
-}
+END_NAMESPACE_OGRELITE

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="RenderViewportPass.cpp" />
+    <ClCompile Include="src\OgreNode.cpp">
+      <Filter>Ogre</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreRenderTarget.cpp">
+      <Filter>Ogre</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ogrelitePrefix.h" />
+    <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="RenderViewportPass.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Ogre">
+      <UniqueIdentifier>{2d348a6e-6fbc-44f3-a63b-2feca8dec91e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
