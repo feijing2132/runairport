@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "OgreRenderSystem.h"
 #include "OgreGLHardwareBufferManager.h"
 #include "OgreGLGpuProgramManager.h"
-#include "OgreGLSLProgramFactory.h"
+//#include "OgreGLSLProgramFactory.h"
 #include "OgreVector4.h"
 
 namespace Ogre {
@@ -110,7 +110,7 @@ namespace Ogre {
 
         HardwareBufferManager* mHardwareBufferManager;
         GLGpuProgramManager* mGpuProgramManager;
-		GLSLProgramFactory* mGLSLProgramFactory;
+		//GLSLProgramFactory* mGLSLProgramFactory;
 
         unsigned short mCurrentLights;
 

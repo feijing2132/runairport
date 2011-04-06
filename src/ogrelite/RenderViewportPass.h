@@ -34,16 +34,25 @@ class RenderCanvas;
 class RenderLayer 
 {
 public:
-	RenderLayer();
+	RenderLayer() 
+		:mpRenerProcess(NULL)
+		,mbVisible(true)
+	{
+	}
 	virtual void drawToCanvas(RenderCanvas* pCanvas);
-
-	int getOrder()const{ return mdrawOrder; }
 	bool isVisible()const{ return mbVisible; }
 protected:	
-	RenderProcess* mpRenerer;	
-	//int mActLeft, mActTop, mActWidth, mActHeight;
-	/// ZOrder
-	int mdrawOrder;
+	RenderProcess* mpRenerProcess;		
+	// Actual dimensions, based on target dimensions
+	int mActLeft, mActTop, mActWidth, mActHeight;	
+	/// Viewport orientation
+	int mOrientation;
+	/// Background options
+	ColourValue mClearColour;
+	float mClearDepth;
+	int mClearStencil;
+	unsigned int mClearBuffers;
+	/// ZOrder	
 	bool mbVisible;
 };
 
@@ -52,28 +61,47 @@ typedef shared_ptr<RenderLayer> RenderLayerSharePtr;
 
 //render target
 // window support or software support(FBO) which have , have buffers like pixel buffer , stencil buffer, depth buffer..
+class RenderSystem;
 class RenderCanvas
 {
-public:
-	void resize();
+public:	
 	void renderOneFrame();
 
-protected:
-	//wait for all drawing flush to canvas
-	virtual void flush()=0;	
-protected:
-	unsigned int mWidth;
-	unsigned int mHeight;
-
-	typedef HashMap<String,inst_ptr<RenderLayer> > RenderLayerMap;	
-	RenderLayerMap mLayerInstMap;	
+	virtual void beginFrame()=0;
 	
+	virtual void endFrame()=0;
+	virtual uint32 getWidth()const=0;
+	virtual uint32 getHeigth()const=0;
+
+	virtual RenderSystem* getSystem()=0;
+
+protected:
+	typedef std::list< RenderLayerSharePtr > RenderLayerList;
+	RenderLayerList mRenderLayList;
+
 };
 
-class RenderWindow  : public RenderCanvas
+//only manage create/destroy resource
+class Texture
 {
 public:
-	
+
 };
+typedef shared_ptr<Texture> TextureSharePtr;
+
+class RenderSystem
+{
+public:
+	//texture manager
+	TextureSharePtr createTexture(const String& sName);
+	void destoryTexture(const String& sName,bool bForce = false);
+	TextureSharePtr getTexture(const String& sName);
+	HashMap<String, inst_ptr<Texture> > mTextureMap;
+	//
+
+
+};
+
+
 
 END_NAMESPACE_OGRELITE

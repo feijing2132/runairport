@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 #include "OgreString.h"
-#include "OgreSharedPtr.h"
+//#include "OgreSharedPtr.h"
 #include <istream>
 
 namespace Ogre {

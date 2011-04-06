@@ -8,57 +8,18 @@
 
 
 BEGIN_NAMESPACE_OGRELITE
-template<class T>
-class SharedPtr;
-
-template <class T> 
-class InstPtr
-{
-public:
-	typedef SharedPtr<T> shareptr;
-	InstPtr():m_ptr(0),nref(0){}
-	InstPtr(T* ptr):m_ptr(ptr),nref(0){ }
-
-	~InstPtr()
+	class Properties
 	{
-		if(nref!=0)
-		{
-			//warning other are reft shi
-		}
-		delete m_ptr;
-		m_ptr = 0;
-	}	
+	public:
+		void set(const String& sKey, const String& sValue);
+		bool get(const String& sKey, String& sValue)const;
+	protected:
+		std::map<String,String> mMap;
+	};
 
-	void operator=(T* ptr)
-	{ 
-		if(nrefcount) throw ; 
-	
-		delete m_ptr;
-		nrefcount = 0;
-		m_ptr = ptr;
-	}
-	void operator=(const InstPtr& other)
+	class TextureProperties
 	{
-		if(nrefcount) throw ; 
-		delete m_ptr;
-		nrefcount = other.nrefcount;
-		m_ptr = other.m_ptr;
-	}
-	
-	int* pn(){ return &nref;}
-	T* get(){ return m_ptr; }
-protected:
-	T * m_ptr;
-	int nref;
-};
+	public:
 
-
-
-
-
-
-
-
-
-
+	};
 END_NAMESPACE_OGRELITE

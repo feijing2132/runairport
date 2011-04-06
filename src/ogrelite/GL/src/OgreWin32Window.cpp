@@ -30,10 +30,10 @@ THE SOFTWARE.
 #define _WIN32_WINNT 0x0500
 #endif
 #include "OgreWin32Window.h"
-#include "OgreRoot.h"
+//#include "OgreRoot.h"
 #include "OgreLogManager.h"
-#include "OgreRenderSystem.h"
-#include "OgreImageCodec.h"
+//#include "OgreRenderSystem.h"
+//#include "OgreImageCodec.h"
 #include "OgreStringConverter.h"
 #include "OgreException.h"
 #include "OgreWin32GLSupport.h"
@@ -731,8 +731,8 @@ namespace Ogre {
 
 
 		// Switch context if different from current one
-		RenderSystem* rsys = Root::getSingleton().getRenderSystem();
-		rsys->_setViewport(this->getViewport(0));
+		//RenderSystem* rsys = Root::getSingleton().getRenderSystem();
+		//rsys->_setViewport(this->getViewport(0));
 
 		// Must change the packing to ensure no overruns!
 		glPixelStorei(GL_PACK_ALIGNMENT, 1);
