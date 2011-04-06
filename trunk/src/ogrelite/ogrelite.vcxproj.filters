@@ -18,12 +18,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="RenderViewportPass.cpp" />
     <ClCompile Include="glRenderWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="RenderViewportPass.h" />
     <ClInclude Include="ogrelitePrefix.h" />
     <ClInclude Include="ogreliteptr.h" />

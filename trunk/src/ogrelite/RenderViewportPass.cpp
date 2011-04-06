@@ -18,41 +18,32 @@ void RenderProcessSquence::process()
 }
 
 
+//////////////////////////////////////////////////////////////////////////
 void RenderCanvas::renderOneFrame()
 {
-	//sort visible layers
-	typedef std::list<RenderLayerSharePtr> RenderLayerVector;
-	RenderLayerVector sortedLayers;
-	for(RenderLayerMap::iterator itr=mLayerInstMap.begin();itr!=mLayerInstMap.end();++itr)
-	{
-		inst_ptr<RenderLayer>& layer = itr->second;
-		if(layer.isValid() && layer->isVisible() )
-		{
-			RenderLayerVector::iterator itrInsertPos = sortedLayers.begin();
-			for(;itrInsertPos!=sortedLayers.end();++itrInsertPos)
-			{
-				if( (*itrInsertPos)->getOrder() < layer->getOrder())
-				{					
-					break;
-				}
-			}
-			sortedLayers.insert(itrInsertPos,layer);
-		}
-	}
-	//draw each visible layers to canvas
-	for(RenderLayerVector::iterator itr=sortedLayers.begin();itr!=sortedLayers.end();++itr)
+	beginFrame();
+	//render each layer
+	for(RenderLayerList::iterator itr=mRenderLayList.begin();itr!=mRenderLayList.end();++itr)
 	{
 		RenderLayerSharePtr& shptr=*itr;
-		shptr->drawToCanvas(this);
+		if(shptr.get() && shptr->isVisible() )
+		{			
+			shptr->drawToCanvas(this);
+		}
 	}
-	//
+	endFrame();
 }
 
 
 
-RenderLayer::RenderLayer() 
-	:mpRenerer(NULL)
+
+
+void RenderLayer::drawToCanvas( RenderCanvas* pCanvas )
 {
+		
+
+	if(mpRenerProcess)
+		mpRenerProcess->process();
 
 }
 
