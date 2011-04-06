@@ -1,5 +1,6 @@
 #pragma once
 #include "ogrelitePrefix.h"
+#include "ogreliteptr.h"
 /*the object represent a render pass to the viewport
 */
 
@@ -33,29 +34,46 @@ class RenderCanvas;
 class RenderLayer 
 {
 public:
+	RenderLayer();
 	virtual void drawToCanvas(RenderCanvas* pCanvas);
+
+	int getOrder()const{ return mdrawOrder; }
+	bool isVisible()const{ return mbVisible; }
 protected:	
 	RenderProcess* mpRenerer;	
 	//int mActLeft, mActTop, mActWidth, mActHeight;
 	/// ZOrder
-	int mZOrder;
+	int mdrawOrder;
+	bool mbVisible;
 };
+
+
+typedef shared_ptr<RenderLayer> RenderLayerSharePtr;
+
 //render target
 // window support or software support(FBO) which have , have buffers like pixel buffer , stencil buffer, depth buffer..
 class RenderCanvas
 {
 public:
-
 	void resize();
+	void renderOneFrame();
+
+protected:
+	//wait for all drawing flush to canvas
+	virtual void flush()=0;	
 protected:
 	unsigned int mWidth;
 	unsigned int mHeight;
+
+	typedef HashMap<String,inst_ptr<RenderLayer> > RenderLayerMap;	
+	RenderLayerMap mLayerInstMap;	
+	
 };
 
 class RenderWindow  : public RenderCanvas
 {
 public:
 	
-}
+};
 
 END_NAMESPACE_OGRELITE
