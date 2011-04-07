@@ -79,12 +79,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glRenderWindow.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="RenderViewportPass.cpp" />
+    <ClCompile Include="src\OgreWin32Context.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glRenderWindow.h" />
     <ClInclude Include="ogrelitePrefix.h" />
     <ClInclude Include="ogreliteptr.h" />
+    <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="RenderViewportPass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

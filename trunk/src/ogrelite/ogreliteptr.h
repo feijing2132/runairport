@@ -24,20 +24,20 @@ public:
 
 	void operator=(T* ptr)
 	{ 
-		if(nrefcount!=0)
+		if(nref!=0)
 			throw  ; 
 		
 		destory();
-		nrefcount = 0;
+		nref = 0;
 		m_ptr = ptr;
 	}
 	void operator=(const inst_ptr& other)
 	{
-		if(nrefcount!=0)
+		if(nref!=0)
 			throw ; 
 		
 		destory();
-		nrefcount = other.nrefcount;
+		nref = other.nref;
 		m_ptr = other.m_ptr;
 	}
 
@@ -96,32 +96,32 @@ protected:
 //	count_type* pn;
 //};
 
-template<class T> class shared_ptr
+template<class T> class nodelete_shared_ptr
 {	
 public:
 	typedef T element_type;
 	typedef T value_type;
 
-	shared_ptr(inst_ptr<T> & r):px(r.get()),pn(r.pn())
+	nodelete_shared_ptr(inst_ptr<T> & r):px(r.get()),pn(r.pn())
 	{ 
 		++*pn;
 	} 
 
-	shared_ptr(shared_ptr const & r): px(r.px),pn(r.pn)  // never throws
+	nodelete_shared_ptr(nodelete_shared_ptr const & r): px(r.px),pn(r.pn)  // never throws
 	{		
 		++*pn;
 	}
 
-	shared_ptr & operator=(shared_ptr const & r)
+	nodelete_shared_ptr & operator=(nodelete_shared_ptr const & r)
 	{
-		shared_ptr(r).swap(*this);
+		nodelete_shared_ptr(r).swap(*this);
 		return *this;
 	}
 
 	void reset(T * p = 0)
 	{
 		//BOOST_ASSERT(p == 0 || p != px);
-		shared_ptr(p).swap(*this);
+		nodelete_shared_ptr(p).swap(*this);
 	}
 
 	T & operator*() const  // never throws
@@ -151,7 +151,7 @@ public:
 		return *pn == 1;
 	}
 
-	void swap(shared_ptr<T> & other)  // never throws
+	void swap(nodelete_shared_ptr<T> & other)  // never throws
 	{
 		std::swap(px, other.px);
 		std::swap(pn, other.pn);
@@ -163,29 +163,29 @@ private:
 	count_type* pn;   // ptr to reference counter
 };
 
-template<class T, class U> inline bool operator==(shared_ptr<T> const & a, shared_ptr<U> const & b)
+template<class T, class U> inline bool operator==(nodelete_shared_ptr<T> const & a, nodelete_shared_ptr<U> const & b)
 {
 	return a.get() == b.get();
 }
 
-template<class T, class U> inline bool operator!=(shared_ptr<T> const & a, shared_ptr<U> const & b)
+template<class T, class U> inline bool operator!=(nodelete_shared_ptr<T> const & a, nodelete_shared_ptr<U> const & b)
 {
 	return a.get() != b.get();
 }
 
-template<class T> inline bool operator<(shared_ptr<T> const & a, shared_ptr<T> const & b)
+template<class T> inline bool operator<(nodelete_shared_ptr<T> const & a, nodelete_shared_ptr<T> const & b)
 {
 	return std::less<T*>()(a.get(), b.get());
 }
 
-template<class T> void swap(shared_ptr<T> & a, shared_ptr<T> & b)
+template<class T> void swap(nodelete_shared_ptr<T> & a, nodelete_shared_ptr<T> & b)
 {
 	a.swap(b);
 }
 
 // get_pointer() enables boost::mem_fn to recognize shared_ptr
 
-template<class T> inline T * get_pointer(shared_ptr<T> const & p)
+template<class T> inline T * get_pointer(nodelete_shared_ptr<T> const & p)
 {
 	return p.get();
 }

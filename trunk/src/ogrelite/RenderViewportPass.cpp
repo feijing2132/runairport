@@ -2,49 +2,48 @@
 
 BEGIN_NAMESPACE_OGRELITE
 
-void RenderProcessSquence::processSeq()
-{	
+
+
+void RenderProcessSquence::render(RenderViewport* pdest)
+{
+	preRenderSeq();
+	processRenderSeq(pdest);
+	postRenderSeq();
+}
+
+void RenderProcessSquence::processRenderSeq( RenderViewport* pdest )
+{
 	for(SequenceProcessList::iterator itr= mSequenceProcesses.begin();itr!=mSequenceProcesses.end();++itr)
 	{
-		(*itr)->process();
+		(*itr)->render(pdest);
 	}	
 }
-
-void RenderProcessSquence::process()
-{
-	preProcessSeq();
-	processSeq();
-	postProcessSeq();
-}
-
 
 //////////////////////////////////////////////////////////////////////////
 void RenderCanvas::renderOneFrame()
 {
-	beginFrame();
+	_beginFrame();
 	//render each layer
 	for(RenderLayerList::iterator itr=mRenderLayList.begin();itr!=mRenderLayList.end();++itr)
 	{
-		RenderLayerSharePtr& shptr=*itr;
+		RenderViewportSharedPtr& shptr=*itr;
 		if(shptr.get() && shptr->isVisible() )
 		{			
-			shptr->drawToCanvas(this);
+			_beginViewport(shptr.get());
+			shptr->renderTo(this);
 		}
 	}
-	endFrame();
+	_endFrame();
 }
 
 
 
 
 
-void RenderLayer::drawToCanvas( RenderCanvas* pCanvas )
+void RenderViewport::renderTo( RenderCanvas* pCanvas )
 {
-		
-
 	if(mpRenerProcess)
-		mpRenerProcess->process();
-
+		mpRenerProcess->render(this);
 }
 
 END_NAMESPACE_OGRELITE
