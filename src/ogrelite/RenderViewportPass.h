@@ -7,11 +7,13 @@
 */
 
 BEGIN_NAMESPACE_OGRELITE
-///virtual base class represent a render operation to 
+///virtual base class represent a render operation to  
+//class 
+class RenderViewport;
 class RenderProcess
 {
 public:
-	virtual void process()=0;
+	virtual void render(RenderViewport* pdest)=0;
 	virtual ~RenderProcess(){}
 protected:
 	String sDesc;
@@ -22,27 +24,28 @@ class RenderProcessSquence : public RenderProcess
 {
 protected:	
 	//bool m_bParalle; //no effect yet
-	void process();
-	virtual void preProcessSeq(){}
-	virtual void postProcessSeq(){}
+	void render(RenderViewport* pdest);
+	virtual void preRenderSeq(){}
+	virtual void postRenderSeq(){}
 protected:
 	typedef std::vector<RenderProcess*> SequenceProcessList;
 	SequenceProcessList mSequenceProcesses;
-	void processSeq();
+	void processRenderSeq(RenderViewport* pdest);
 };
 
 //viewport layer to canvas 
 class RenderCanvas;
-class RenderLayer 
+class RenderViewport 
 {
 public:
-	RenderLayer() 
+	RenderViewport() 
 		:mpRenerProcess(NULL)
 		,mbVisible(true)
 	{
 	}
-	virtual void drawToCanvas(RenderCanvas* pCanvas);
+	virtual void renderTo(RenderCanvas* pCanvas);
 	bool isVisible()const{ return mbVisible; }
+	void setVisible(bool b){ mbVisible = b; }
 	void setClearEveryFrame( unsigned int buffers = FBT_COLOUR | FBT_DEPTH);
 protected:	
 	RenderProcess* mpRenerProcess;		
@@ -54,13 +57,12 @@ protected:
 	ColourValue mClearColour;
 	float mClearDepth;
 	int mClearStencil;
-	unsigned int mClearBuffers;
-	/// ZOrder	
+	unsigned int mClearBuffers;	
 	bool mbVisible;
 };
 
 
-typedef shared_ptr<RenderLayer> RenderLayerSharePtr;
+typedef nodelete_shared_ptr<RenderViewport> RenderViewportSharedPtr;
 
 //render target
 // window support or software support(FBO) which have , have buffers like pixel buffer , stencil buffer, depth buffer..
@@ -68,20 +70,27 @@ class RenderSystem;
 class RenderCanvas
 {
 public:	
-	void renderOneFrame();
-
-	virtual void beginFrame()=0;
-	
-	virtual void endFrame()=0;
 	virtual uint32 getWidth()const=0;
 	virtual uint32 getHeigth()const=0;
 
 	virtual RenderSystem* getSystem()=0;
 
+	void renderOneFrame();
 protected:
-	typedef std::list< RenderLayerSharePtr > RenderLayerList;
+	virtual void _beginFrame()=0;
+	virtual void _beginViewport(RenderViewport*player)=0;	
+	virtual void _endFrame()=0;
+protected:
+	typedef std::list< RenderViewportSharedPtr > RenderLayerList;
 	RenderLayerList mRenderLayList;
 
+};
+typedef nodelete_shared_ptr<RenderCanvas> RenderCanvasSharedPtr;
+//////////////////////////////////////////////////////////////////////////
+class RenderWindowCanvas : public RenderCanvas
+{
+public:
+	virtual void swapBuffers(bool waitForVSync)=0;
 };
 
 //only manage create/destroy resource
@@ -90,20 +99,9 @@ class Texture
 public:
 
 };
-typedef shared_ptr<Texture> TextureSharePtr;
-
-class RenderSystem
-{
-public:
-	//texture manager
-	TextureSharePtr createTexture(const String& sName);
-	void destoryTexture(const String& sName,bool bForce = false);
-	TextureSharePtr getTexture(const String& sName);
-	HashMap<String, inst_ptr<Texture> > mTextureMap;
-	//
+typedef nodelete_shared_ptr<Texture> TextureSharedPtr;
 
 
-};
 
 
 

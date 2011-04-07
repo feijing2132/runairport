@@ -8,18 +8,19 @@
 
 
 BEGIN_NAMESPACE_OGRELITE
-	class Properties
+	class NameValueMap
 	{
 	public:
 		void set(const String& sKey, const String& sValue);
+		void set(const String& sKey, int iValue);
+		void set(const String& sKey, const double& dValue);
+		
+
 		bool get(const String& sKey, String& sValue)const;
+		bool get(const String& sKey, int& iValue)const;
+		bool get(const String& sKey, double& dValue)const;
+
 	protected:
 		std::map<String,String> mMap;
-	};
-
-	class TextureProperties
-	{
-	public:
-
-	};
+	};	
 END_NAMESPACE_OGRELITE

@@ -20,11 +20,16 @@
   <ItemGroup>
     <ClCompile Include="RenderViewportPass.cpp" />
     <ClCompile Include="glRenderWindow.cpp" />
+    <ClCompile Include="src\OgreWin32Context.cpp">
+      <Filter>devicelayer\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RenderViewportPass.h" />
     <ClInclude Include="ogrelitePrefix.h" />
     <ClInclude Include="ogreliteptr.h" />
     <ClInclude Include="glRenderWindow.h" />
+    <ClInclude Include="RenderSystem.h" />
   </ItemGroup>
 </Project>

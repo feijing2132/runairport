@@ -294,6 +294,7 @@ namespace Ogre {
 
     /** Defines the frame buffer types. */
     enum FrameBufferType {
+		FBT_NONE = 0x0,
         FBT_COLOUR  = 0x1,
         FBT_DEPTH   = 0x2,
         FBT_STENCIL = 0x4
