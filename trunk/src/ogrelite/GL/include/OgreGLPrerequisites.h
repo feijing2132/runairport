@@ -47,6 +47,7 @@ namespace Ogre {
 #if OGRE_THREAD_SUPPORT == 1
 #	define GLEW_MX
 #endif
+#define GLEW_STATIC
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #if !defined( __MINGW32__ )

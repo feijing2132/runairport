@@ -194,7 +194,7 @@ namespace Ogre {
 			Log* mTarget;
 			LogMessageLevel mLevel;
 			bool mMaskDebug;
-			typedef StringUtil::StrStreamType BaseStream;
+			typedef StringStream BaseStream;
 			BaseStream mCache;
 
 		public:

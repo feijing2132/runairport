@@ -20,7 +20,7 @@ BEGIN_NAMESPACE_OGRELITE
 		Win32GLRenderWindowCanvas* clone(const String&name,const NameValueMap* miscParams=NULL);
 
 	protected:
-		HWND mHWnd;	
+		
 		HDC  mHDC; //own need to release 
 		inst_ptr<Win32Context> mContext;
 
@@ -32,7 +32,7 @@ BEGIN_NAMESPACE_OGRELITE
 	class GLRenderSystem : public RenderSystem
 	{
 	public:
-
+		
 	};
 
 

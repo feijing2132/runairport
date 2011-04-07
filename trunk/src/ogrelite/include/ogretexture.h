@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 //#include "OgreHardwareBuffer.h"
-#include "OgreResource.h"
+//#include "OgreResource.h"
 #include "OgreImage.h"
 
 namespace Ogre {
@@ -98,7 +98,7 @@ namespace Ogre {
             different in reality. Texture objects are created through
             the 'create' method of the TextureManager concrete subclass.
      */
-    class _OgreExport Texture : public Resource
+    class _OgreExport Texture /*: public Resource*/
     {
     public:
         Texture(ResourceManager* creator, const String& name, ResourceHandle handle,

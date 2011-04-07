@@ -24,6 +24,18 @@
       <Filter>devicelayer\opengl</Filter>
     </ClCompile>
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="src\OgreGLSupport.cpp">
+      <Filter>devicelayer\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreWin32GLSupport.cpp">
+      <Filter>devicelayer\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="GL\src\glew.cpp">
+      <Filter>devicelayer\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="GL\src\OgreGLContext.cpp">
+      <Filter>devicelayer\opengl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RenderViewportPass.h" />
