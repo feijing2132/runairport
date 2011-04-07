@@ -1,6 +1,8 @@
 #pragma once
 #include "ogrelitePrefix.h"
 #include "ogreliteptr.h"
+#include "OgreColourValue.h"
+#include "OgreCommon.h"
 /*the object represent a render pass to the viewport
 */
 
@@ -41,6 +43,7 @@ public:
 	}
 	virtual void drawToCanvas(RenderCanvas* pCanvas);
 	bool isVisible()const{ return mbVisible; }
+	void setClearEveryFrame( unsigned int buffers = FBT_COLOUR | FBT_DEPTH);
 protected:	
 	RenderProcess* mpRenerProcess;		
 	// Actual dimensions, based on target dimensions

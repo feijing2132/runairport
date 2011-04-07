@@ -138,11 +138,11 @@ namespace Ogre {
 			return *this;
 		}
 
-		/*~AxisAlignedBox()
+		~AxisAlignedBox()
 		{
 			if (mpCorners)
 				OGRE_FREE(mpCorners, MEMCATEGORY_SCENE_CONTROL);
-		}*/
+		}
 
 
 		/** Gets the minimum corner of the box.
@@ -299,31 +299,31 @@ namespace Ogre {
 		</pre>
 		@remarks as this implementation uses a static member, make sure to use your own copy !
 		*/
-		//inline const Vector3* getAllCorners(void) const
-		//{
-		//	assert( (mExtent == EXTENT_FINITE) && "Can't get corners of a null or infinite AAB" );
+		inline const Vector3* getAllCorners(void) const
+		{
+			assert( (mExtent == EXTENT_FINITE) && "Can't get corners of a null or infinite AAB" );
 
-		//	// The order of these items is, using right-handed co-ordinates:
-		//	// Minimum Z face, starting with Min(all), then anticlockwise
-		//	//   around face (looking onto the face)
-		//	// Maximum Z face, starting with Max(all), then anticlockwise
-		//	//   around face (looking onto the face)
-		//	// Only for optimization/compatibility.
-		//	if (!mpCorners)
-		//		mpCorners = OGRE_ALLOC_T(Vector3, 8, MEMCATEGORY_SCENE_CONTROL);
+			// The order of these items is, using right-handed co-ordinates:
+			// Minimum Z face, starting with Min(all), then anticlockwise
+			//   around face (looking onto the face)
+			// Maximum Z face, starting with Max(all), then anticlockwise
+			//   around face (looking onto the face)
+			// Only for optimization/compatibility.
+			if (!mpCorners)
+				mpCorners = OGRE_ALLOC_T(Vector3, 8, MEMCATEGORY_SCENE_CONTROL);
 
-		//	mpCorners[0] = mMinimum;
-		//	mpCorners[1].x = mMinimum.x; mpCorners[1].y = mMaximum.y; mpCorners[1].z = mMinimum.z;
-		//	mpCorners[2].x = mMaximum.x; mpCorners[2].y = mMaximum.y; mpCorners[2].z = mMinimum.z;
-		//	mpCorners[3].x = mMaximum.x; mpCorners[3].y = mMinimum.y; mpCorners[3].z = mMinimum.z;            
+			mpCorners[0] = mMinimum;
+			mpCorners[1].x = mMinimum.x; mpCorners[1].y = mMaximum.y; mpCorners[1].z = mMinimum.z;
+			mpCorners[2].x = mMaximum.x; mpCorners[2].y = mMaximum.y; mpCorners[2].z = mMinimum.z;
+			mpCorners[3].x = mMaximum.x; mpCorners[3].y = mMinimum.y; mpCorners[3].z = mMinimum.z;            
 
-		//	mpCorners[4] = mMaximum;
-		//	mpCorners[5].x = mMinimum.x; mpCorners[5].y = mMaximum.y; mpCorners[5].z = mMaximum.z;
-		//	mpCorners[6].x = mMinimum.x; mpCorners[6].y = mMinimum.y; mpCorners[6].z = mMaximum.z;
-		//	mpCorners[7].x = mMaximum.x; mpCorners[7].y = mMinimum.y; mpCorners[7].z = mMaximum.z;
+			mpCorners[4] = mMaximum;
+			mpCorners[5].x = mMinimum.x; mpCorners[5].y = mMaximum.y; mpCorners[5].z = mMaximum.z;
+			mpCorners[6].x = mMinimum.x; mpCorners[6].y = mMinimum.y; mpCorners[6].z = mMaximum.z;
+			mpCorners[7].x = mMaximum.x; mpCorners[7].y = mMinimum.y; mpCorners[7].z = mMaximum.z;
 
-		//	return mpCorners;
-		//}
+			return mpCorners;
+		}
 
 		/** gets the position of one of the corners
 		*/

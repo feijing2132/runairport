@@ -52,7 +52,7 @@ namespace Ogre {
         /** default constructor*/
         RenderSystemCapabilitiesSerializer();
         /** default destructor*/
-        virtual ~RenderSystemCapabilitiesSerializer() {};
+        virtual ~RenderSystemCapabilitiesSerializer() {}
 
         /** Writes a RenderSystemCapabilities object to a data stream */
         void writeScript(const RenderSystemCapabilities* caps, String name, String filename);
@@ -156,7 +156,7 @@ namespace Ogre {
             mSetIntMethodDispatchTable.insert(SetIntMethodDispatchTable::value_type(keyword, method));
         }
 
-        inline void callSetIntMethod(String& keyword, int val)
+        inline void callSetIntMethod(String& keyword, ushort val)
         {
             SetIntMethodDispatchTable::iterator methodIter = mSetIntMethodDispatchTable.find(keyword);
             if (methodIter != mSetIntMethodDispatchTable.end())

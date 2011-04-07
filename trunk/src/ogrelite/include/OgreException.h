@@ -30,8 +30,8 @@ THE SOFTWARE.
 
 // Precompiler options
 #include "OgrePrerequisites.h"
-//#include "OgreHeaderPrefix.h"
-//#include "OgreString.h"
+#include "OgreHeaderPrefix.h"
+#include "OgreString.h"
 #include <exception>
 
 // Backwards compatibility with old assert mode definitions
@@ -347,5 +347,5 @@ namespace Ogre {
 
 } // Namespace Ogre
 
-//#include "OgreHeaderSuffix.h"
+#include "OgreHeaderSuffix.h"
 #endif

@@ -34,12 +34,11 @@ THE SOFTWARE.
 #include "OgreRenderQueue.h"
 #include "OgreAxisAlignedBox.h"
 #include "OgreSphere.h"
-//#include "OgreRenderable.h"
-//#include "OgreShadowCaster.h"
-//#include "OgreFactoryObj.h"
-//#include "OgreAnimable.h"
-//#include "OgreAny.h"
-//#include "OgreUserObjectBindings.h"
+#include "OgreShadowCaster.h"
+#include "OgreFactoryObj.h"
+#include "OgreAnimable.h"
+#include "OgreAny.h"
+#include "OgreUserObjectBindings.h"
 
 namespace Ogre {
 
@@ -57,53 +56,53 @@ namespace Ogre {
             Instances of this class are discrete, relatively small, movable objects
             which are attached to SceneNode objects to define their position.
     */
-    class _OgreExport MovableObject /*: public ShadowCaster, public AnimableObject*///, public MovableAlloc
+    class _OgreExport MovableObject : public ShadowCaster, public AnimableObject, public MovableAlloc
     {
     public:
-        /** Listener which gets called back on MovableObject events. should use signal slot ?
+        /** Listener which gets called back on MovableObject events.
         */
-   //     class _OgreExport Listener
-   //     {
-   //     public:
-   //         Listener(void) {}
-   //         virtual ~Listener() {}
-   //         /** MovableObject is being destroyed */
-   //         virtual void objectDestroyed(MovableObject*) {}
-   //         /** MovableObject has been attached to a node */
-   //         virtual void objectAttached(MovableObject*) {}
-   //         /** MovableObject has been detached from a node */
-   //         virtual void objectDetached(MovableObject*) {}
-   //         /** MovableObject has been moved */
-   //         virtual void objectMoved(MovableObject*) {}
-   //         /** Called when the movable object of the camera to be used for rendering.
-   //         @returns
-   //             true if allows queue for rendering, false otherwise.
-   //         */
-   //         virtual bool objectRendering(const MovableObject*, const Camera*) { return true; }
-   //         /** Called when the movable object needs to query a light list.
-   //         @remarks
-   //             If you want to customize light finding for this object, you should override 
-			//	this method and hook into MovableObject via MovableObject::setListener.
-			//	Be aware that the default method caches results within a frame to 
-			//	prevent unnecessary recalculation, so if you override this you 
-			//	should provide your own caching to maintain performance.
-			//@note
-			//	If you use texture shadows, there is an additional restriction - 
-			//	since the lights which should have shadow textures rendered for
-			//	them are determined based on the entire frustum, and not per-object,
-			//	it is important that the lights returned at the start of this 
-			//	list (up to the number of shadow textures available) are the same 
-			//	lights that were used to generate the shadow textures, 
-			//	and they are in the same order (particularly for additive effects).
-			//@note
-			//	This method will not be called for additive stencil shadows since the
-			//	light list cannot be varied per object with this technique.
-   //         @returns
-   //             A pointer to a light list if you populated the light list yourself, or
-   //             NULL to fall back on the default finding process.
-   //         */
-   //         virtual const LightList* objectQueryLights(const MovableObject*) { return 0; }
-   //     };
+        class _OgreExport Listener
+        {
+        public:
+            Listener(void) {}
+            virtual ~Listener() {}
+            /** MovableObject is being destroyed */
+            virtual void objectDestroyed(MovableObject*) {}
+            /** MovableObject has been attached to a node */
+            virtual void objectAttached(MovableObject*) {}
+            /** MovableObject has been detached from a node */
+            virtual void objectDetached(MovableObject*) {}
+            /** MovableObject has been moved */
+            virtual void objectMoved(MovableObject*) {}
+            /** Called when the movable object of the camera to be used for rendering.
+            @returns
+                true if allows queue for rendering, false otherwise.
+            */
+            virtual bool objectRendering(const MovableObject*, const Camera*) { return true; }
+            /** Called when the movable object needs to query a light list.
+            @remarks
+                If you want to customize light finding for this object, you should override 
+				this method and hook into MovableObject via MovableObject::setListener.
+				Be aware that the default method caches results within a frame to 
+				prevent unnecessary recalculation, so if you override this you 
+				should provide your own caching to maintain performance.
+			@note
+				If you use texture shadows, there is an additional restriction - 
+				since the lights which should have shadow textures rendered for
+				them are determined based on the entire frustum, and not per-object,
+				it is important that the lights returned at the start of this 
+				list (up to the number of shadow textures available) are the same 
+				lights that were used to generate the shadow textures, 
+				and they are in the same order (particularly for additive effects).
+			@note
+				This method will not be called for additive stencil shadows since the
+				light list cannot be varied per object with this technique.
+            @returns
+                A pointer to a light list if you populated the light list yourself, or
+                NULL to fall back on the default finding process.
+            */
+            virtual const LightList* objectQueryLights(const MovableObject*) { return 0; }
+        };
 
     protected:
 		/// Name of this object
@@ -125,7 +124,7 @@ namespace Ogre {
 		/// Hidden because of distance?
 		bool mBeyondFarDistance;	
 		/// User objects binding.
-		//UserObjectBindings mUserObjectBindings;
+		UserObjectBindings mUserObjectBindings;
         /// The render queue to use when rendering this object
         uint8 mRenderQueueID;
 		/// Flags whether the RenderQueue's default should be used.
@@ -150,12 +149,12 @@ namespace Ogre {
         /// Does rendering this object disabled by listener?
         bool mRenderingDisabled;
         /// MovableObject listener - only one allowed (no list) for size & performance reasons. */
-        //Listener* mListener;
+        Listener* mListener;
 
         /// List of lights for this object
-        //mutable LightList mLightList;
+        mutable LightList mLightList;
         /// The last frame that this light list was updated in
-        ///mutable ulong mLightListUpdated;
+        mutable ulong mLightListUpdated;
 
 		/// the light mask defined for this movable. This will be taken into consideration when deciding which light should affect this movable
 		uint32 mLightMask;
@@ -308,24 +307,24 @@ namespace Ogre {
 			this MovableObject. This can be a pointer back to one of your own
 			classes for instance.		
 		*/
-		//virtual void setUserAny(const Any& anything) { getUserObjectBindings().setUserAny(anything); }
+		virtual void setUserAny(const Any& anything) { getUserObjectBindings().setUserAny(anything); }
 
 		/** @deprecated use UserObjectBindings::getUserAny via getUserObjectBindings() instead.
 			Retrieves the custom user value associated with this object.
 		*/
-		//virtual const Any& getUserAny(void) const { return getUserObjectBindings().getUserAny(); }
+		virtual const Any& getUserAny(void) const { return getUserObjectBindings().getUserAny(); }
 
 		/** Return an instance of user objects binding associated with this class.
 		You can use it to associate one or more custom objects with this class instance.
 		@see UserObjectBindings::setUserAny.		
 		*/
-		//UserObjectBindings&	getUserObjectBindings() { return mUserObjectBindings; }
+		UserObjectBindings&	getUserObjectBindings() { return mUserObjectBindings; }
 
 		/** Return an instance of user objects binding associated with this class.
 		You can use it to associate one or more custom objects with this class instance.
 		@see UserObjectBindings::setUserAny.		
 		*/
-		//const UserObjectBindings& getUserObjectBindings() const { return mUserObjectBindings; }
+		const UserObjectBindings& getUserObjectBindings() const { return mUserObjectBindings; }
 
         /** Sets the render queue group this entity will be rendered through.
         @remarks
@@ -425,11 +424,11 @@ namespace Ogre {
             Note for size and performance reasons only one listener per object
             is allowed.
         */
-       // virtual void setListener(Listener* listener) { mListener = listener; }
+        virtual void setListener(Listener* listener) { mListener = listener; }
 
         /** Gets the current listener for this object.
         */
-      //  virtual Listener* getListener(void) const { return mListener; }
+        virtual Listener* getListener(void) const { return mListener; }
 
         /** Gets a list of lights, ordered relative to how close they are to this movable object.
         @remarks
@@ -449,7 +448,7 @@ namespace Ogre {
             the renderable is a part of the movable.
         @returns The list of lights use to lighting this object.
         */
-        //virtual const LightList& queryLights(void) const;
+        virtual const LightList& queryLights(void) const;
 
 		/** Get a bitwise mask which will filter the lights affecting this object
 		@remarks
@@ -470,17 +469,17 @@ namespace Ogre {
 			(say if you want to use it to implement this method, and use the pointer
 			as a return value) and for reading it's only accurate as at the last frame.
 		*/
-		//virtual LightList* _getLightList() { return &mLightList; }
+		virtual LightList* _getLightList() { return &mLightList; }
 
 		/// Define a default implementation of method from ShadowCaster which implements no shadows
         EdgeData* getEdgeList(void) { return NULL; }
 		/// Define a default implementation of method from ShadowCaster which implements no shadows
 		bool hasEdgeList(void) { return false; }
         /// Define a default implementation of method from ShadowCaster which implements no shadows
-	/*	ShadowRenderableListIterator getShadowVolumeRenderableIterator(
-			ShadowTechnique shadowTechnique, const Light* light, 
-			HardwareIndexBufferSharedPtr* indexBuffer, 
-			bool extrudeVertices, Real extrusionDist, unsigned long flags = 0);*/
+        ShadowRenderableListIterator getShadowVolumeRenderableIterator(
+            ShadowTechnique shadowTechnique, const Light* light, 
+            HardwareIndexBufferSharedPtr* indexBuffer, 
+            bool extrudeVertices, Real extrusionDist, unsigned long flags = 0);
 		
         /** Overridden member from ShadowCaster. */
         const AxisAlignedBox& getLightCapBounds(void) const;
@@ -531,8 +530,8 @@ namespace Ogre {
 			(those for normal display). If true, debug renderables will be
 			included too.
 		*/
-		//virtual void visitRenderables(Renderable::Visitor* visitor, 
-		//	bool debugRenderables = false) = 0;
+		virtual void visitRenderables(Renderable::Visitor* visitor, 
+			bool debugRenderables = false) = 0;
 
 		/** Sets whether or not the debug display of this object is enabled.
 		@remarks
@@ -542,9 +541,9 @@ namespace Ogre {
 			disables that debug display. Objects that are not visible never display
 			debug geometry regardless of this setting.
 		*/
-		//virtual void setDebugDisplayEnabled(bool enabled) { mDebugDisplay = enabled; }
+		virtual void setDebugDisplayEnabled(bool enabled) { mDebugDisplay = enabled; }
 		/// Gets whether debug display of this object is enabled. 
-		//virtual bool isDebugDisplayEnabled(void) const { return mDebugDisplay; }
+		virtual bool isDebugDisplayEnabled(void) const { return mDebugDisplay; }
 
 
 
@@ -557,7 +556,7 @@ namespace Ogre {
 		to allow all clients to produce new instances of this object, integrated
 		with the standard Ogre processing.
 	*/
-	class _OgreExport MovableObjectFactory //: public MovableAlloc
+	class _OgreExport MovableObjectFactory : public MovableAlloc
 	{
 	protected:
 		/// Type flag, allocated if requested

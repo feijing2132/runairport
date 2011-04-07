@@ -34,11 +34,11 @@ THE SOFTWARE.
 #include "OgreMatrix3.h"
 #include "OgreMatrix4.h"
 #include "OgreQuaternion.h"
-//#include "OgreString.h"
-//#include "OgreRenderable.h"
+#include "OgreString.h"
+#include "OgreRenderable.h"
 #include "OgreIteratorWrappers.h"
-//#include "OgreMesh.h"
-//#include "OgreUserObjectBindings.h"
+#include "OgreMesh.h"
+#include "OgreUserObjectBindings.h"
 
 namespace Ogre {
 
@@ -59,7 +59,7 @@ namespace Ogre {
             This is an abstract class - concrete classes are based on this for specific purposes,
             e.g. SceneNode, Bone
     */
-    class _OgreExport Node// : public NodeAlloc
+    class _OgreExport Node : public NodeAlloc
     {
     public:
         /** Enumeration denoting the spaces which a transform can be relative to.
@@ -74,16 +74,16 @@ namespace Ogre {
             TS_WORLD
         };
         typedef HashMap<String, Node*> ChildNodeMap;
-		typedef MapIterator<ChildNodeMap> ChildNodeIterator;
+        typedef MapIterator<ChildNodeMap> ChildNodeIterator;
 		typedef ConstMapIterator<ChildNodeMap> ConstChildNodeIterator;
 
 		/** Listener which gets called back on Node events.
 		*/
-		/*class _OgreExport Listener
+		class _OgreExport Listener
 		{
 		public:
 			Listener() {}
-			virtual ~Listener() {}*/
+			virtual ~Listener() {}
 			/** Called when a node gets updated.
 			@remarks
 				Note that this happens when the node's derived update happens,
@@ -91,34 +91,34 @@ namespace Ogre {
 				be several state-changing calls but only one of these calls, 
 				when the node graph is fully updated.
 			*/
-			//virtual void nodeUpdated(const Node*) {}
+			virtual void nodeUpdated(const Node*) {}
 			/** Node is being destroyed */
-			//virtual void nodeDestroyed(const Node*) {}
+			virtual void nodeDestroyed(const Node*) {}
 			/** Node has been attached to a parent */
-			//virtual void nodeAttached(const Node*) {}
+			virtual void nodeAttached(const Node*) {}
 			/** Node has been detached from a parent */
-			//virtual void nodeDetached(const Node*) {}
-		//};
+			virtual void nodeDetached(const Node*) {}
+		};
 
 		/** Inner class for displaying debug renderable for Node. */
-		//class DebugRenderable : public Renderable//, public NodeAlloc
-		//{
-		//protected:
-		//	Node* mParent;
-		//	MeshPtr mMeshPtr;
-		//	MaterialPtr mMat;
-		//	Real mScaling;
-		//public:
-		//	DebugRenderable(Node* parent);
-		//	~DebugRenderable();
-		//	const MaterialPtr& getMaterial(void) const;
-		//	void getRenderOperation(RenderOperation& op);
-		//	void getWorldTransforms(Matrix4* xform) const;
-		//	Real getSquaredViewDepth(const Camera* cam) const;
-		//	const LightList& getLights(void) const;
-		//	void setScaling(Real s) { mScaling = s; }
+		class DebugRenderable : public Renderable, public NodeAlloc
+		{
+		protected:
+			Node* mParent;
+			MeshPtr mMeshPtr;
+			MaterialPtr mMat;
+			Real mScaling;
+		public:
+			DebugRenderable(Node* parent);
+			~DebugRenderable();
+			const MaterialPtr& getMaterial(void) const;
+			void getRenderOperation(RenderOperation& op);
+			void getWorldTransforms(Matrix4* xform) const;
+			Real getSquaredViewDepth(const Camera* cam) const;
+			const LightList& getLights(void) const;
+			void setScaling(Real s) { mScaling = s; }
 
-		//};
+		};
 
     protected:
         /// Pointer to parent node
@@ -224,15 +224,15 @@ namespace Ogre {
         mutable bool mCachedTransformOutOfDate;
 
 		/** Node listener - only one allowed (no list) for size & performance reasons. */
-		//Listener* mListener;
+		Listener* mListener;
 
 		typedef vector<Node*>::type QueuedUpdates;
 		static QueuedUpdates msQueuedUpdates;
 
-		//DebugRenderable* mDebug;
+		DebugRenderable* mDebug;
 
 		/// User objects binding.
-		//UserObjectBindings mUserObjectBindings;
+		UserObjectBindings mUserObjectBindings;
 
     public:
         /** Constructor, should only be called by parent, not directly.
@@ -657,11 +657,11 @@ namespace Ogre {
 			Note for size and performance reasons only one listener per node is
 			allowed.
 		*/
-		//virtual void setListener(Listener* listener) { mListener = listener; }
+		virtual void setListener(Listener* listener) { mListener = listener; }
 		
 		/** Gets the current listener for this Node.
 		*/
-		//virtual Listener* getListener(void) const { return mListener; }
+		virtual Listener* getListener(void) const { return mListener; }
 		
 
         /** Sets the current transform of this node to be the 'initial state' ie that
@@ -706,7 +706,7 @@ namespace Ogre {
         virtual const Vector3& getInitialScale(void) const;
 
         /** Helper function, get the squared view depth.  */
-        //Real getSquaredViewDepth(const Camera* cam) const;
+        Real getSquaredViewDepth(const Camera* cam) const;
 
         /** To be called in the event of transform changes to this node that require it's recalculation.
         @remarks
@@ -725,7 +725,7 @@ namespace Ogre {
         virtual void cancelUpdate(Node* child);
 
 		/** Get a debug renderable for rendering the Node.  */
-		//virtual DebugRenderable* getDebugRenderable(Real scaling);
+		virtual DebugRenderable* getDebugRenderable(Real scaling);
 
 		/** Queue a 'needUpdate' call to a node safely.
 		@remarks
@@ -746,24 +746,24 @@ namespace Ogre {
 		this Node. This can be a pointer back to one of your own
 		classes for instance.
 		*/
-		//virtual void setUserAny(const Any& anything) { getUserObjectBindings().setUserAny(anything); }
+		virtual void setUserAny(const Any& anything) { getUserObjectBindings().setUserAny(anything); }
 
 		/** @deprecated use UserObjectBindings::getUserAny via getUserObjectBindings() instead.
 		Retrieves the custom user value associated with this object.
 		*/
-		//virtual const Any& getUserAny(void) const { return getUserObjectBindings().getUserAny(); }
+		virtual const Any& getUserAny(void) const { return getUserObjectBindings().getUserAny(); }
 
 		/** Return an instance of user objects binding associated with this class.
 		You can use it to associate one or more custom objects with this class instance.
 		@see UserObjectBindings::setUserAny.
 		*/
-		//UserObjectBindings&	getUserObjectBindings() { return mUserObjectBindings; }
+		UserObjectBindings&	getUserObjectBindings() { return mUserObjectBindings; }
 
 		/** Return an instance of user objects binding associated with this class.
 		You can use it to associate one or more custom objects with this class instance.
 		@see UserObjectBindings::setUserAny.		
 		*/
-		//const UserObjectBindings& getUserObjectBindings() const { return mUserObjectBindings; }
+		const UserObjectBindings& getUserObjectBindings() const { return mUserObjectBindings; }
 
     };
 	/** @} */

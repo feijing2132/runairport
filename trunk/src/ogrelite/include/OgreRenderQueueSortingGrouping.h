@@ -31,9 +31,9 @@ THE SOFTWARE.
 // Precompiler options
 #include "OgrePrerequisites.h"
 #include "OgreIteratorWrappers.h"
-//#include "OgreMaterial.h"
-//#include "OgreTechnique.h"
-//#include "OgrePass.h"
+#include "OgreMaterial.h"
+#include "OgreTechnique.h"
+#include "OgrePass.h"
 #include "OgreRadixSort.h"
 
 namespace Ogre {
@@ -110,7 +110,7 @@ namespace Ogre {
 		causes a visit call at the Pass level, and a call for each
 		Renderable underneath.
 	*/
-	class _OgreExport QueuedRenderableCollection /*: public RenderQueueAlloc*/
+	class _OgreExport QueuedRenderableCollection : public RenderQueueAlloc
 	{
 	public:
 		/** Organisation modes required for this collection.
@@ -137,7 +137,21 @@ namespace Ogre {
         /// Comparator to order pass groups
         struct PassGroupLess
         {
-            bool _OgreExport operator()(const Pass* a, const Pass* b) const;
+            bool _OgreExport operator()(const Pass* a, const Pass* b) const
+            {
+                // Sort by passHash, which is pass, then texture unit changes
+                uint32 hasha = a->getHash();
+                uint32 hashb = b->getHash();
+                if (hasha == hashb)
+                {
+                    // Must differentTransparentQueueItemLessiate by pointer incase 2 passes end up with the same hash
+                    return a < b;
+                }
+                else
+                {
+                    return hasha < hashb;
+                }
+            }
         };
         /// Comparator to order objects by descending camera distance
 		struct DepthSortDescendingLess
@@ -149,7 +163,31 @@ namespace Ogre {
             {
             }
 
-            bool _OgreExport operator()(const RenderablePass& a, const RenderablePass& b) const;
+            bool _OgreExport operator()(const RenderablePass& a, const RenderablePass& b) const
+            {
+                if (a.renderable == b.renderable)
+                {
+                    // Same renderable, sort by pass hash
+                    return a.pass->getHash() < b.pass->getHash();
+                }
+                else
+                {
+                    // Different renderables, sort by depth
+                    Real adepth = a.renderable->getSquaredViewDepth(camera);
+                    Real bdepth = b.renderable->getSquaredViewDepth(camera);
+					if (Math::RealEqual(adepth, bdepth))
+				    {
+                        // Must return deterministic result, doesn't matter what
+                        return a.pass < b.pass;
+				    }
+				    else
+				    {
+				        // Sort DESCENDING by depth (i.e. far objects first)
+					    return (adepth > bdepth);
+				    }
+                }
+
+            }
         };
 
         /** Vector of RenderablePass objects, this is built on the assumption that

@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "OgreResourceManager.h"
 #include "OgreCompositor.h"
 #include "OgreRectangle2D.h"
-#include "OgreCompositorSerializer.h"
 #include "OgreRenderSystem.h"
 #include "OgreCompositionTechnique.h"
 
@@ -156,6 +155,13 @@ namespace Ogre {
 		*/
 		CustomCompositionPass* getCustomCompositionPass(const String& name);
 
+		/**
+		Relocates a compositor chain from one viewport to another
+		@param sourceVP The viewport to take the chain from
+		@param destVP The viewport to connect the chain to
+		*/
+		void _relocateChain(Viewport* sourceVP, Viewport* destVP);
+
 		/** Override standard Singleton retrieval.
 		@remarks
 		Why do we do this? Well, it's because the Singleton
@@ -193,9 +199,6 @@ namespace Ogre {
 	private:
         typedef map<Viewport*, CompositorChain*>::type Chains;
         Chains mChains;
-
-		/// Serializer - Hold instance per thread if necessary
-		OGRE_THREAD_POINTER(CompositorSerializer, mSerializer);
 
         /** Clear composition chains for all viewports
          */

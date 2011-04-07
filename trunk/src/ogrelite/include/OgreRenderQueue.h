@@ -28,7 +28,7 @@ THE SOFTWARE.
 #ifndef __RenderQueue_H__
 #define __RenderQueue_H__
 
-//#include "OgreHeaderPrefix.h"
+#include "OgreHeaderPrefix.h"
 #include "OgrePrerequisites.h"
 #include "OgreIteratorWrappers.h"
 
@@ -89,7 +89,7 @@ namespace Ogre {
             backgrounds and overlays, and also could be used in the future for more
             complex multipass routines like stenciling.
     */
-    class _OgreExport RenderQueue// : public RenderQueueAlloc
+    class _OgreExport RenderQueue : public RenderQueueAlloc
     {
     public:
         typedef map< uint8, RenderQueueGroup* >::type RenderQueueGroupMap;
@@ -304,5 +304,5 @@ namespace Ogre {
 
 }
 
-//#include "OgreHeaderSuffix.h"
+#include "OgreHeaderSuffix.h"
 #endif

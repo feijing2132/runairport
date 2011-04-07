@@ -230,6 +230,10 @@ namespace Ogre {
 		/** Gives a name to a SubMesh
 		*/
 		void nameSubMesh(const String& name, ushort index);
+
+		/** Removes a name from a SubMesh
+		*/
+		void unnameSubMesh(const String& name);
 		
 		/** Gets the index of a submesh with a given name.
         @remarks
@@ -462,7 +466,7 @@ namespace Ogre {
 		@param value The value from which this Lod will apply.
 		@param meshName The name of the mesh which will be the lower level detail version.
 		*/
-		void createManualLodLevel(Real value, const String& meshName);
+		void createManualLodLevel(Real value, const String& meshName, const String& groupName = Ogre::String());
 
 		/** Changes the alternate mesh to use as a manual LOD at the given index.
 		@remarks
@@ -669,7 +673,7 @@ namespace Ogre {
             rendering if you intend to use this information for that purpose.
         @lodIndex The LOD at which to get the edge list, 0 being the highest.
         */
-        EdgeData* getEdgeList(unsigned int lodIndex = 0);
+        EdgeData* getEdgeList(unsigned short lodIndex = 0);
 
         /** Return the edge list for this mesh, building it if required. 
         @remarks
@@ -677,7 +681,7 @@ namespace Ogre {
             rendering if you intend to use this information for that purpose.
         @lodIndex The LOD at which to get the edge list, 0 being the highest.
         */
-        const EdgeData* getEdgeList(unsigned int lodIndex = 0) const;
+        const EdgeData* getEdgeList(unsigned short lodIndex = 0) const;
 
         /** Returns whether this mesh has already had it's geometry prepared for use in 
             rendering shadow volumes. */
@@ -919,10 +923,14 @@ namespace Ogre {
 		
 		/// Only relevant if mIsLodManual is true, the name of the alternative mesh to use
 		String manualName;
+		/// Only relevant if mIsLodManual is true, the name of the group of the alternative mesh
+		String manualGroup;
 		/// Hard link to mesh to avoid looking up each time
 		mutable MeshPtr manualMesh;
         /// Edge list for this LOD level (may be derived from manual mesh)
         mutable EdgeData* edgeData;
+
+		MeshLodUsage() : userValue(0.0), value(0.0), edgeData(0) {}
 	};
 
 	/** @} */
