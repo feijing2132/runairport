@@ -304,6 +304,7 @@ settings have been made.
 //#include "OgreMemoryAllocatorConfig.h"
 
 //
+#include <sstream>
 namespace Ogre
 {
 #if OGRE_STRING_USE_CUSTOM_MEMORY_ALLOCATOR

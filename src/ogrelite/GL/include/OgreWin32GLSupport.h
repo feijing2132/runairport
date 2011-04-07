@@ -3,7 +3,7 @@
 
 #include "OgreWin32Prerequisites.h"
 #include "OgreGLSupport.h"
-#include "OgreGLRenderSystem.h"
+//#include "OgreGLRenderSystem.h"
 
 namespace Ogre
 {
@@ -26,11 +26,11 @@ namespace Ogre
 		*/
 		String validateConfig();
 
-		virtual RenderWindow* createWindow(bool autoCreateWindow, GLRenderSystem* renderSystem, const String& windowTitle = "OGRE Render Window");
-		
-		/// @copydoc RenderSystem::_createRenderWindow
-		virtual RenderWindow* newWindow(const String &name, unsigned int width, unsigned int height, 
-			bool fullScreen, const NameValuePairList *miscParams = 0);
+		//virtual RenderWindow* createWindow(bool autoCreateWindow, GLRenderSystem* renderSystem, const String& windowTitle = "OGRE Render Window");
+		//
+		///// @copydoc RenderSystem::_createRenderWindow
+		//virtual RenderWindow* newWindow(const String &name, unsigned int width, unsigned int height, 
+		//	bool fullScreen, const NameValuePairList *miscParams = 0);
 
 		
 		/**
@@ -56,12 +56,12 @@ namespace Ogre
 		bool selectPixelFormat(HDC hdc, int colourDepth, int multisample, bool hwGamma);
 
 		virtual bool supportsPBuffers();
-		virtual GLPBuffer *createPBuffer(PixelComponentType format, size_t width, size_t height);
+		//virtual GLPBuffer *createPBuffer(PixelComponentType format, size_t width, size_t height);
 		virtual unsigned int getDisplayMonitorCount() const;
 	private:
 		// Allowed video modes
 		vector<DEVMODE>::type mDevModes;
-		Win32Window *mInitialWindow;
+		//Win32Window *mInitialWindow;
 		vector<int>::type mFSAALevels;
 		bool mHasPixelFormatARB;
         bool mHasMultisample;

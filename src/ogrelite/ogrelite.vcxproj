@@ -79,9 +79,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glRenderWindow.cpp" />
+    <ClCompile Include="GL\src\glew.cpp" />
+    <ClCompile Include="GL\src\OgreGLContext.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="RenderViewportPass.cpp" />
+    <ClCompile Include="src\OgreGLSupport.cpp" />
     <ClCompile Include="src\OgreWin32Context.cpp" />
+    <ClCompile Include="src\OgreWin32GLSupport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glRenderWindow.h" />

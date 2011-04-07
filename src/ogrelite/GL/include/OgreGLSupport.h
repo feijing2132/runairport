@@ -29,11 +29,11 @@ THE SOFTWARE.
 #define OGRE_GLSUPPORT_H
 
 #include "OgreGLPrerequisites.h"
-#include "OgreGLRenderSystem.h"
-
-#include "OgreRenderWindow.h"
+//#include "OgreGLRenderSystem.h"
+//
+//#include "OgreRenderWindow.h"
 #include "OgreConfigOptionMap.h"
-#include "OgreGLPBuffer.h"
+//#include "OgreGLPBuffer.h"
 
 namespace Ogre
 {
@@ -64,11 +64,11 @@ public:
 	virtual RenderWindow* createWindow(bool autoCreateWindow, GLRenderSystem* renderSystem, const String& windowTitle) = 0;
 
 	/// @copydoc RenderSystem::_createRenderWindow
-	virtual RenderWindow* newWindow(const String &name, unsigned int width, unsigned int height, 
-		bool fullScreen, const NameValuePairList *miscParams = 0) = 0;
+	/*virtual RenderWindow* newWindow(const String &name, unsigned int width, unsigned int height, 
+		bool fullScreen, const NameValuePairList *miscParams = 0) = 0;*/
 
     virtual bool supportsPBuffers();
-    virtual GLPBuffer *createPBuffer(PixelComponentType format, size_t width, size_t height);
+   // virtual GLPBuffer *createPBuffer(PixelComponentType format, size_t width, size_t height);
 
     /**
     * Start anything special

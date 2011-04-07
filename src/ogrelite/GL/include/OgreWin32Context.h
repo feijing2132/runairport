@@ -50,7 +50,8 @@ namespace Ogre {
 		virtual void releaseContext();
 
 	protected:
-        HDC     mHDC;
+		HWND	mHWnd;	
+		HDC     mHDC;
         HGLRC   mGlrc;
     };
 }
