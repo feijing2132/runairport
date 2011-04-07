@@ -65,10 +65,10 @@ namespace Ogre {
         ObjectMap mObjectsByName;
 
 		/// Pointer to a Wire Bounding Box for this Node
-		//WireBoundingBox *mWireBoundingBox;
+		WireBoundingBox *mWireBoundingBox;
 		/// Flag that determines if the bounding box of the node should be displayed
-		//bool mShowBoundingBox;
-       // bool mHideBoundingBox;
+		bool mShowBoundingBox;
+        bool mHideBoundingBox;
 
         /// SceneManager which created this node
         SceneManager* mCreator;
@@ -457,7 +457,7 @@ namespace Ogre {
         virtual void setDebugDisplayEnabled(bool enabled, bool cascade = true);
 
 		/// As Node::getDebugRenderable, except scaling is automatically determined
-		//virtual DebugRenderable* getDebugRenderable();
+		virtual DebugRenderable* getDebugRenderable();
 
 
 

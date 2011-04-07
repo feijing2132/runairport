@@ -100,7 +100,8 @@ namespace Ogre
 		@param width The new width to use
 		@param height The new height to use
 		*/
-		virtual void setFullscreen(bool fullScreen, unsigned int width, unsigned int height) {}
+		virtual void setFullscreen(bool fullScreen, unsigned int width, unsigned int height)
+                { (void)fullScreen; (void)width; (void)height; }
         
         /** Destroys the window.
         */
@@ -126,7 +127,8 @@ namespace Ogre
 
         /** Set the visibility state
         */
-        virtual void setVisible(bool visible) {}
+        virtual void setVisible(bool visible)
+        { (void)visible; }
 
         /** Overridden from RenderTarget, flags invisible windows as inactive
         */
@@ -155,7 +157,7 @@ namespace Ogre
 			int& left, int& top);
 
 		/// Override since windows don't usually have alpha
-		//PixelFormat suggestPixelFormat() const { return PF_BYTE_RGB; }
+		PixelFormat suggestPixelFormat() const { return PF_BYTE_RGB; }
 
         /** Returns true if the window will automatically de-activate itself when it loses focus.
         */
@@ -166,12 +168,6 @@ namespace Ogre
           * \note 'true' is the default behavior.
           */
         void setDeactivateOnFocusChange(bool deactivate);
-
-		/** Change the orientation of the window.
-         @note Currently only available on iPhone.
-         @param orient Orientation to change the window to.
-         */
-        virtual void changeOrientation(Viewport::Orientation orient) {}
 
     protected:
         bool mIsFullScreen;

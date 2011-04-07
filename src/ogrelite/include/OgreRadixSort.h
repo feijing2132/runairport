@@ -110,7 +110,7 @@ namespace Ogre {
 
 		};
 		/// Temp sort storage
-		typedef std::vector<SortEntry/*, STLAllocator<SortEntry, GeneralAllocPolicy>*/ > SortVector; 
+		typedef std::vector<SortEntry, STLAllocator<SortEntry, GeneralAllocPolicy> > SortVector; 
 		SortVector mSortArea1;
 		SortVector mSortArea2;
 		SortVector* mSrc;

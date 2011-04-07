@@ -29,7 +29,7 @@ THE SOFTWARE.
 #define _RenderOperation_H__
 
 #include "OgrePrerequisites.h"
-//#include "OgreVertexIndexData.h"
+#include "OgreVertexIndexData.h"
 
 namespace Ogre {
 

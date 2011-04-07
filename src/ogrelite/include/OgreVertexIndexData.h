@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __VertexIndexData_H__
 
 #include "OgrePrerequisites.h"
-//#include "OgreHardwareVertexBuffer.h"
-//#include "OgreHardwareIndexBuffer.h"
+#include "OgreHardwareVertexBuffer.h"
+#include "OgreHardwareIndexBuffer.h"
 
 namespace Ogre {
 	/** \addtogroup Core

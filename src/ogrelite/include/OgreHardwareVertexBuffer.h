@@ -132,7 +132,7 @@ namespace Ogre {
         define the semantics (position, normal etc), the VertexElement
         class does.
     */
-	class _OgreExport VertexElement/* : public VertexDataAlloc*/
+	class _OgreExport VertexElement : public VertexDataAlloc
     {
     protected:
         /// The source vertex buffer, as bound to an index using VertexBufferBinding
@@ -146,6 +146,8 @@ namespace Ogre {
         /// Index of the item, only applicable for some elements like texture coords
         unsigned short mIndex;
     public:
+		/// Constructor, should not be called directly, only needed because of list
+		VertexElement() {}
         /// Constructor, should not be called directly, call VertexDeclaration::addElement
         VertexElement(unsigned short source, size_t offset, VertexElementType theType,
             VertexElementSemantic semantic, unsigned short index = 0);
@@ -271,7 +273,9 @@ namespace Ogre {
         */
         inline void baseVertexPointerToElement(void* pBase, unsigned short** pElem) const
         {
-            *pElem = static_cast<unsigned short*>(pBase) + mOffset;
+			*pElem = static_cast<unsigned short*>(
+				static_cast<void*>(
+					static_cast<unsigned char*>(pBase) + mOffset));
         }
 
 
@@ -298,7 +302,7 @@ namespace Ogre {
 	Like the other classes in this functional area, these declarations should be created and
 	destroyed using the HardwareBufferManager.
     */
-	class _OgreExport VertexDeclaration/* : public VertexDataAlloc*/
+	class _OgreExport VertexDeclaration : public VertexDataAlloc
     {
     public:
 		/// Defines the list of vertex elements that makes up this declaration
@@ -476,7 +480,7 @@ namespace Ogre {
 		Like the other classes in this functional area, these binding maps should be created and
 		destroyed using the HardwareBufferManager.
 	*/
-	class _OgreExport VertexBufferBinding /*: public VertexDataAlloc*/
+	class _OgreExport VertexBufferBinding : public VertexDataAlloc
 	{
 	public:
 		/// Defines the vertex buffer bindings used as source for vertex declarations

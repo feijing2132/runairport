@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "OgrePrerequisites.h"
 #include "OgreAtomicWrappers.h"
 #include "OgreAny.h"
+#include "OgreSharedPtr.h"
 
 namespace Ogre
 {
@@ -67,6 +68,11 @@ namespace Ogre
 	*/
 	class _OgreExport WorkQueue : public UtilityAlloc
 	{
+	protected:
+		typedef std::map<String, uint16> ChannelMap;
+		ChannelMap mChannelMap;
+		uint16 mNextChannel;
+		OGRE_MUTEX(mChannelMapMutex)
 	public:
 		/// Numeric identifier for a request
 		typedef unsigned long long int RequestID;
@@ -87,22 +93,27 @@ namespace Ogre
 			uint8 mRetryCount;
 			/// Identifier (assigned by the system)
 			RequestID mID;
+			/// Abort Flag
+			mutable bool mAborted;
 
 		public:
 			/// Constructor 
 			Request(uint16 channel, uint16 rtype, const Any& rData, uint8 retry, RequestID rid);
 			~Request();
+			/// Set the abort flag
+			void abortRequest() const { mAborted = true; }
 			/// Get the request channel (top level categorisation)
-			uint32 getChannel() const { return mChannel; }
+			uint16 getChannel() const { return mChannel; }
 			/// Get the type of this request within the given channel
-			uint32 getType() const { return mType; }
+			uint16 getType() const { return mType; }
 			/// Get the user details of this request
 			const Any& getData() const { return mData; }
 			/// Get the remaining retry count
 			uint8 getRetryCount() const { return mRetryCount; }
 			/// Get the identifier of this request
 			RequestID getID() const { return mID; }
-
+			/// Get the abort flag
+			bool getAborted() const { return mAborted; }
 		};
 
 		/** General purpose response structure. 
@@ -129,6 +140,8 @@ namespace Ogre
 			const String& getMessages() const { return mMessages; }
 			/// Return the response data (user defined, only valid on success)
 			const Any& getData() const { return mData; }
+			/// Abort the request
+			void abortRequest() { mRequest->abortRequest(); mData.destroy(); }
 		};
 
 		/** Interface definition for a handler of requests. 
@@ -157,7 +170,7 @@ namespace Ogre
 			this method. 
 			*/
 			virtual bool canHandleRequest(const Request* req, const WorkQueue* srcQ) 
-			{ return true; }
+			{ (void)srcQ; return !req->getAborted(); }
 
 			/** The handler method every subclass must implement. 
 			If a failure is encountered, return a Response with a failure
@@ -192,7 +205,7 @@ namespace Ogre
 			this method. 
 			*/
 			virtual bool canHandleResponse(const Response* res, const WorkQueue* srcQ) 
-			{ return true; }
+			{ (void)srcQ; return !res->getRequest()->getAborted(); }
 
 			/** The handler method every subclass must implement. 
 			@param res The Response structure. The caller is responsible for
@@ -204,10 +217,10 @@ namespace Ogre
 			virtual void handleResponse(const Response* res, const WorkQueue* srcQ) = 0;
 		};
 
-		WorkQueue() {}
+		WorkQueue() : mNextChannel(0) {}
 		virtual ~WorkQueue() {}
 
-				/** Start up the queue with the options that have been set.
+		/** Start up the queue with the options that have been set.
 		@param forceRestart If the queue is already running, whether to shut it
 			down and restart.
 		*/
@@ -308,13 +321,22 @@ namespace Ogre
 		/** Set the time limit imposed on the processing of responses in a
 			single frame, in milliseconds (0 indicates no limit).
 			This sets the maximum time that will be spent in processResponses() in 
-			a single frame.
+			a single frame. The default is 8ms.
 		*/
 		virtual void setResponseProcessingTimeLimit(unsigned long ms) = 0;
 
 		/** Shut down the queue.
 		*/
 		virtual void shutdown() = 0;
+
+		/** Get a channel ID for a given channel name. 
+		@remarks
+			Channels are assigned on a first-come, first-served basis and are
+			not persistent across application instances. This method allows 
+			applications to not worry about channel clashes through manually
+			assigned channel numbers.
+		*/
+		virtual uint16 getChannel(const String& channelName);
 
 	};
 
@@ -426,6 +448,7 @@ namespace Ogre
 		typedef deque<Request*>::type RequestQueue;
 		typedef deque<Response*>::type ResponseQueue;
 		RequestQueue mRequestQueue;
+		RequestQueue mProcessQueue;
 		ResponseQueue mResponseQueue;
 
 		/// Thread function
@@ -440,9 +463,58 @@ namespace Ogre
 
 			void run();
 		};
-		WorkerFunc mWorkerFunc;
+		WorkerFunc* mWorkerFunc;
 
-		typedef list<RequestHandler*>::type RequestHandlerList;
+		/** Intermediate structure to hold a pointer to a request handler which 
+			provides insurance against the handler itself being disconnected
+			while the list remains unchanged.
+		*/
+		class _OgreExport RequestHandlerHolder : public UtilityAlloc
+		{
+		protected:
+			OGRE_RW_MUTEX(mRWMutex);
+			RequestHandler* mHandler;
+		public:
+			RequestHandlerHolder(RequestHandler* handler)
+				: mHandler(handler)	{}
+
+			// Disconnect the handler to allow it to be destroyed
+			void disconnectHandler()
+			{
+				// write lock - must wait for all requests to finish
+				OGRE_LOCK_RW_MUTEX_WRITE(mRWMutex);
+				mHandler = 0;
+			}
+
+			/** Get handler pointer - note, only use this for == comparison or similar,
+				do not attempt to call it as it is not thread safe. 
+			*/
+			RequestHandler* getHandler() { return mHandler; }
+
+			/** Process a request if possible.
+			@return Valid response if processed, null otherwise
+			*/
+			Response* handleRequest(const Request* req, const WorkQueue* srcQ)
+			{
+				// Read mutex so that multiple requests can be processed by the
+				// same handler in parallel if required
+				OGRE_LOCK_RW_MUTEX_READ(mRWMutex);
+				Response* response = 0;
+				if (mHandler)
+				{
+					if (mHandler->canHandleRequest(req, srcQ))
+					{
+						response = mHandler->handleRequest(req, srcQ);
+					}
+				}
+				return response;
+			}
+
+		};
+		// Hold these by shared pointer so they can be copied keeping same instance
+		typedef SharedPtr<RequestHandlerHolder> RequestHandlerHolderPtr;
+
+		typedef list<RequestHandlerHolderPtr>::type RequestHandlerList;
 		typedef list<ResponseHandler*>::type ResponseHandlerList;
 		typedef map<uint16, RequestHandlerList>::type RequestHandlerListByChannel;
 		typedef map<uint16, ResponseHandlerList>::type ResponseHandlerListByChannel;
@@ -455,6 +527,7 @@ namespace Ogre
 		bool mShuttingDown;
 
 		OGRE_MUTEX(mRequestMutex)
+		OGRE_MUTEX(mProcessMutex)
 		OGRE_MUTEX(mResponseMutex)
 		OGRE_RW_MUTEX(mRequestHandlerMutex);
 

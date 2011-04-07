@@ -111,7 +111,7 @@ namespace Ogre {
 			MSE_PRE_WRITE,
 			MSE_WRITE_BEGIN,
 			MSE_WRITE_END,
-			MSE_POST_WRITE,
+			MSE_POST_WRITE
 		};
 
 		/** Class that allows listening in on the various stages of material serialization process.
@@ -130,7 +130,8 @@ namespace Ogre {
 			@param mat The material that is being written.			
 			*/
 			virtual void materialEventRaised(MaterialSerializer* ser, 
-				SerializeEvent event, bool& skip, const Material* mat) {}
+				SerializeEvent event, bool& skip, const Material* mat)
+                        { (void)ser; (void)event; (void)skip; (void)mat; }
 			
 			/** Called when technique section event raised.				
 			@param ser The MaterialSerializer instance that writes the given material.
@@ -140,7 +141,8 @@ namespace Ogre {
 			@param tech The technique that is being written.		
 			*/
 			virtual void techniqueEventRaised(MaterialSerializer* ser, 
-				SerializeEvent event, bool& skip, const Technique* tech) {}
+				SerializeEvent event, bool& skip, const Technique* tech)
+                        { (void)ser; (void)event; (void)skip; (void)tech; }
 		
 			/** Called when pass section event raised.					
 			@param ser The MaterialSerializer instance that writes the given material.
@@ -150,7 +152,8 @@ namespace Ogre {
 			@param pass The pass that is being written.		
 			*/
 			virtual void passEventRaised(MaterialSerializer* ser, 
-				SerializeEvent event, bool& skip, const Pass* pass) {}
+				SerializeEvent event, bool& skip, const Pass* pass)
+                        { (void)ser; (void)event; (void)skip; (void)pass; }
 
 			/** Called when GPU program reference section event raised.				
 			@param ser The MaterialSerializer instance that writes the given material.
@@ -167,7 +170,16 @@ namespace Ogre {
 				const String& attrib, 
 				const GpuProgramPtr& program, 
 				const GpuProgramParametersSharedPtr& params,
-				GpuProgramParameters* defaultParams) {}
+				GpuProgramParameters* defaultParams)
+                        {
+                            (void)ser;
+                            (void)event;
+                            (void)skip;
+                            (void)attrib;
+                            (void)program;
+                            (void)params;
+                            (void)defaultParams;
+                        }
 
 			/** Called when texture unit state section event raised.					
 			@param ser The MaterialSerializer instance that writes the given material.
@@ -177,7 +189,13 @@ namespace Ogre {
 			@param textureUnit The texture unit state that is being written.		
 			*/
 			virtual void textureUnitStateEventRaised(MaterialSerializer* ser, 
-				SerializeEvent event, bool& skip, const TextureUnitState* textureUnit) {}			
+				SerializeEvent event, bool& skip, const TextureUnitState* textureUnit)
+                        {
+                            (void)ser;
+                            (void)event;
+                            (void)skip;
+                            (void)textureUnit;
+                        }			
 		};
 
     protected:
@@ -231,18 +249,18 @@ namespace Ogre {
         void writeGpuProgramRef(const String& attrib, const GpuProgramPtr& program, const GpuProgramParametersSharedPtr& params);
         void writeGpuPrograms(void);
         void writeGPUProgramParameters(const GpuProgramParametersSharedPtr& params, GpuProgramParameters* defaultParams,
-            const int level = 4, const bool useMainBuffer = true);
+            const unsigned short level = 4, const bool useMainBuffer = true);
 		void writeNamedGpuProgramParameters(const GpuProgramParametersSharedPtr& params, GpuProgramParameters* defaultParams,
-			const int level = 4, const bool useMainBuffer = true);
+			const unsigned short level = 4, const bool useMainBuffer = true);
 		void writeLowLevelGpuProgramParameters(const GpuProgramParametersSharedPtr& params, GpuProgramParameters* defaultParams,
-			const int level = 4, const bool useMainBuffer = true);
+			const unsigned short level = 4, const bool useMainBuffer = true);
 		void writeGpuProgramParameter(
 			const String& commandName, const String& identifier, 
 			const GpuProgramParameters::AutoConstantEntry* autoEntry, 
 			const GpuProgramParameters::AutoConstantEntry* defaultAutoEntry, 
 			bool isFloat, size_t physicalIndex, size_t physicalSize,
 			const GpuProgramParametersSharedPtr& params, GpuProgramParameters* defaultParams,
-			const int level, const bool useMainBuffer);
+			const unsigned short level, const bool useMainBuffer);
 		void writeTextureUnit(const TextureUnitState *pTex);
 		void writeSceneBlendFactor(const SceneBlendFactor c_src, const SceneBlendFactor c_dest, 
 			const SceneBlendFactor a_src, const SceneBlendFactor a_dest);
@@ -297,7 +315,7 @@ namespace Ogre {
 		/** default constructor*/
 		MaterialSerializer();
 		/** default destructor*/
-		virtual ~MaterialSerializer() {};
+		virtual ~MaterialSerializer() {}
 
 		/** Queue an in-memory Material to the internal buffer for export.
 		@param pMat Material pointer

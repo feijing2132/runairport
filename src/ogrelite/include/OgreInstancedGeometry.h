@@ -245,7 +245,7 @@ namespace Ogre {
 			/// Dump contents for diagnostics
 			void dump(std::ofstream& of) const;
 			/// retun the BoundingBox information. Usefull when cloning the batch instance.
-			AxisAlignedBox & getAABB(void){return mAABB;};
+			AxisAlignedBox & getAABB(void){return mAABB;}
 			/// @copydoc MovableObject::visitRenderables
 			void visitRenderables(Renderable::Visitor* visitor, bool debugRenderables);
 
@@ -283,16 +283,17 @@ namespace Ogre {
 			/// Records the last frame in which animation was updated
 			unsigned long mFrameAnimationLastUpdated;
 		public:
-			InstancedObject(int index);
-			InstancedObject(int index,SkeletonInstance *skeleton,AnimationStateSet*animations);
+			InstancedObject(unsigned short index);
+			InstancedObject(unsigned short index,SkeletonInstance *skeleton,AnimationStateSet*animations);
 			~InstancedObject();
 			void setPosition( Vector3  position);
-			Vector3 & getPosition(void);
+			const Vector3& getPosition(void) const;
 			void yaw(const Radian& angle);
 			void pitch(const Radian& angle);
 			void roll(const Radian& angle);
 			void rotate(const Quaternion& q);
 			void setScale(const Vector3& scale);
+			const Vector3& getScale() const;
 	        void setOrientation(const Quaternion& q);
 	        void setPositionAndOrientation(Vector3 p, const Quaternion& q);
             Quaternion & getOrientation(void);
@@ -430,7 +431,7 @@ namespace Ogre {
 
 			/// list of LOD Buckets in this BatchInstance
 			typedef vector<LODBucket*>::type LODBucketList;
-			typedef map<int, InstancedObject*>::type ObjectsMap;
+			typedef map<unsigned short, InstancedObject*>::type ObjectsMap;
 			typedef MapIterator<ObjectsMap> InstancedObjectIterator;
 		protected:
 			
@@ -509,8 +510,8 @@ namespace Ogre {
 			void updateContainers(LODBucket* bucket );
 			/// attach the BatchInstance to the scene
 			void attachToScene();
-			void addInstancedObject(int index, InstancedObject* object);
-			InstancedObject*  isInstancedObjectPresent(int index);
+			void addInstancedObject(unsigned short index, InstancedObject* object);
+			InstancedObject*  isInstancedObjectPresent(unsigned short index);
 			InstancedObjectIterator getObjectIterator();
 			SceneNode*getSceneNode(void){return mNode;}
 			ObjectsMap& getInstancesMap(void){return  mInstancesMap;}

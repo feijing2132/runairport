@@ -29,10 +29,11 @@ THE SOFTWARE.
 #define _Codec_H__
 
 #include "OgrePrerequisites.h"
-//#include "OgreSharedPtr.h"
+#include "OgreSharedPtr.h"
 #include "OgreDataStream.h"
 #include "OgreIteratorWrappers.h"
 #include "OgreStringVector.h"
+#include "OgreException.h"
 
 namespace Ogre {
 	/** \addtogroup Core
@@ -51,7 +52,7 @@ namespace Ogre {
             The codec concept is a pretty generic one - you can easily understand
             how it can be used for images, sounds, archives, even compressed data.
     */
-	class _OgreExport Codec /*: public CodecAlloc*/
+	class _OgreExport Codec : public CodecAlloc
     {
     protected:
         typedef map< String, Codec* >::type CodecList; 
@@ -60,14 +61,14 @@ namespace Ogre {
         static CodecList ms_mapCodecs;
 
     public:
-        class _OgrePrivate CodecData /*: public CodecAlloc*/
+        class _OgrePrivate CodecData : public CodecAlloc
         {
         public:
-            virtual ~CodecData() {};
+            virtual ~CodecData() {}
 
             /** Returns the type of the data.
             */
-            virtual String dataType() const { return "CodecData"; };
+            virtual String dataType() const { return "CodecData"; }
         };
         typedef SharedPtr<CodecData> CodecDataPtr;
 
@@ -80,10 +81,22 @@ namespace Ogre {
         */
         static void registerCodec( Codec *pCodec )
         {
+			CodecList::iterator i = ms_mapCodecs.find(pCodec->getType());
+			if (i != ms_mapCodecs.end())
+				OGRE_EXCEPT(Exception::ERR_DUPLICATE_ITEM, 
+					pCodec->getType() + " already has a registered codec. ", __FUNCTION__);
+
             ms_mapCodecs[pCodec->getType()] = pCodec;
         }
 
-        /** Unregisters a codec from the database.
+		/** Return whether a codec is registered already. 
+		*/
+		static bool isCodecRegistered( const String& codecType )
+		{
+			return ms_mapCodecs.find(codecType) != ms_mapCodecs.end();
+		}
+
+		/** Unregisters a codec from the database.
         */
         static void unRegisterCodec( Codec *pCodec )
         {
