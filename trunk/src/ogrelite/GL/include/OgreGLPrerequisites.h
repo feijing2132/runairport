@@ -44,9 +44,8 @@ namespace Ogre {
     class GLRenderBuffer;
 }
 
-#if OGRE_THREAD_SUPPORT == 1
-#	define GLEW_MX
-#endif
+
+#define GLEW_MX
 #define GLEW_STATIC
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
@@ -73,7 +72,7 @@ namespace Ogre {
 #   include <OpenGLES/ES1/glext.h>
 #endif
 
-#if OGRE_THREAD_SUPPORT == 1
+//#if OGRE_THREAD_SUPPORT == 1
 	// implemented in OgreGLContext.cpp
 	GLEWContext * glewGetContext();
 
@@ -82,7 +81,7 @@ namespace Ogre {
 	WGLEWContext * wglewGetContext();
 #	endif
 
-#endif
+//#endif
 
 /// Lots of generated code in here which triggers the new VC CRT security warnings
 #if !defined( _CRT_SECURE_NO_DEPRECATE )

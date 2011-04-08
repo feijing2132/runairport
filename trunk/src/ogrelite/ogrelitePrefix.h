@@ -1,26 +1,42 @@
 #pragma once
 #include <OgrePrerequisites.h>
 //#include <boost/shared_ptr.hpp>
-
+#include <OgreCommon.h>
+#include <OgreStringConverter.h>
 #define BEGIN_NAMESPACE_OGRELITE namespace Ogre{ namespace OgreLite{
 #define END_NAMESPACE_OGRELITE } }
 
 
 
 BEGIN_NAMESPACE_OGRELITE
-	class NameValueMap
+
+
+	class RenderProcess;
+	class NameValueMap 
 	{
 	public:
-		void set(const String& sKey, const String& sValue);
-		void set(const String& sKey, int iValue);
-		void set(const String& sKey, const double& dValue);
+		NameValueMap(){}
+		NameValueMap(const NameValuePairList& other){  mMap = other; }
+		void set(const String& sKey, const String& sValue){  mMap[sKey] = sValue; }
+		
+		template<class T>
+		void set(const String& sKey, const T& tValue){ mMap[sKey] = StringConverter::toString(tValue); }
+	
 		
 
-		bool get(const String& sKey, String& sValue)const;
-		bool get(const String& sKey, int& iValue)const;
-		bool get(const String& sKey, double& dValue)const;
+		bool get(const String& sKey, String& sValue)const
+		{
+			NameValuePairList::const_iterator itrFind = mMap.find(sKey);				
+			if( itrFind !=mMap.end())
+			{
+				sValue = itrFind->second;
+				return true;
+			}
+			return false;
+		}
+		
 
-	protected:
-		std::map<String,String> mMap;
+	public:
+		NameValuePairList mMap;
 	};	
 END_NAMESPACE_OGRELITE

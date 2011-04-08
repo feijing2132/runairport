@@ -25,40 +25,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
+#include "OgreStableHeaders.h"
+#include "OgreVector3.h"
+#include "OgreMath.h"
 
-#include "OgreGLContext.h"
-//#include "OgreSharedPtr.h"
-
-namespace Ogre {
-    // Empty base class
-    GLContext::GLContext():
-        initialized(false) {
-    }
-    
-    GLContext::~GLContext() {        
-    }
-    
-    void GLContext::endCurrent() {
-    }
-    
-}
-
-
-
-// declared in OgreGLPrerequisites.h 
-GLEWContext * glewGetContext()
+namespace Ogre
 {
-	using namespace Ogre;
-	static OGRE_THREAD_POINTER_VAR(GLEWContext, GLEWContextsPtr);
+    const Vector3 Vector3::ZERO( 0, 0, 0 );
 
-	GLEWContext * currentGLEWContextsPtr =  OGRE_THREAD_POINTER_GET(GLEWContextsPtr);
-	if (currentGLEWContextsPtr == NULL)
-	{
-		currentGLEWContextsPtr = new GLEWContext();
-		OGRE_THREAD_POINTER_SET(GLEWContextsPtr, currentGLEWContextsPtr);
-		memset(currentGLEWContextsPtr, 0, sizeof(GLEWContext));
-		glewInit();
-	}
-	return currentGLEWContextsPtr;
+    const Vector3 Vector3::UNIT_X( 1, 0, 0 );
+    const Vector3 Vector3::UNIT_Y( 0, 1, 0 );
+    const Vector3 Vector3::UNIT_Z( 0, 0, 1 );
+    const Vector3 Vector3::NEGATIVE_UNIT_X( -1,  0,  0 );
+    const Vector3 Vector3::NEGATIVE_UNIT_Y(  0, -1,  0 );
+    const Vector3 Vector3::NEGATIVE_UNIT_Z(  0,  0, -1 );
+    const Vector3 Vector3::UNIT_SCALE(1, 1, 1);
 }
-

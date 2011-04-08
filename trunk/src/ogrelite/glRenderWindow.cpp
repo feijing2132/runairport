@@ -1,4 +1,9 @@
 #include "glRenderWindow.h"
+#include "OgreWin32GLSupport.h"
+#include "OgreException.h"
+#include <OgreStringConverter.h>
+
+
 BEGIN_NAMESPACE_OGRELITE
 
 
@@ -23,18 +28,21 @@ void Win32GLRenderWindowCanvas::destory()
 
 
 
-void Win32GLRenderWindowCanvas::create( const String& name, unsigned int width, unsigned int height, const NameValueMap* miscParams )
+
+
+void Win32GLRenderWindowCanvas::create( const String& name,const NameValueMap* miscParams/*=NULL*/ )
 {
 	destory();
 	if(miscParams)
 	{
-		int extWnd=0;
-		if (miscParams->get("externalWindowHandle",extWnd))
+		String sWnd;
+		if (miscParams->get("externalWindowHandle",sWnd))
 		{
-			mHWnd = (HWND)extWnd;		
+			mHWnd = (HWND) StringConverter::parseInt(sWnd);		
 		}
 	}
-	
+	if(!mHWnd)
+		return;
 	//get parameters from the 
 	RECT rc;
 	// top and left represent outer window position
@@ -43,12 +51,19 @@ void Win32GLRenderWindowCanvas::create( const String& name, unsigned int width, 
 	//mLeft = rc.left;
 	// width and height represent drawable area only
 	GetClientRect(mHWnd, &rc);
-	//mWidth = rc.right;
-	//mHeight = rc.bottom;
+	mWidth = rc.right;
+	mHeight = rc.bottom;
 
+	//create dc
 	mHDC = GetDC(mHWnd);
-	int testFsaa = mFSAA;
-	bool testHwGamma = hwGamma;
+
+	Win32GLSupport& mGLSupport = (Win32GLSupport&)(*mpRenderEngine->getGLSupport());
+	int testFsaa = 0;
+	bool testHwGamma = 0;
+	int mColourDepth = 32;
+	int mFSAA = 0;
+	int hwGamma = 0;
+
 	bool formatOk = mGLSupport.selectPixelFormat(mHDC, mColourDepth, testFsaa, testHwGamma);
 	if (!formatOk)
 	{
@@ -82,10 +97,21 @@ void Win32GLRenderWindowCanvas::create( const String& name, unsigned int width, 
 	}
 	// record what gamma option we used in the end
 	// this will control enabling of sRGB state flags when used
-	mHwGamma = testHwGamma;
-	mFSAA = testFsaa;
-	
+	//mHwGamma = testHwGamma;
+	//mFSAA = testFsaa;
+	HGLRC mGlrc = wglCreateContext(mHDC);
+	if (!mGlrc)
+		OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR, 
+		"wglCreateContext failed: " + translateWGLError(), "Win32Window::create");
 
+	if(GLRenderCanvas* pInitCanvas = mGLSupport.getInitCanvas())
+	{
+		pInitCanvas->getGLContext()->setCurrent();	
+		HGLRC old_context = wglGetCurrentContext();
+		if (!wglShareLists(old_context, mGlrc))
+			OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR, "wglShareLists() failed", " Win32Window::create");
+	}
 
+	mContext = new Win32Context(mHDC, mGlrc);
 }
 END_NAMESPACE_OGRELITE

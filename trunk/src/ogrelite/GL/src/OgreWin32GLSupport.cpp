@@ -323,10 +323,10 @@ namespace Ogre {
 	}
 
 
-	RenderWindow* Win32GLSupport::newWindow(const String &name, unsigned int width, 
+	OgreLite::Win32GLRenderWindowCanvas* Win32GLSupport::newWindow(const String &name, unsigned int width, 
 		unsigned int height, bool fullScreen, const NameValuePairList *miscParams)
 	{		
-		Win32Window* window = new Win32Window(*this);
+		OgreLite::Win32GLRenderWindowCanvas* window = new OgreLite::Win32GLRenderWindowCanvas();
 		NameValuePairList newParams;
 	
 		if (miscParams != NULL)

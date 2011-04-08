@@ -27,13 +27,12 @@ namespace Ogre
 		*/
 		String validateConfig();
 
-		//virtual OgreLite::GLRenderWindowCanvas* createWindow(bool autoCreateWindow, GLRenderSystem* renderSystem, const String& windowTitle = "OGRE Render Window");
+		//virtual OgreLite::RenderWindowCanvas* createWindow(bool autoCreateWindow, OgreLite::GLRenderEngine* renderSystem, const String& windowTitle = "OGRE Render Window");
 		//
 		///// @copydoc RenderSystem::_createRenderWindow
-		//virtual RenderWindow* newWindow(const String &name, unsigned int width, unsigned int height, 
-		//	bool fullScreen, const NameValuePairList *miscParams = 0);
+		virtual OgreLite::GLRenderCanvas* newRenderCanvas(const String &name,OgreLite::GLRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams = 0);
 
-		
+		virtual OgreLite::GLRenderCanvas* getInitCanvas(){ return mInitialWindow; }
 		/**
 		* Start anything special
 		*/
@@ -57,7 +56,7 @@ namespace Ogre
 		bool selectPixelFormat(HDC hdc, int colourDepth, int multisample, bool hwGamma);
 
 		virtual bool supportsPBuffers();
-		virtual GLPBuffer *createPBuffer(PixelComponentType format, size_t width, size_t height);
+		//virtual GLPBuffer *createPBuffer(PixelComponentType format, size_t width, size_t height);
 		virtual unsigned int getDisplayMonitorCount() const;
 	private:
 		// Allowed video modes

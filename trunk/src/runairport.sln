@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ogrelite", "ogrelite\ogrelite.vcxproj", "{3782ECA8-9220-4BC3-92CA-D14D77A7A84F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "runairport", "runairport\runairport.vcxproj", "{E2FA403B-3286-487E-A737-5ADB74B879A3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3782ECA8-9220-4BC3-92CA-D14D77A7A84F} = {3782ECA8-9220-4BC3-92CA-D14D77A7A84F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

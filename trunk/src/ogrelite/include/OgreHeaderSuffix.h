@@ -1,11 +1,10 @@
-/*
------------------------------------------------------------------------------
-This source file is part of OGRE
-    (Object-oriented Graphics Rendering Engine)
+/*-------------------------------------------------------------------------
+This source file is a part of OGRE
+(Object-oriented Graphics Rendering Engine)
+
 For the latest info, see http://www.ogre3d.org/
 
 Copyright (c) 2000-2009 Torus Knot Software Ltd
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -22,43 +21,24 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
------------------------------------------------------------------------------
-*/
+THE SOFTWARE
+-------------------------------------------------------------------------*/
+#ifndef __OgreHeaderPrefix_H__
+#define __OgreHeaderPrefix_H__
 
-#include "OgreGLContext.h"
-//#include "OgreSharedPtr.h"
+#include "OgrePrerequisites.h"
 
-namespace Ogre {
-    // Empty base class
-    GLContext::GLContext():
-        initialized(false) {
-    }
-    
-    GLContext::~GLContext() {        
-    }
-    
-    void GLContext::endCurrent() {
-    }
-    
-}
+#if OGRE_COMPILER == OGRE_COMPILER_MSVC
+
+// restore previous warnings settings
+#   pragma warning (pop)
 
 
+#endif
 
-// declared in OgreGLPrerequisites.h 
-GLEWContext * glewGetContext()
-{
-	using namespace Ogre;
-	static OGRE_THREAD_POINTER_VAR(GLEWContext, GLEWContextsPtr);
 
-	GLEWContext * currentGLEWContextsPtr =  OGRE_THREAD_POINTER_GET(GLEWContextsPtr);
-	if (currentGLEWContextsPtr == NULL)
-	{
-		currentGLEWContextsPtr = new GLEWContext();
-		OGRE_THREAD_POINTER_SET(GLEWContextsPtr, currentGLEWContextsPtr);
-		memset(currentGLEWContextsPtr, 0, sizeof(GLEWContext));
-		glewInit();
-	}
-	return currentGLEWContextsPtr;
-}
+#endif
+// allow inclusion of prefix again now (this is scoped)
+#undef __OgreHeaderPrefix_H__
+
 

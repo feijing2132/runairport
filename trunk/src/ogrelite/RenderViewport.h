@@ -66,14 +66,14 @@ typedef nodelete_shared_ptr<RenderViewport> RenderViewportSharedPtr;
 
 //render target
 // window support or software support(FBO) which have , have buffers like pixel buffer , stencil buffer, depth buffer..
-class RenderSystem;
+class RenderEngine;
 class RenderCanvas
 {
 public:	
-	virtual uint32 getWidth()const=0;
-	virtual uint32 getHeigth()const=0;
+	virtual uint32 getWidth()const{ return mWidth; }
+	virtual uint32 getHeigth()const{ return mHeight; }
 
-	virtual RenderSystem* getSystem()=0;
+	virtual RenderEngine* getSystem()=0;
 
 	void renderOneFrame();
 protected:
@@ -83,15 +83,13 @@ protected:
 protected:
 	typedef std::list< RenderViewportSharedPtr > RenderLayerList;
 	RenderLayerList mRenderLayList;
+	uint32 mWidth;
+	uint32 mHeight;
 
 };
 typedef nodelete_shared_ptr<RenderCanvas> RenderCanvasSharedPtr;
 //////////////////////////////////////////////////////////////////////////
-class RenderWindowCanvas : public RenderCanvas
-{
-public:
-	virtual void swapBuffers(bool waitForVSync)=0;
-};
+
 
 //only manage create/destroy resource
 class Texture

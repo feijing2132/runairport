@@ -91,13 +91,12 @@ namespace Ogre {
 		if (mGlrc != NULL)
 		{
 			wglDeleteContext(mGlrc);
-			mGlrc = NULL;
-			mHDC  = NULL;
+			mGlrc = NULL;			
 		}		
 	}
 }
 
-#if OGRE_THREAD_SUPPORT == 1
+
 
 // declared in OgreGLPrerequisites.h 
 WGLEWContext * wglewGetContext()
@@ -117,4 +116,3 @@ WGLEWContext * wglewGetContext()
 	return currentWGLEWContextsPtr;
 }
 
-#endif

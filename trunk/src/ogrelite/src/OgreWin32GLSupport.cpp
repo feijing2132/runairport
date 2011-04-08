@@ -8,7 +8,6 @@
 #include "OgreWin32GLSupport.h"
 //#include "OgreGLTexture.h"
 //#include "OgreWin32Window.h"
-#include <GL/wglext.h>
 #include "OgreWin32RenderTexture.h"
 
 using namespace Ogre;
@@ -222,78 +221,78 @@ namespace Ogre {
 		return StringUtil::BLANK;
 	}
 
-	RenderWindow* Win32GLSupport::createWindow(bool autoCreateWindow, GLRenderSystem* renderSystem, const String& windowTitle)
-	{
-		if (autoCreateWindow)
-        {
-            ConfigOptionMap::iterator opt = mOptions.find("Full Screen");
-            if (opt == mOptions.end())
-                OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find full screen options!", "Win32GLSupport::createWindow");
-            bool fullscreen = (opt->second.currentValue == "Yes");
+	//OgreLite::RenderWindowCanvas* Win32GLSupport::createWindow(bool autoCreateWindow, OgreLite::GLRenderEngine* renderSystem, const String& windowTitle)
+	//{
+	//	if (autoCreateWindow)
+ //       {
+ //           ConfigOptionMap::iterator opt = mOptions.find("Full Screen");
+ //           if (opt == mOptions.end())
+ //               OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find full screen options!", "Win32GLSupport::createWindow");
+ //           bool fullscreen = (opt->second.currentValue == "Yes");
 
-            opt = mOptions.find("Video Mode");
-            if (opt == mOptions.end())
-                OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find video mode options!", "Win32GLSupport::createWindow");
-            String val = opt->second.currentValue;
-            String::size_type pos = val.find('x');
-            if (pos == String::npos)
-                OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Invalid Video Mode provided", "Win32GLSupport::createWindow");
+ //           opt = mOptions.find("Video Mode");
+ //           if (opt == mOptions.end())
+ //               OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find video mode options!", "Win32GLSupport::createWindow");
+ //           String val = opt->second.currentValue;
+ //           String::size_type pos = val.find('x');
+ //           if (pos == String::npos)
+ //               OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Invalid Video Mode provided", "Win32GLSupport::createWindow");
 
-			unsigned int w = StringConverter::parseUnsignedInt(val.substr(0, pos));
-            unsigned int h = StringConverter::parseUnsignedInt(val.substr(pos + 1));
+	//		unsigned int w = StringConverter::parseUnsignedInt(val.substr(0, pos));
+ //           unsigned int h = StringConverter::parseUnsignedInt(val.substr(pos + 1));
 
-			// Parse optional parameters
-			NameValuePairList winOptions;
-			opt = mOptions.find("Colour Depth");
-			if (opt == mOptions.end())
-				OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find Colour Depth options!", "Win32GLSupport::createWindow");
-			unsigned int colourDepth =
-				StringConverter::parseUnsignedInt(opt->second.currentValue);
-			winOptions["colourDepth"] = StringConverter::toString(colourDepth);
+	//		// Parse optional parameters
+	//		NameValuePairList winOptions;
+	//		opt = mOptions.find("Colour Depth");
+	//		if (opt == mOptions.end())
+	//			OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find Colour Depth options!", "Win32GLSupport::createWindow");
+	//		unsigned int colourDepth =
+	//			StringConverter::parseUnsignedInt(opt->second.currentValue);
+	//		winOptions["colourDepth"] = StringConverter::toString(colourDepth);
 
-			opt = mOptions.find("VSync");
-			if (opt == mOptions.end())
-				OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find VSync options!", "Win32GLSupport::createWindow");
-			bool vsync = (opt->second.currentValue == "Yes");
-			winOptions["vsync"] = StringConverter::toString(vsync);
-			renderSystem->setWaitForVerticalBlank(vsync);
+	//		opt = mOptions.find("VSync");
+	//		if (opt == mOptions.end())
+	//			OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find VSync options!", "Win32GLSupport::createWindow");
+	//		bool vsync = (opt->second.currentValue == "Yes");
+	//		winOptions["vsync"] = StringConverter::toString(vsync);
+	//		//renderSystem->setWaitForVerticalBlank(vsync);
 
-			opt = mOptions.find("VSync Interval");
-			if (opt == mOptions.end())
-				OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find VSync Interval options!", "Win32GLSupport::createWindow");
-			winOptions["vsyncInterval"] = opt->second.currentValue;
+	//		opt = mOptions.find("VSync Interval");
+	//		if (opt == mOptions.end())
+	//			OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find VSync Interval options!", "Win32GLSupport::createWindow");
+	//		winOptions["vsyncInterval"] = opt->second.currentValue;
 
 
-			opt = mOptions.find("Display Frequency");
-			if (opt != mOptions.end())
-			{
-				unsigned int displayFrequency =
-					StringConverter::parseUnsignedInt(opt->second.currentValue);
-				winOptions["displayFrequency"] = StringConverter::toString(displayFrequency);
-			}
+	//		opt = mOptions.find("Display Frequency");
+	//		if (opt != mOptions.end())
+	//		{
+	//			unsigned int displayFrequency =
+	//				StringConverter::parseUnsignedInt(opt->second.currentValue);
+	//			winOptions["displayFrequency"] = StringConverter::toString(displayFrequency);
+	//		}
 
-			opt = mOptions.find("FSAA");
-			if (opt == mOptions.end())
-				OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find FSAA options!", "Win32GLSupport::createWindow");
-			StringVector aavalues = StringUtil::split(opt->second.currentValue, " ", 1);
-			unsigned int multisample = StringConverter::parseUnsignedInt(aavalues[0]);
-			String multisample_hint;
-			if (aavalues.size() > 1)
-				multisample_hint = aavalues[1];
+	//		opt = mOptions.find("FSAA");
+	//		if (opt == mOptions.end())
+	//			OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find FSAA options!", "Win32GLSupport::createWindow");
+	//		StringVector aavalues = StringUtil::split(opt->second.currentValue, " ", 1);
+	//		unsigned int multisample = StringConverter::parseUnsignedInt(aavalues[0]);
+	//		String multisample_hint;
+	//		if (aavalues.size() > 1)
+	//			multisample_hint = aavalues[1];
 
-			winOptions["FSAA"] = StringConverter::toString(multisample);
-			winOptions["FSAAHint"] = multisample_hint;
+	//		winOptions["FSAA"] = StringConverter::toString(multisample);
+	//		winOptions["FSAAHint"] = multisample_hint;
 
-			opt = mOptions.find("sRGB Gamma Conversion");
-			if (opt == mOptions.end())
-				OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find sRGB options!", "Win32GLSupport::createWindow");
-			bool hwGamma = (opt->second.currentValue == "Yes");
-			winOptions["gamma"] = StringConverter::toString(hwGamma);
+	//		opt = mOptions.find("sRGB Gamma Conversion");
+	//		if (opt == mOptions.end())
+	//			OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS, "Can't find sRGB options!", "Win32GLSupport::createWindow");
+	//		bool hwGamma = (opt->second.currentValue == "Yes");
+	//		winOptions["gamma"] = StringConverter::toString(hwGamma);
 
-            return renderSystem->_createRenderWindow(windowTitle, w, h, fullscreen, &winOptions);
-        }
-       
-	}
+	//		return renderSystem->_createRenderWindow(windowTitle, w, h, fullscreen, &winOptions);
+	//	}
+ //      
+	//}
 
 	BOOL CALLBACK Win32GLSupport::sCreateMonitorsInfoEnumProc(
 		HMONITOR hMonitor,  // handle to display monitor
@@ -319,76 +318,19 @@ namespace Ogre {
 	}
 
 
-	//RenderWindow* Win32GLSupport::newWindow(const String &name, unsigned int width, 
-	//	unsigned int height, bool fullScreen, const NameValuePairList *miscParams)
-	//{		
-	//	Win32Window* window = new Win32Window(*this);
-	//	NameValuePairList newParams;
-	//
-	//	if (miscParams != NULL)
-	//	{	
-	//		newParams = *miscParams;
-	//		miscParams = &newParams;
-
-	//		NameValuePairList::const_iterator monitorIndexIt = miscParams->find("monitorIndex");			
-	//		HMONITOR hMonitor = NULL;
-	//		int monitorIndex = -1;
-	//	
-	//		// If monitor index found, try to assign the monitor handle based on it.
-	//		if (monitorIndexIt != miscParams->end())
-	//		{				
-	//			if (mMonitorInfoList.empty())		
-	//				EnumDisplayMonitors(NULL, NULL, sCreateMonitorsInfoEnumProc, (LPARAM)&mMonitorInfoList);			
-
-	//			monitorIndex = StringConverter::parseInt(monitorIndexIt->second);
-	//			if (monitorIndex < (int)mMonitorInfoList.size())
-	//			{						
-	//				hMonitor = mMonitorInfoList[monitorIndex].hMonitor;					
-	//			}
-	//		}
-	//		// If we didn't specified the monitor index, or if it didn't find it
-	//		if (hMonitor == NULL)
-	//		{
-	//			POINT windowAnchorPoint;
-	//	
-	//			NameValuePairList::const_iterator opt;
-	//			int left = -1;
-	//			int top  = -1;
-
-	//			if ((opt = newParams.find("left")) != newParams.end())
-	//				left = StringConverter::parseInt(opt->second);
-
-	//			if ((opt = newParams.find("top")) != newParams.end())
-	//				top = StringConverter::parseInt(opt->second);
-
-	//			// Fill in anchor point.
-	//			windowAnchorPoint.x = left;
-	//			windowAnchorPoint.y = top;
-
-
-	//			// Get the nearest monitor to this window.
-	//			hMonitor = MonitorFromPoint(windowAnchorPoint, MONITOR_DEFAULTTONEAREST);				
-	//		}
-
-	//		newParams["monitorHandle"] = StringConverter::toString((int)hMonitor);																
-	//	}
-
-	//	window->create(name, width, height, fullScreen, miscParams);
-
-	//	if(!mInitialWindow)
-	//		mInitialWindow = window;
-	//	return window;
-	//}
-
-	void Win32GLSupport::start()
+	OgreLite::GLRenderCanvas* Win32GLSupport::newRenderCanvas(const String &name, OgreLite::GLRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams)
 	{
-		LogManager::getSingleton().logMessage("*** Starting Win32GL Subsystem ***");
+		OgreLite::Win32GLRenderWindowCanvas* window = new OgreLite::Win32GLRenderWindowCanvas(renderSystem);
+		window->create(name, miscParams);
+		if(!mInitialWindow)
+			mInitialWindow = window;
+		return window;
 	}
 
 	void Win32GLSupport::stop()
 	{
 		LogManager::getSingleton().logMessage("*** Stopping Win32GL Subsystem ***");
-		//mInitialWindow = 0; // Since there is no removeWindow, although there should be...
+		mInitialWindow = 0; // Since there is no removeWindow, although there should be...
 	}
 
 	void Win32GLSupport::initialiseExtensions()
@@ -397,9 +339,9 @@ namespace Ogre {
 		// First, initialise the normal extensions
 		GLSupport::initialiseExtensions();
 		// wglew init
-#if OGRE_THREAD_SUPPORT != 1
-		wglewContextInit(this);
-#endif
+//#if OGRE_THREAD_SUPPORT != 1
+//		wglewContextInit(this);
+//#endif
 
 		// Check for W32 specific extensions probe function
 		PFNWGLGETEXTENSIONSSTRINGARBPROC _wglGetExtensionsStringARB = 
@@ -633,10 +575,10 @@ namespace Ogre {
 	{
 		return WGLEW_GET_FUN(__WGLEW_ARB_pbuffer) != GL_FALSE;
 	}
-    GLPBuffer *Win32GLSupport::createPBuffer(PixelComponentType format, size_t width, size_t height)
+    /*GLPBuffer *Win32GLSupport::createPBuffer(PixelComponentType format, size_t width, size_t height)
 	{
 		return new Win32PBuffer(format, width, height);
-	}
+	}*/
 
 	unsigned int Win32GLSupport::getDisplayMonitorCount() const
 	{
@@ -646,6 +588,10 @@ namespace Ogre {
 		return (unsigned int)mMonitorInfoList.size();
 	}
 
+	void Win32GLSupport::start()
+	{
+
+	}
 	String translateWGLError()
 	{
 		int winError = GetLastError();
