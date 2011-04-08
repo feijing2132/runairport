@@ -77,7 +77,7 @@ THE SOFTWARE.
 
 /** Define this if you want to link OGRE as a static lib (preferably as a project file)
 */
-//#define OGRE_STATIC_LIB
+#define OGRE_STATIC_LIB
 
 
 // define the memory allocator configuration to use
@@ -92,7 +92,7 @@ THE SOFTWARE.
 
 // Whether to use the custom memory allocator in STL containers
 #ifndef OGRE_CONTAINERS_USE_CUSTOM_MEMORY_ALLOCATOR
-#  define OGRE_CONTAINERS_USE_CUSTOM_MEMORY_ALLOCATOR 1
+#  define OGRE_CONTAINERS_USE_CUSTOM_MEMORY_ALLOCATOR 0
 #endif
 
 //if you want to make Ogre::String use the custom memory allocator then set:

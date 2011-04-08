@@ -50,7 +50,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;OGRE_STATIC_LIB;OGRE_COMPILER_MSVC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;OGRE_COMPILER_MSVC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>include;gl/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -81,9 +81,26 @@
     <ClCompile Include="glRenderWindow.cpp" />
     <ClCompile Include="GL\src\glew.cpp" />
     <ClCompile Include="GL\src\OgreGLContext.cpp" />
-    <ClCompile Include="RenderSystem.cpp" />
-    <ClCompile Include="RenderViewportPass.cpp" />
+    <ClCompile Include="RenderEngine.cpp" />
+    <ClCompile Include="RenderProcess.cpp" />
+    <ClCompile Include="RenderViewport.cpp" />
+    <ClCompile Include="src\OgreColourValue.cpp" />
+    <ClCompile Include="src\OgreException.cpp" />
     <ClCompile Include="src\OgreGLSupport.cpp" />
+    <ClCompile Include="src\OgreLog.cpp" />
+    <ClCompile Include="src\OgreLogManager.cpp" />
+    <ClCompile Include="src\OgreMath.cpp" />
+    <ClCompile Include="src\OgreMatrix3.cpp" />
+    <ClCompile Include="src\OgreMatrix4.cpp" />
+    <ClCompile Include="src\OgreMemoryNedPooling.cpp" />
+    <ClCompile Include="src\OgrePlane.cpp" />
+    <ClCompile Include="src\OgreQuaternion.cpp" />
+    <ClCompile Include="src\OgreString.cpp" />
+    <ClCompile Include="src\OgreStringConverter.cpp" />
+    <ClCompile Include="src\OgreStringInterface.cpp" />
+    <ClCompile Include="src\OgreVector2.cpp" />
+    <ClCompile Include="src\OgreVector3.cpp" />
+    <ClCompile Include="src\OgreVector4.cpp" />
     <ClCompile Include="src\OgreWin32Context.cpp" />
     <ClCompile Include="src\OgreWin32GLSupport.cpp" />
   </ItemGroup>
@@ -91,8 +108,9 @@
     <ClInclude Include="glRenderWindow.h" />
     <ClInclude Include="ogrelitePrefix.h" />
     <ClInclude Include="ogreliteptr.h" />
-    <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="RenderViewportPass.h" />
+    <ClInclude Include="RenderEngine.h" />
+    <ClInclude Include="RenderProcess.h" />
+    <ClInclude Include="RenderViewport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

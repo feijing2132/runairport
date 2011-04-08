@@ -10,14 +10,14 @@ class inst_ptr
 {
 public:	
 	inst_ptr():m_ptr(0),nref(0){}
-	inst_ptr(T* ptr):m_ptr(ptr),nref(0){ }
+	//inst_ptr(T* ptr):m_ptr(ptr),nref(0){ }
 
 	~inst_ptr()
 	{
 		if(nref!=0)
 		{
 			//warning other  ref this object
-			assert(false);
+			//assert(false);
 		}
 		destory();
 	}	
@@ -30,16 +30,7 @@ public:
 		destory();
 		nref = 0;
 		m_ptr = ptr;
-	}
-	void operator=(const inst_ptr& other)
-	{
-		if(nref!=0)
-			throw ; 
-		
-		destory();
-		nref = other.nref;
-		m_ptr = other.m_ptr;
-	}
+	}	
 
 	T & operator*() const  // never throws
 	{
@@ -66,6 +57,10 @@ public:
 protected:
 	T * m_ptr;
 	count_type nref;
+
+private:
+	void operator=(const inst_ptr& other){ assert(false);}
+	
 };
 
 
@@ -111,7 +106,10 @@ public:
 	{		
 		++*pn;
 	}
-
+	~nodelete_shared_ptr(){
+		--*pn;
+		px = 0;
+	}
 	nodelete_shared_ptr & operator=(nodelete_shared_ptr const & r)
 	{
 		nodelete_shared_ptr(r).swap(*this);

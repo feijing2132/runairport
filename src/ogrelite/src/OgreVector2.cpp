@@ -26,39 +26,18 @@ THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
 
-#include "OgreGLContext.h"
-//#include "OgreSharedPtr.h"
+#include "OgreStableHeaders.h"
+#include "OgreVector2.h"
+#include "OgreMath.h"
 
-namespace Ogre {
-    // Empty base class
-    GLContext::GLContext():
-        initialized(false) {
-    }
-    
-    GLContext::~GLContext() {        
-    }
-    
-    void GLContext::endCurrent() {
-    }
-    
-}
-
-
-
-// declared in OgreGLPrerequisites.h 
-GLEWContext * glewGetContext()
+namespace Ogre
 {
-	using namespace Ogre;
-	static OGRE_THREAD_POINTER_VAR(GLEWContext, GLEWContextsPtr);
+    const Vector2 Vector2::ZERO( 0, 0);
 
-	GLEWContext * currentGLEWContextsPtr =  OGRE_THREAD_POINTER_GET(GLEWContextsPtr);
-	if (currentGLEWContextsPtr == NULL)
-	{
-		currentGLEWContextsPtr = new GLEWContext();
-		OGRE_THREAD_POINTER_SET(GLEWContextsPtr, currentGLEWContextsPtr);
-		memset(currentGLEWContextsPtr, 0, sizeof(GLEWContext));
-		glewInit();
-	}
-	return currentGLEWContextsPtr;
+    const Vector2 Vector2::UNIT_X( 1, 0);
+    const Vector2 Vector2::UNIT_Y( 0, 1);
+    const Vector2 Vector2::NEGATIVE_UNIT_X( -1,  0);
+    const Vector2 Vector2::NEGATIVE_UNIT_Y(  0, -1);
+    const Vector2 Vector2::UNIT_SCALE(1, 1);
+
 }
-

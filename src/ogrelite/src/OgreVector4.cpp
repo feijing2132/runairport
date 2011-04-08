@@ -25,40 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
+#include "OgreStableHeaders.h"
+#include "OgreVector4.h"
+#include "OgreMath.h"
 
-#include "OgreGLContext.h"
-//#include "OgreSharedPtr.h"
-
-namespace Ogre {
-    // Empty base class
-    GLContext::GLContext():
-        initialized(false) {
-    }
-    
-    GLContext::~GLContext() {        
-    }
-    
-    void GLContext::endCurrent() {
-    }
-    
-}
-
-
-
-// declared in OgreGLPrerequisites.h 
-GLEWContext * glewGetContext()
+namespace Ogre
 {
-	using namespace Ogre;
-	static OGRE_THREAD_POINTER_VAR(GLEWContext, GLEWContextsPtr);
-
-	GLEWContext * currentGLEWContextsPtr =  OGRE_THREAD_POINTER_GET(GLEWContextsPtr);
-	if (currentGLEWContextsPtr == NULL)
-	{
-		currentGLEWContextsPtr = new GLEWContext();
-		OGRE_THREAD_POINTER_SET(GLEWContextsPtr, currentGLEWContextsPtr);
-		memset(currentGLEWContextsPtr, 0, sizeof(GLEWContext));
-		glewInit();
-	}
-	return currentGLEWContextsPtr;
+    const Vector4 Vector4::ZERO( 0, 0, 0, 0 );
 }
-

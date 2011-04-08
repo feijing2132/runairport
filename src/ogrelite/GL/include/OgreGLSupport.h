@@ -35,9 +35,15 @@ THE SOFTWARE.
 #include "OgreConfigOptionMap.h"
 #include "OgreGLPBuffer.h"
 
+
 namespace Ogre
 {
-    
+
+	namespace OgreLite{
+		class GLRenderCanvas;
+		class GLRenderEngine;
+		class NameValueMap;
+	}
 class _OgreGLExport GLSupport
 {
 public:
@@ -61,11 +67,12 @@ public:
 
 	virtual ConfigOptionMap& getConfigOptions(void);
 
-	virtual RenderWindow* createWindow(bool autoCreateWindow, GLRenderSystem* renderSystem, const String& windowTitle) = 0;
+	//virtual OgreLite::RenderWindowCanvas* createWindow(bool autoCreateWindow, OgreLite::GLRenderEngine* renderSystem, const String& windowTitle) = 0;
 
 	/// @copydoc RenderSystem::_createRenderWindow
-	/*virtual RenderWindow* newWindow(const String &name, unsigned int width, unsigned int height, 
-		bool fullScreen, const NameValuePairList *miscParams = 0) = 0;*/
+	virtual OgreLite::GLRenderCanvas* newRenderCanvas(const String &name, OgreLite::GLRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams = 0)=0;
+	virtual OgreLite::GLRenderCanvas* getInitCanvas()=0;
+
 
     virtual bool supportsPBuffers();
     virtual GLPBuffer *createPBuffer(PixelComponentType format, size_t width, size_t height);
