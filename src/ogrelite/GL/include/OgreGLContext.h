@@ -68,8 +68,7 @@ namespace Ogre {
 		*/
 		virtual void releaseContext() {}
     protected:
-        bool initialized;
-		GLEWContext mglewctx;
+        bool initialized;		
     };
 }
 

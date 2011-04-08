@@ -6,21 +6,18 @@
 
 BEGIN_NAMESPACE_OGRELITE
 
-	class GLRenderWindowCanvas : public RenderCanvas
-	{
-	public:
 
-	};
 	
-	class Win32GLRenderWindowCanvas : public GLRenderWindowCanvas
+	class Win32GLRenderWindowCanvas : public RenderWindowCanvas
 	{
 	public:				
 		void create(const String& name, unsigned int width, unsigned int height,
 			const NameValueMap* miscParams=NULL);
 		Win32GLRenderWindowCanvas* clone(const String&name,const NameValueMap* miscParams=NULL);
 
+		HDC getHDC(){ return mHDC; }
 	protected:
-		
+		HWND mHWnd;
 		HDC  mHDC; //own need to release 
 		inst_ptr<Win32Context> mContext;
 
@@ -32,6 +29,7 @@ BEGIN_NAMESPACE_OGRELITE
 	class GLRenderSystem : public RenderSystem
 	{
 	public:
+		inst_ptr<GLSupport> mpGLSupport;
 		
 	};
 
