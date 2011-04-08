@@ -30,6 +30,7 @@ THE SOFTWARE.
 #define __GLPBUFFER_H__
 
 #include "OgreGLPrerequisites.h"
+#include "OgrePixelFormat.h"
 
 namespace Ogre {
     /** An off-screen rendering context. These contexts are always RGBA for simplicity, speed and
