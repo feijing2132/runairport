@@ -36,7 +36,7 @@ namespace Ogre {
     class _OgreGLExport Win32Context: public GLContext
     {
     public:
-        Win32Context(HDC     HDC,
+        Win32Context(HDC     hdc,
                      HGLRC   Glrc);
         virtual ~Win32Context();
 

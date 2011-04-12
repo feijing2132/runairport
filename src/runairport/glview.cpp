@@ -109,6 +109,7 @@ glView::glView(QWidget *parent)
 {
 	pdwgdraw = new dwgRender();
 	//pdwgdraw->load_dwg("c:\\a.dwg");
+	startTimer(1);
 }
 
 glView::~glView()
@@ -133,22 +134,18 @@ void glView::paintGL()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();	
-	//gluOrtho2D(-pdwgdraw->pMax.x(),pdwgdraw->pMax.x(),-pdwgdraw->pMax.y(),pdwgdraw->pMax.y());
-	
+	glLoadIdentity();
+	gluOrtho2D(-100,100,-100,100);
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
-	
 
-	//glColor3b(255,255,255);
-	
-
-	//glBegin( GL_QUADS );
-	//glVertex3f( -1.0,  1.0,  0.0 );
-	//glVertex3f(  1.0,  1.0,  0.0 );
-	//glVertex3f(  1.0, -1.0,  0.0 );
-	//glVertex3f( -1.0, -1.0,  0.0 );
-	//glEnd();
+	glColor3f(1,1,1);
+	glBegin(GL_LINE_LOOP);
+	glVertex2d(-50,-50);
+	glVertex2d(50,-50);
+	glVertex2d(50,50);
+	glVertex2d(-50,50);
+	glEnd();
 
 	pdwgdraw->draw();
 
@@ -162,12 +159,7 @@ void glView::resizeGL( int width, int height )
 	{
 		height = 1;
 	}
-	glViewport( 0, 0, (GLint)width, (GLint)height );
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-	gluPerspective( 45.0, (GLfloat)width/(GLfloat)height, 0.1, 100.0 );
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity();
+	glViewport( 0, 0, (GLint)width, (GLint)height );	
 	
 }
 
@@ -191,4 +183,15 @@ void glView::keyPressEvent( QKeyEvent *e )
 	case Qt::Key_Escape:
 		close();
 	}
+}
+
+bool glView::event( QEvent * e )
+{
+	return QWidget::event(e);
+}
+
+void glView::timerEvent( QTimerEvent* evt )
+{
+	Q_UNUSED(evt);
+	update();
 }

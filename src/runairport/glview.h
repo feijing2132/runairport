@@ -11,6 +11,8 @@ class glView : public QGLWidget
 public:
 	glView(QWidget *parent);
 	~glView();
+	bool event( QEvent * e );
+	void timerEvent( QTimerEvent* evt );
 
 private:
 	void initializeGL();

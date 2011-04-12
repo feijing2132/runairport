@@ -33,9 +33,9 @@ THE SOFTWARE.
 
 namespace Ogre {
 
-    Win32Context::Win32Context(HDC     HDC,
+    Win32Context::Win32Context(HDC     hdc,
                  HGLRC   Glrc):
-        mHDC(HDC),
+        mHDC(hdc),
         mGlrc(Glrc)
     {
     }
@@ -51,7 +51,7 @@ namespace Ogre {
         
     void Win32Context::setCurrent()
     {
-         wglMakeCurrent(mHDC, mGlrc);      
+		wglMakeCurrent(mHDC,mGlrc);
     }
 	void Win32Context::endCurrent()
 	{

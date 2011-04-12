@@ -318,7 +318,7 @@ namespace Ogre {
 	}
 
 
-	OgreLite::GLRenderCanvas* Win32GLSupport::newRenderCanvas(const String &name, OgreLite::GLRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams)
+	/*OgreLite::IRenderCanvas* Win32GLSupport::newRenderCanvas(const String &name, OgreLite::IRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams)
 	{
 		
 		OgreLite::Win32GLRenderWindowCanvas* window = new OgreLite::Win32GLRenderWindowCanvas(renderSystem);
@@ -326,7 +326,7 @@ namespace Ogre {
 		if(!mInitialWindow)
 			mInitialWindow = window;
 		return window;
-	}
+	}*/
 
 	void Win32GLSupport::stop()
 	{
@@ -349,7 +349,7 @@ namespace Ogre {
 			(PFNWGLGETEXTENSIONSSTRINGARBPROC)wglGetProcAddress("wglGetExtensionsStringARB");
 		if(!_wglGetExtensionsStringARB)
 			return;
-		const char *wgl_extensions = _wglGetExtensionsStringARB( mInitialWindow->getHDC() );
+		const char *wgl_extensions = NULL;//_wglGetExtensionsStringARB( mInitialWindow->getHDC() );
         LogManager::getSingleton().stream()
 			<< "Supported WGL extensions: " << wgl_extensions;
 		// Parse them, and add them to the main list

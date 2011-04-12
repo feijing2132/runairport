@@ -34,6 +34,16 @@ BEGIN_NAMESPACE_OGRELITE
 			}
 			return false;
 		}
+		bool get(const String& sKey, int& iValue)const
+		{
+			String sValue;
+			if(get(sKey,sValue))
+			{
+				iValue = StringConverter::parseInt(sValue);
+				return true;
+			}
+			return false;
+		}
 		
 
 	public:

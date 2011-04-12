@@ -6,51 +6,20 @@
 
 BEGIN_NAMESPACE_OGRELITE
 
-	class GLRenderCanvas : public RenderCanvas
-	{
-	public:		
-		virtual RenderEngine* getSystem(){ return mpRenderEngine; }			
-	protected:
-		GLRenderEngine* mpRenderEngine;
-	};
-	//the window canvas usually the main canvas
-	class GLRenderWindowCanvas : public GLRenderCanvas
+	class IGLRenderCanvas : public IRenderCanvas
 	{
 	public:
-		virtual GLContext* getGLContext(){ return mContext.get(); };
+		virtual void setCurrent()=0;
+		virtual void endCurrent()=0;
 
-	protected:
-		inst_ptr<Win32Context> mContext;
-
-		virtual void _beginFrame();
-		virtual void _beginViewport(RenderViewport*player){}	
-		virtual void _endFrame();
 	};
-
-	//platform canvas
-	class Win32GLRenderWindowCanvas : public GLRenderWindowCanvas
+	//the window canvas usually the main canvas
+	class GLRenderWindowCanvas : public IGLRenderCanvas
 	{
-	public:		
-		Win32GLRenderWindowCanvas(GLRenderEngine* pEngine)
-		{
-			mpRenderEngine = pEngine;
-		}
-		void create(const String& name, const NameValueMap* miscParams=NULL);
-		HDC getHDC(){ return mHDC; }	
-
-		virtual void _beginFrame();
-		virtual void _endFrame();
-	protected:
-		HWND mHWnd;
-		HDC  mHDC; //own need to release 
-		
-
-		void swapBuffers(bool waitForVSync);
-
-		void destory();
-	};
-
+	public:	
+	};	
 	
+	class Win32GLRenderWindowCanvas;
 
 
 END_NAMESPACE_OGRELITE

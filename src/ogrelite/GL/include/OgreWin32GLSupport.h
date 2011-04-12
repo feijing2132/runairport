@@ -30,9 +30,9 @@ namespace Ogre
 		//virtual OgreLite::RenderWindowCanvas* createWindow(bool autoCreateWindow, OgreLite::GLRenderEngine* renderSystem, const String& windowTitle = "OGRE Render Window");
 		//
 		///// @copydoc RenderSystem::_createRenderWindow
-		virtual OgreLite::GLRenderCanvas* newRenderCanvas(const String &name,OgreLite::GLRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams = 0);
+		virtual OgreLite::IGLRenderCanvas* newRenderCanvas(const String &name,OgreLite::IRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams = 0);
 
-		virtual OgreLite::GLRenderWindowCanvas* getInitCanvas(){ return mInitialWindow; }
+		OgreLite::Win32GLRenderWindowCanvas * getInitWindow(){ return mInitialWindow; }
 		/**
 		* Start anything special
 		*/

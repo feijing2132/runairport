@@ -2,13 +2,46 @@
 #include "OgreWin32GLSupport.h"
 #include "OgreException.h"
 #include <OgreStringConverter.h>
-
+#include "OgreWin32Context.h"
 
 BEGIN_NAMESPACE_OGRELITE
 
+//platform engine canvas
+class Win32GLRenderEngine : public IRenderEngine
+{
+public:
+	inst_ptr<Win32GLSupport> m_pGLSupport;
+};
 
+//
+class Win32GLRenderWindowCanvas : public GLRenderWindowCanvas
+{
+public:		
+	Win32GLRenderWindowCanvas(Win32GLRenderEngine* pEngine)
+	{
+		mpRenderEngine = pEngine;
+	}
+	void create(const String& name, const NameValueMap* miscParams=NULL);
+	HDC getHDC(){ return mHDC; }	
+
+	virtual void _beginFrame();
+	virtual void _endFrame();
+protected:
+	HWND mHWnd;
+	HDC  mHDC; //own need to release 
+	Win32GLRenderEngine* mpRenderEngine;
+
+	inst_ptr<Win32Context> mContext;
+
+	void swapBuffers(bool waitForVSync);
+
+	void destory();
+};
+
+//////////////////////////////////////////////////////////////////////////
 void Win32GLRenderWindowCanvas::swapBuffers( bool waitForVSync )
 {
+	glFlush();
 	SwapBuffers( mHDC );
 }
 
@@ -44,20 +77,21 @@ void Win32GLRenderWindowCanvas::create( const String& name,const NameValueMap* m
 	if(!mHWnd)
 		return;
 	//get parameters from the 
-	RECT rc;
+	//RECT rc;
 	// top and left represent outer window position
-	GetWindowRect(mHWnd, &rc);
+	//GetWindowRect(mHWnd, &rc);
 	//mTop = rc.top;
 	//mLeft = rc.left;
 	// width and height represent drawable area only
-	GetClientRect(mHWnd, &rc);
-	mWidth = rc.right;
-	mHeight = rc.bottom;
+	//GetClientRect(mHWnd, &rc);
+	//mWidth = rc.right;
+	//mHeight = rc.bottom;
 
 	//create dc
 	mHDC = GetDC(mHWnd);
 
-	Win32GLSupport& mGLSupport = (Win32GLSupport&)(*mpRenderEngine->getGLSupport());
+	
+	Win32GLSupport& mGLSupport = *mpRenderEngine->m_pGLSupport;
 	int testFsaa = 0;
 	bool testHwGamma = 0;
 	int mColourDepth = 32;
@@ -104,9 +138,9 @@ void Win32GLRenderWindowCanvas::create( const String& name,const NameValueMap* m
 		OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR, 
 		"wglCreateContext failed: " + translateWGLError(), "Win32Window::create");
 
-	if(GLRenderWindowCanvas* pInitCanvas = mGLSupport.getInitCanvas())
+	if(GLRenderWindowCanvas* pInitCanvas = mGLSupport.getInitWindow() )
 	{
-		pInitCanvas->getGLContext()->setCurrent();	
+		pInitCanvas->setCurrent();
 		HGLRC old_context = wglGetCurrentContext();
 		if (!wglShareLists(old_context, mGlrc))
 			OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR, "wglShareLists() failed", " Win32Window::create");
@@ -124,30 +158,19 @@ void Win32GLRenderWindowCanvas::_endFrame()
 
 void Win32GLRenderWindowCanvas::_beginFrame()
 {
-	RECT rc;
+	//RECT rc;
 	// top and left represent outer window position
-	GetWindowRect(mHWnd, &rc);
+	//GetWindowRect(mHWnd, &rc);
 	//mTop = rc.top;
 	//mLeft = rc.left;
 	// width and height represent drawable area only
-	GetClientRect(mHWnd, &rc);
-	mWidth = rc.right;
-	mHeight = rc.bottom;
+	//GetClientRect(mHWnd, &rc);
+	//mWidth = rc.right;
+	//mHeight = rc.bottom;
 
 	__super::_beginFrame();
 }
 
-void GLRenderWindowCanvas::_beginFrame()
-{
-	mContext->setCurrent();	
-	glViewport(0,0,mWidth,mHeight);
-	glClearColor(0,0,0,0);	
-	glClear(GL_COLOR_BUFFER_BIT);
-}
 
-void GLRenderWindowCanvas::_endFrame()
-{
-	mContext->endCurrent();
-}
 
 END_NAMESPACE_OGRELITE
