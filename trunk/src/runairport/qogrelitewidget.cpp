@@ -1,19 +1,60 @@
 #include "StdAfx.h"
 #include "qogrelitewidget.h"
-#include <QPixmap>
+
+#include "../ogrelite/glRenderWindow.h"
+
 using namespace Ogre;
 using namespace OgreLite;
-
+//////////////////////////////////////////////////////////////////////////
 static String mainCanvas = ("MainCanvas"); 
 
-QOgreLiteWidget::QOgreLiteWidget(QWidget *parent)
-	: QWidget(parent,Qt::WFlags(Qt::MSWindowsOwnDC))
+
+BEGIN_NAMESPACE_OGRELITE
+
+
+class QTGLRenderEngine;
+class QTGLWindowCanvase : public IGLRenderCanvas
 {
-	mbSetupOgre = false; 
-	//setAttribute(Qt::WA_PaintOnScreen);
-	setAttribute(Qt::WA_NoSystemBackground);
-	setAutoFillBackground(true); // for compatibility
+public:
+	QTGLWindowCanvase(QGLWidget* pGlWidget, QTGLRenderEngine* pEngine)
+	{ 
+		mpEngine = pEngine; 
+	}
+	IRenderEngine* getSystem();
+protected:
+	QTGLRenderEngine* mpEngine;
+};
+
+
+class QTGLRenderEngine : public IRenderEngine
+{
+public:
+
+protected:
+	virtual IRenderCanvas* _createCanvasImpl(const String& sName,const NameValueMap* miscParams=NULL)
+	{
+		int widgetPtr = NULL;
+		if(miscParams->get("QGLWidget",widgetPtr))
+		{
+			return new QTGLWindowCanvase((QGLWidget*)widgetPtr,this);
+		}
+		return NULL;		
+	}
+};
+
+IRenderEngine* QTGLWindowCanvase::getSystem()
+{
+	return mpEngine;
+}
+END_NAMESPACE_OGRELITE
+
+//////////////////////////////////////////////////////////////////////////
+QOgreLiteWidget::QOgreLiteWidget(QWidget *parent)
+	: QGLWidget(parent)
+{
+	mbSetupOgre = false; 	
 	startTimer(1);
+
 }
 
 QOgreLiteWidget::~QOgreLiteWidget()
@@ -22,16 +63,18 @@ QOgreLiteWidget::~QOgreLiteWidget()
 }
 
 void QOgreLiteWidget::paintEvent( QPaintEvent*evt )
-{
-	Q_UNUSED(evt);
-
+{	
 	if(!mbSetupOgre)
 	{
 		mbSetupOgre = true;
 		SetupOgre();
 	}
-	RenderCanvasSharedPtr pCanvas = pEngine.getRenderCanvas(mainCanvas);
-	pCanvas->renderOneFrame();
+	if (updatesEnabled()) 
+	{
+		RenderCanvasSharedPtr pCanvas = d->pEngine.getRenderCanvas(mainCanvas);
+		pCanvas->renderOneFrame();
+	}
+	
 }
 
 void QOgreLiteWidget::resizeEvent( QResizeEvent* )
@@ -39,29 +82,10 @@ void QOgreLiteWidget::resizeEvent( QResizeEvent* )
 	update();
 }
 
-bool QOgreLiteWidget::event( QEvent * e )
-{
-	/*Q_D(QWidget);*/
-	if (e->type() == QEvent::Paint) {
-	/*	QPoint offset;
-		QPaintDevice *redirectedDevice = d->redirected(&offset);
-		if (redirectedDevice && redirectedDevice->devType() == QInternal::Pixmap) {
-			d->restoreRedirected();
-			QPixmap pixmap = renderPixmap();
-			d->setRedirected(redirectedDevice, offset);
-			QPainter p(redirectedDevice);
-			p.drawPixmap(-offset, pixmap);
-			return true;
-		}*/
-	}
-	 return QWidget::event(e);
-}
 
 void QOgreLiteWidget::SetupOgre()
 {
-	NameValueMap parameters;
-	parameters.set("externalWindowHandle", (size_t)(HWND)winId() );
-	pEngine.createRenderCanvas(mainCanvas,&parameters);
+
 }
 
 void QOgreLiteWidget::timerEvent( QTimerEvent* evt )
@@ -69,3 +93,4 @@ void QOgreLiteWidget::timerEvent( QTimerEvent* evt )
 	Q_UNUSED(evt);
 	update();
 }
+

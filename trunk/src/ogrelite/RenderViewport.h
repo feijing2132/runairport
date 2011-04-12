@@ -10,7 +10,7 @@ BEGIN_NAMESPACE_OGRELITE
 //class 
 class RenderViewport;
 //viewport layer to canvas 
-class RenderCanvas;
+class IRenderCanvas;
 class RenderProcess;
 class RenderViewport 
 {
@@ -20,7 +20,7 @@ public:
 		,mbVisible(true)
 	{
 	}
-	virtual void renderTo(RenderCanvas* pCanvas);
+	virtual void renderTo(IRenderCanvas* pCanvas);
 	bool isVisible()const{ return mbVisible; }
 	void setVisible(bool b){ mbVisible = b; }
 	void setClearEveryFrame( unsigned int buffers = FBT_COLOUR | FBT_DEPTH);
@@ -43,14 +43,13 @@ typedef nodelete_shared_ptr<RenderViewport> RenderViewportSharedPtr;
 
 //render target
 // window support or software support(FBO) which have , have buffers like pixel buffer , stencil buffer, depth buffer..
-class RenderEngine;
-class RenderCanvas
+class IRenderEngine;
+class IRenderCanvas
 {
 public:	
-	virtual uint32 getWidth()const{ return mWidth; }
-	virtual uint32 getHeigth()const{ return mHeight; }
-
-	virtual RenderEngine* getSystem()=0;
+	virtual uint32 getWidth()const=0;
+	virtual uint32 getHeight()const=0;
+	virtual IRenderEngine* getSystem()=0;
 
 	void renderOneFrame();
 protected:
@@ -60,11 +59,8 @@ protected:
 protected:
 	typedef std::list< RenderViewportSharedPtr > RenderLayerList;
 	RenderLayerList mRenderLayList;
-	uint32 mWidth;
-	uint32 mHeight;
-
 };
-typedef nodelete_shared_ptr<RenderCanvas> RenderCanvasSharedPtr;
+typedef nodelete_shared_ptr<IRenderCanvas> RenderCanvasSharedPtr;
 //////////////////////////////////////////////////////////////////////////
 
 

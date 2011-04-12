@@ -3,7 +3,7 @@
 
 BEGIN_NAMESPACE_OGRELITE
 //////////////////////////////////////////////////////////////////////////
-void RenderCanvas::renderOneFrame()
+void IRenderCanvas::renderOneFrame()
 {
 	_beginFrame();
 	//render each layer
@@ -23,7 +23,7 @@ void RenderCanvas::renderOneFrame()
 
 
 
-void RenderViewport::renderTo( RenderCanvas* pCanvas )
+void RenderViewport::renderTo( IRenderCanvas* pCanvas )
 {
 	if(mpRenerProcess)
 		mpRenerProcess->render(this);

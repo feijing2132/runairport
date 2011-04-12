@@ -40,8 +40,8 @@ namespace Ogre
 {
 
 	namespace OgreLite{
-		class GLRenderCanvas;
-		class GLRenderEngine;
+		class IGLRenderCanvas;	
+		class IRenderEngine;
 		class NameValueMap;
 	}
 class _OgreGLExport GLSupport
@@ -70,8 +70,8 @@ public:
 	//virtual OgreLite::RenderWindowCanvas* createWindow(bool autoCreateWindow, OgreLite::GLRenderEngine* renderSystem, const String& windowTitle) = 0;
 
 	/// @copydoc RenderSystem::_createRenderWindow
-	virtual OgreLite::GLRenderCanvas* newRenderCanvas(const String &name, OgreLite::GLRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams = 0)=0;
-	virtual OgreLite::GLRenderCanvas* getInitCanvas()=0;
+	virtual OgreLite::IGLRenderCanvas* newRenderCanvas(const String &name, OgreLite::IRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams = 0)=0;
+	
 
 
     virtual bool supportsPBuffers();
