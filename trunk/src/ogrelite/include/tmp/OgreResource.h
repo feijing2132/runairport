@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 #include "OgreString.h"
-//#include "OgreSharedPtr.h"
+#include "OgreSharedPtr.h"
 #include "OgreStringInterface.h"
 #include "OgreAtomicWrappers.h"
 
@@ -74,7 +74,7 @@ namespace Ogre {
 				through a generic interface.</li>
 			</ol>
     */
-	class _OgreExport Resource : public StringInterface/*, public ResourceAlloc*/
+	class _OgreExport Resource : public StringInterface, public ResourceAlloc
     {
 	public:
 		OGRE_AUTO_MUTEX // public to allow external locking

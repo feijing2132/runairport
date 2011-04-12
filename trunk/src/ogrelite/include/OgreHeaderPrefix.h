@@ -74,8 +74,6 @@ THE SOFTWARE
 // Many versions of VC have bugs which generate this error in cases where they shouldn't
 #   pragma warning (disable : 4100)
 
-#   pragma warning (disable : 4244)
-
 #endif
 
 

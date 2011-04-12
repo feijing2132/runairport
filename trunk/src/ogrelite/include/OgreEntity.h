@@ -38,7 +38,7 @@ THE SOFTWARE.
 #include "OgreHardwareBufferManager.h"
 #include "OgreMesh.h"
 #include "OgreRenderable.h"
-#include "OgreResourceGroupManager.h"
+//#include "OgreResourceGroupManager.h"
 
 namespace Ogre {
 	/** \addtogroup Core
@@ -78,7 +78,7 @@ namespace Ogre {
 	@note
 	No functions were declared virtual to improve performance.
 	*/
-	class _OgreExport Entity: public MovableObject, public Resource::Listener
+	class _OgreExport Entity: public MovableObject/*, public Resource::Listener*/
 	{
 		// Allow EntityFactory full access
 		friend class EntityFactory;
@@ -273,40 +273,40 @@ namespace Ogre {
 		/// Bounding box that 'contains' all the mesh of each child entity
 		mutable AxisAlignedBox mFullBoundingBox;
 
-		ShadowRenderableList mShadowRenderables;
+		//ShadowRenderableList mShadowRenderables;
 
 		/** Nested class to allow entity shadows. */
-		class _OgreExport EntityShadowRenderable : public ShadowRenderable
-		{
-		protected:
-			Entity* mParent;
-			// Shared link to position buffer
-			HardwareVertexBufferSharedPtr mPositionBuffer;
-			// Shared link to w-coord buffer (optional)
-			HardwareVertexBufferSharedPtr mWBuffer;
-			// Link to current vertex data used to bind (maybe changes)
-			const VertexData* mCurrentVertexData;
-			// Original position buffer source binding
-			unsigned short mOriginalPosBufferBinding;
-			/// Link to SubEntity, only present if SubEntity has it's own geometry
-			SubEntity* mSubEntity;
+		//class _OgreExport EntityShadowRenderable : public ShadowRenderable
+		//{
+		//protected:
+		//	Entity* mParent;
+		//	// Shared link to position buffer
+		//	HardwareVertexBufferSharedPtr mPositionBuffer;
+		//	// Shared link to w-coord buffer (optional)
+		//	HardwareVertexBufferSharedPtr mWBuffer;
+		//	// Link to current vertex data used to bind (maybe changes)
+		//	const VertexData* mCurrentVertexData;
+		//	// Original position buffer source binding
+		//	unsigned short mOriginalPosBufferBinding;
+		//	/// Link to SubEntity, only present if SubEntity has it's own geometry
+		//	SubEntity* mSubEntity;
 
 
-		public:
-			EntityShadowRenderable(Entity* parent,
-				HardwareIndexBufferSharedPtr* indexBuffer, const VertexData* vertexData,
-				bool createSeparateLightCap, SubEntity* subent, bool isLightCap = false);
-			~EntityShadowRenderable();
-			/// Overridden from ShadowRenderable
-			void getWorldTransforms(Matrix4* xform) const;
-			HardwareVertexBufferSharedPtr getPositionBuffer(void) { return mPositionBuffer; }
-			HardwareVertexBufferSharedPtr getWBuffer(void) { return mWBuffer; }
-			/// Rebind the source positions (for temp buffer users)
-			void rebindPositionBuffer(const VertexData* vertexData, bool force);
-			/// Overridden from ShadowRenderable
-			bool isVisible(void) const;
+		//public:
+		//	EntityShadowRenderable(Entity* parent,
+		//		HardwareIndexBufferSharedPtr* indexBuffer, const VertexData* vertexData,
+		//		bool createSeparateLightCap, SubEntity* subent, bool isLightCap = false);
+		//	~EntityShadowRenderable();
+		//	/// Overridden from ShadowRenderable
+		//	void getWorldTransforms(Matrix4* xform) const;
+		//	HardwareVertexBufferSharedPtr getPositionBuffer(void) { return mPositionBuffer; }
+		//	HardwareVertexBufferSharedPtr getWBuffer(void) { return mWBuffer; }
+		//	/// Rebind the source positions (for temp buffer users)
+		//	void rebindPositionBuffer(const VertexData* vertexData, bool force);
+		//	/// Overridden from ShadowRenderable
+		//	bool isVisible(void) const;
 
-		};
+		//};
 	public:
 		/** Default destructor.
 		*/
@@ -348,7 +348,7 @@ namespace Ogre {
 		is only one. Otherwise call getSubEntity() and call the same
 		method on the individual SubEntity.
 		*/
-		void setMaterialName( const String& name, const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME );
+		//void setMaterialName( const String& name, const String& groupName = ResourceGroupManager::AUTODETECT_RESOURCE_GROUP_NAME );
 
 		
 		/** Sets the material to use for the whole of this entity.
@@ -542,10 +542,10 @@ namespace Ogre {
 		/** Overridden member from ShadowCaster. */
 		bool hasEdgeList(void);
         /** Overridden member from ShadowCaster. */
-        ShadowRenderableListIterator getShadowVolumeRenderableIterator(
+      /*  ShadowRenderableListIterator getShadowVolumeRenderableIterator(
             ShadowTechnique shadowTechnique, const Light* light,
             HardwareIndexBufferSharedPtr* indexBuffer,
-            bool extrudeVertices, Real extrusionDistance, unsigned long flags = 0 );
+            bool extrudeVertices, Real extrusionDistance, unsigned long flags = 0 );*/
 
 		/** Internal method for retrieving bone matrix information. */
 		const Matrix4* _getBoneMatrices(void) const { return mBoneMatrices;}

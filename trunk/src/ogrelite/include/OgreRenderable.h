@@ -31,14 +31,14 @@ THE SOFTWARE.
 #include "OgrePrerequisites.h"
 #include "OgreCommon.h"
 
-#include "OgreRenderOperation.h"
+//#include "OgreRenderOperation.h"
 #include "OgreMatrix4.h"
 #include "OgreMaterial.h"
 #include "OgrePlane.h"
-#include "OgreGpuProgram.h"
+//#include "OgreGpuProgram.h"
 #include "OgreVector4.h"
 #include "OgreException.h"
-#include "OgreUserObjectBindings.h"
+//#include "OgreUserObjectBindings.h"
 
 namespace Ogre {
 
@@ -90,7 +90,7 @@ namespace Ogre {
             This is to allow Renderables to use a chosen Technique if they wish, otherwise
             they will use the best Technique available for the Material they are using.
         */
-        virtual Technique* getTechnique(void) const { return getMaterial()->getBestTechnique(0, this); }
+       // virtual Technique* getTechnique(void) const { return getMaterial()->getBestTechnique(0, this); }
         /** Gets the render operation required to send this object to the frame buffer.
         */
         virtual void getRenderOperation(RenderOperation& op) = 0;
@@ -285,7 +285,7 @@ namespace Ogre {
         @param params The parameters object which this method should call to 
             set the updated parameters.
         */
-        virtual void _updateCustomGpuParameter(
+       /* virtual void _updateCustomGpuParameter(
             const GpuProgramParameters::AutoConstantEntry& constantEntry,
             GpuProgramParameters* params) const
         {
@@ -295,7 +295,7 @@ namespace Ogre {
                 params->_writeRawConstant(constantEntry.physicalIndex, i->second, 
 					constantEntry.elementCount);
             }
-        }
+        }*/
 
 		/** Sets whether this renderable's chosen detail level can be
 			overridden (downgraded) by the camera setting. 
@@ -322,24 +322,24 @@ namespace Ogre {
 			this Renderable. This can be a pointer back to one of your own
 			classes for instance.
 		*/
-		virtual void setUserAny(const Any& anything) { getUserObjectBindings().setUserAny(anything); }
+		//virtual void setUserAny(const Any& anything) { getUserObjectBindings().setUserAny(anything); }
 
 		/** @deprecated use UserObjectBindings::getUserAny via getUserObjectBindings() instead.
 			Retrieves the custom user value associated with this object.
 		*/
-		virtual const Any& getUserAny(void) const { return getUserObjectBindings().getUserAny(); }
+		//virtual const Any& getUserAny(void) const { return getUserObjectBindings().getUserAny(); }
 
 		/** Return an instance of user objects binding associated with this class.
 		You can use it to associate one or more custom objects with this class instance.
 		@see UserObjectBindings::setUserAny.
 		*/
-		UserObjectBindings&	getUserObjectBindings() { return mUserObjectBindings; }
+		//UserObjectBindings&	getUserObjectBindings() { return mUserObjectBindings; }
 
 		/** Return an instance of user objects binding associated with this class.
 		You can use it to associate one or more custom objects with this class instance.
 		@see UserObjectBindings::setUserAny.		
 		*/
-		const UserObjectBindings& getUserObjectBindings() const { return mUserObjectBindings; }
+		//const UserObjectBindings& getUserObjectBindings() const { return mUserObjectBindings; }
 
 
 		/** Visitor object that can be used to iterate over a collection of Renderable
@@ -369,8 +369,8 @@ namespace Ogre {
 			@param pAny Optional pointer to some additional data that the class
 				calling the visitor may populate if it chooses to.
 			*/
-			virtual void visit(Renderable* rend, ushort lodIndex, bool isDebug, 
-				Any* pAny = 0) = 0;
+			/*virtual void visit(Renderable* rend, ushort lodIndex, bool isDebug, 
+				Any* pAny = 0) = 0;*/
 		};
 
 		/** Sets render system private data
@@ -397,7 +397,7 @@ namespace Ogre {
 		bool mPolygonModeOverrideable;
         bool mUseIdentityProjection;
         bool mUseIdentityView;
-		UserObjectBindings mUserObjectBindings;		 // User objects binding.
+		//UserObjectBindings mUserObjectBindings;		 // User objects binding.
 		mutable RenderSystemData * mRenderSystemData;// this should be used only by a render system for internal use
 	};
 

@@ -32,8 +32,10 @@ THE SOFTWARE.
 #include "OgreMovableObject.h"
 #include "OgreRenderable.h"
 #include "OgreAxisAlignedBox.h"
-#include "OgreVertexIndexData.h"
+//#include "OgreVertexIndexData.h"
 #include "OgreMovablePlane.h"
+#include "OgreVector2.h"
+#include "OgreMaterial.h"
 
 namespace Ogre
 {
@@ -81,7 +83,7 @@ namespace Ogre
         used to represent either a visible area or a projection area. Can be used
         for a number of applications.
     */
-    class _OgreExport Frustum : public MovableObject, public Renderable
+    class _OgreExport Frustum : public MovableObject/*, public Renderable*/
     {
     protected:
         /// Orthographic or perspective?
@@ -166,9 +168,9 @@ namespace Ogre
         static String msMovableType;
 
         mutable AxisAlignedBox mBoundingBox;
-        mutable VertexData mVertexData;
+        //mutable VertexData mVertexData;
 
-        MaterialPtr mMaterial;
+        //MaterialPtr mMaterial;
         mutable Vector3 mWorldSpaceCorners[8];
 
         /// Is this frustum to act as a reflection of itself?

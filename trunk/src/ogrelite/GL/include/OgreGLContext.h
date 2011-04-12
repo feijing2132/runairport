@@ -66,7 +66,7 @@ namespace Ogre {
 		/**
 		* Release the render context.
 		*/
-		virtual void releaseContext() {}
+		virtual void releaseContext()=0;
     protected:
         bool initialized;		
     };

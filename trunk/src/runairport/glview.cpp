@@ -108,7 +108,7 @@ glView::glView(QWidget *parent)
 	: QGLWidget(parent)
 {
 	pdwgdraw = new dwgRender();
-	pdwgdraw->load_dwg("c:\\a.dwg");
+	//pdwgdraw->load_dwg("c:\\a.dwg");
 }
 
 glView::~glView()
@@ -134,7 +134,7 @@ void glView::paintGL()
 
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();	
-	gluOrtho2D(-pdwgdraw->pMax.x(),pdwgdraw->pMax.x(),-pdwgdraw->pMax.y(),pdwgdraw->pMax.y());
+	//gluOrtho2D(-pdwgdraw->pMax.x(),pdwgdraw->pMax.x(),-pdwgdraw->pMax.y(),pdwgdraw->pMax.y());
 	
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();

@@ -30,7 +30,7 @@ THE SOFTWARE.
 #define __Skeleton_H__
 
 #include "OgrePrerequisites.h"
-#include "OgreResource.h"
+//#include "OgreResource.h"
 #include "OgreQuaternion.h"
 #include "OgreVector3.h"
 #include "OgreIteratorWrappers.h"
@@ -82,8 +82,8 @@ namespace Ogre {
         Skeleton definitions are loaded from datafiles, namely the .skeleton file format. They
         are loaded on demand, especially when referenced by a Mesh.
     */
-    class _OgreExport Skeleton : public Resource
-    {
+    class _OgreExport Skeleton /*: public Resource*/
+	{
 		friend class SkeletonInstance;
 	protected:
 		/// Internal constructor for use by SkeletonInstance only
@@ -95,8 +95,8 @@ namespace Ogre {
             On creation, a Skeleton has a no bones, you should create them and link
             them together appropriately. 
         */
-        Skeleton(ResourceManager* creator, const String& name, ResourceHandle handle,
-            const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+       /* Skeleton(ResourceManager* creator, const String& name, ResourceHandle handle,
+            const String& group, bool isManual = false, ManualResourceLoader* loader = 0);*/
         virtual ~Skeleton();
 
 
@@ -464,29 +464,29 @@ namespace Ogre {
         SkeletonPtr() : SharedPtr<Skeleton>() {}
         explicit SkeletonPtr(Skeleton* rep) : SharedPtr<Skeleton>(rep) {}
         SkeletonPtr(const SkeletonPtr& r) : SharedPtr<Skeleton>(r) {} 
-        SkeletonPtr(const ResourcePtr& r) : SharedPtr<Skeleton>()
-        {
-			// lock & copy other mutex pointer
-            OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
-            {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-                pRep = static_cast<Skeleton*>(r.getPointer());
-                pUseCount = r.useCountPointer();
-                if (pUseCount)
-                {
-                    ++(*pUseCount);
-                }
-            }
-        }
+   //     SkeletonPtr(const ResourcePtr& r) : SharedPtr<Skeleton>()
+   //     {
+			//// lock & copy other mutex pointer
+   //         OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
+   //         {
+			//    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+			//    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+   //             pRep = static_cast<Skeleton*>(r.getPointer());
+   //             pUseCount = r.useCountPointer();
+   //             if (pUseCount)
+   //             {
+   //                 ++(*pUseCount);
+   //             }
+   //         }
+   //     }
 
         /// Operator used to convert a ResourcePtr to a SkeletonPtr
-        SkeletonPtr& operator=(const ResourcePtr& r)
+        /*SkeletonPtr& operator=(const ResourcePtr& r)
         {
             if (pRep == static_cast<Skeleton*>(r.getPointer()))
                 return *this;
             release();
-			// lock & copy other mutex pointer
+			 lock & copy other mutex pointer
             OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
             {
 			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
@@ -500,12 +500,12 @@ namespace Ogre {
             }
 			else
 			{
-				// RHS must be a null pointer
+				 RHS must be a null pointer
 				assert(r.isNull() && "RHS must be null if it has no mutex!");
 				setNull();
 			}
             return *this;
-        }
+        }*/
     };
 
 	/// Link to another skeleton to share animations

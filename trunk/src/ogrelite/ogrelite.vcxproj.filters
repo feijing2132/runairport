@@ -87,6 +87,19 @@
     <ClCompile Include="glRenderWindow.cpp">
       <Filter>devicelayer\opengl</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="src\OgreSceneNode.cpp">
+      <Filter>applayer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreNode.cpp">
+      <Filter>applayer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreCamera.cpp">
+      <Filter>applayer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OgreFrustum.cpp">
+      <Filter>applayer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ogrelitePrefix.h" />
@@ -97,5 +110,6 @@
     <ClInclude Include="glRenderWindow.h">
       <Filter>devicelayer\opengl</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h" />
   </ItemGroup>
 </Project>

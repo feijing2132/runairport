@@ -30,11 +30,12 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 
-#include "OgreResource.h"
+//#include "OgreResource.h"
 #include "OgreIteratorWrappers.h"
 #include "OgreCommon.h"
 #include "OgreColourValue.h"
 #include "OgreBlendMode.h"
+#include "OgreSharedPtr.h"
 
 namespace Ogre {
 
@@ -85,7 +86,7 @@ namespace Ogre {
     Material returned from this method will apply to any materials created 
     from this point onward.
     */
-    class _OgreExport Material : public Resource
+    class _OgreExport Material /*: public Resource*/
     {
         friend class SceneManager;
         friend class MaterialManager;
@@ -154,8 +155,8 @@ namespace Ogre {
 
         /** Constructor - use resource manager's create method rather than this.
         */
-		Material(ResourceManager* creator, const String& name, ResourceHandle handle,
-			const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+		//Material(ResourceManager* creator, const String& name, ResourceHandle handle,
+		//	const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
 
         ~Material();
         /** Assignment operator to allow easy copying between materials.
@@ -641,7 +642,7 @@ namespace Ogre {
             if (mCompilationRequired) 
                 compile();
             // call superclass
-            Resource::touch();
+            //Resource::touch();
         }
         
         /** Applies texture names to Texture Unit State with matching texture name aliases.
@@ -680,48 +681,48 @@ namespace Ogre {
 		MaterialPtr() : SharedPtr<Material>() {}
 		explicit MaterialPtr(Material* rep) : SharedPtr<Material>(rep) {}
 		MaterialPtr(const MaterialPtr& r) : SharedPtr<Material>(r) {} 
-		MaterialPtr(const ResourcePtr& r) : SharedPtr<Material>()
-		{
-			// lock & copy other mutex pointer
-            OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
-            {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-			    pRep = static_cast<Material*>(r.getPointer());
-			    pUseCount = r.useCountPointer();
-			    if (pUseCount)
-			    {
-				    ++(*pUseCount);
-			    }
-            }
-		}
+		//MaterialPtr(const ResourcePtr& r) : SharedPtr<Material>()
+		//{
+		//	// lock & copy other mutex pointer
+  //          OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
+  //          {
+		//	    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+		//	    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+		//	    pRep = static_cast<Material*>(r.getPointer());
+		//	    pUseCount = r.useCountPointer();
+		//	    if (pUseCount)
+		//	    {
+		//		    ++(*pUseCount);
+		//	    }
+  //          }
+		//}
 
 		/// Operator used to convert a ResourcePtr to a MaterialPtr
-		MaterialPtr& operator=(const ResourcePtr& r)
-		{
-			if (pRep == static_cast<Material*>(r.getPointer()))
-				return *this;
-			release();
-			// lock & copy other mutex pointer
-            OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
-            {
-			    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-			    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-			    pRep = static_cast<Material*>(r.getPointer());
-			    pUseCount = r.useCountPointer();
-			    if (pUseCount)
-			    {
-				    ++(*pUseCount);
-			    }
-            }
-			else
-			{
-				// RHS must be a null pointer
-				assert(r.isNull() && "RHS must be null if it has no mutex!");
-				setNull();
-			}
-			return *this;
-		}
+		//MaterialPtr& operator=(const ResourcePtr& r)
+		//{
+		//	if (pRep == static_cast<Material*>(r.getPointer()))
+		//		return *this;
+		//	release();
+		//	// lock & copy other mutex pointer
+  //          OGRE_MUTEX_CONDITIONAL(r.OGRE_AUTO_MUTEX_NAME)
+  //          {
+		//	    OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
+		//	    OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
+		//	    pRep = static_cast<Material*>(r.getPointer());
+		//	    pUseCount = r.useCountPointer();
+		//	    if (pUseCount)
+		//	    {
+		//		    ++(*pUseCount);
+		//	    }
+  //          }
+		//	else
+		//	{
+		//		// RHS must be a null pointer
+		//		assert(r.isNull() && "RHS must be null if it has no mutex!");
+		//		setNull();
+		//	}
+		//	return *this;
+		//}
 	};
 	/** @} */
 	/** @} */

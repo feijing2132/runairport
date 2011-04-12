@@ -45,6 +45,7 @@ public:
 	}
 
 	bool isValid()const{ return m_ptr!=0; }
+	bool isInRef()const{ return nref!=0; }
 	count_type* pn(){ return &nref;}
 	T* get()const{ return m_ptr; }
 
