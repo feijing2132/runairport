@@ -9,32 +9,41 @@ BEGIN_NAMESPACE_OGRELITE
 	class GLRenderCanvas : public RenderCanvas
 	{
 	public:		
-		virtual RenderEngine* getSystem(){ return mpRenderEngine; }
-		virtual void _beginFrame(){};
-		virtual void _beginViewport(RenderViewport*player){};	
-		virtual void _endFrame(){};
-
-		virtual GLContext* getGLContext()=0;
+		virtual RenderEngine* getSystem(){ return mpRenderEngine; }			
 	protected:
 		GLRenderEngine* mpRenderEngine;
 	};
+	//the window canvas usually the main canvas
+	class GLRenderWindowCanvas : public GLRenderCanvas
+	{
+	public:
+		virtual GLContext* getGLContext(){ return mContext.get(); };
 
-	
-	class Win32GLRenderWindowCanvas : public GLRenderCanvas
+	protected:
+		inst_ptr<Win32Context> mContext;
+
+		virtual void _beginFrame();
+		virtual void _beginViewport(RenderViewport*player){}	
+		virtual void _endFrame();
+	};
+
+	//platform canvas
+	class Win32GLRenderWindowCanvas : public GLRenderWindowCanvas
 	{
 	public:		
 		Win32GLRenderWindowCanvas(GLRenderEngine* pEngine)
 		{
 			mpRenderEngine = pEngine;
 		}
-		void create(const String& name, const NameValueMap* miscParams=NULL);		
+		void create(const String& name, const NameValueMap* miscParams=NULL);
+		HDC getHDC(){ return mHDC; }	
 
-		HDC getHDC(){ return mHDC; }
-		virtual GLContext* getGLContext(){ return mContext.get(); };
+		virtual void _beginFrame();
+		virtual void _endFrame();
 	protected:
 		HWND mHWnd;
 		HDC  mHDC; //own need to release 
-		inst_ptr<Win32Context> mContext;
+		
 
 		void swapBuffers(bool waitForVSync);
 

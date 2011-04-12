@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "OgrePrerequisites.h"
 
 #include "OgreString.h"
-#include "OgreMovableObject.h"
+//#include "OgreMovableObject.h"
 
 // Matrices & Vectors
 #include "OgreMatrix4.h"

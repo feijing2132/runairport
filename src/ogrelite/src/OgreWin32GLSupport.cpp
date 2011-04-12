@@ -320,6 +320,7 @@ namespace Ogre {
 
 	OgreLite::GLRenderCanvas* Win32GLSupport::newRenderCanvas(const String &name, OgreLite::GLRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams)
 	{
+		
 		OgreLite::Win32GLRenderWindowCanvas* window = new OgreLite::Win32GLRenderWindowCanvas(renderSystem);
 		window->create(name, miscParams);
 		if(!mInitialWindow)

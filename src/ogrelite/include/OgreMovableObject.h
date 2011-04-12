@@ -34,11 +34,12 @@ THE SOFTWARE.
 #include "OgreRenderQueue.h"
 #include "OgreAxisAlignedBox.h"
 #include "OgreSphere.h"
-#include "OgreShadowCaster.h"
+//#include "OgreShadowCaster.h"
 #include "OgreFactoryObj.h"
-#include "OgreAnimable.h"
+//#include "OgreAnimable.h"
 #include "OgreAny.h"
 #include "OgreUserObjectBindings.h"
+#include "../ogreliteptr.h"
 
 namespace Ogre {
 
@@ -56,7 +57,7 @@ namespace Ogre {
             Instances of this class are discrete, relatively small, movable objects
             which are attached to SceneNode objects to define their position.
     */
-    class _OgreExport MovableObject : public ShadowCaster, public AnimableObject, public MovableAlloc
+    class _OgreExport MovableObject /*: public ShadowCaster, public AnimableObject, public MovableAlloc*/
     {
     public:
         /** Listener which gets called back on MovableObject events.
@@ -476,10 +477,10 @@ namespace Ogre {
 		/// Define a default implementation of method from ShadowCaster which implements no shadows
 		bool hasEdgeList(void) { return false; }
         /// Define a default implementation of method from ShadowCaster which implements no shadows
-        ShadowRenderableListIterator getShadowVolumeRenderableIterator(
+       /* ShadowRenderableListIterator getShadowVolumeRenderableIterator(
             ShadowTechnique shadowTechnique, const Light* light, 
             HardwareIndexBufferSharedPtr* indexBuffer, 
-            bool extrudeVertices, Real extrusionDist, unsigned long flags = 0);
+            bool extrudeVertices, Real extrusionDist, unsigned long flags = 0);*/
 		
         /** Overridden member from ShadowCaster. */
         const AxisAlignedBox& getLightCapBounds(void) const;
@@ -530,8 +531,8 @@ namespace Ogre {
 			(those for normal display). If true, debug renderables will be
 			included too.
 		*/
-		virtual void visitRenderables(Renderable::Visitor* visitor, 
-			bool debugRenderables = false) = 0;
+		/*	virtual void visitRenderables(Renderable::Visitor* visitor, 
+		bool debugRenderables = false) = 0;*/
 
 		/** Sets whether or not the debug display of this object is enabled.
 		@remarks
@@ -614,6 +615,8 @@ namespace Ogre {
 			of a certain type of object.
 		*/
 		unsigned long getTypeFlags(void) const { return mTypeFlag; }
+		
+		HashMap<String, OgreLite::inst_ptr<MovableObject> > mMovableObjectMap;
 
 	};
 	/** @} */

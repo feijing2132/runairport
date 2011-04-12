@@ -250,7 +250,7 @@ namespace Ogre {
 			std::swap(pUseCount, other.pUseCount);
 			std::swap(useFreeMethod, other.useFreeMethod);
 #if OGRE_THREAD_SUPPORT
-			std::swap(OGRE_AUTO_MUTEX_NAME, other.OGRE_AUTO_MUTEX_NAME);
+			//std::swap(OGRE_AUTO_MUTEX_NAME, other.OGRE_AUTO_MUTEX_NAME);
 #endif
 		}
 	};

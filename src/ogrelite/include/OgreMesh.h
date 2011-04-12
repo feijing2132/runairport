@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 #include "OgrePrerequisites.h"
 
-#include "OgreResource.h"
+//#include "OgreResource.h"
 #include "OgreVertexIndexData.h"
 #include "OgreAxisAlignedBox.h"
 #include "OgreVertexBoneAssignment.h"
@@ -40,7 +40,8 @@ THE SOFTWARE.
 #include "OgreSkeleton.h"
 #include "OgreAnimationTrack.h"
 #include "OgrePose.h"
-#include "OgreDataStream.h"
+#include "../ogreliteptr.h"
+//#include "OgreDataStream.h"
 
 
 namespace Ogre {
@@ -88,7 +89,7 @@ namespace Ogre {
     struct MeshLodUsage;
     class LodStrategy;
 
-    class _OgreExport Mesh: public Resource
+    class _OgreExport Mesh/*: public Resource*/
     {
         friend class SubMesh;
         friend class MeshSerializerImpl;
@@ -128,7 +129,7 @@ namespace Ogre {
 		
     protected:
 
-        DataStreamPtr mFreshFromDisk;
+        //DataStreamPtr mFreshFromDisk;
 
 		SubMeshNameMap mSubMeshNameMap ;
 
@@ -208,8 +209,8 @@ namespace Ogre {
             @warning
                 Do not call this method directly.
         */
-        Mesh(ResourceManager* creator, const String& name, ResourceHandle handle,
-            const String& group, bool isManual = false, ManualResourceLoader* loader = 0);
+        /*Mesh(ResourceManager* creator, const String& name, ResourceHandle handle,
+            const String& group, bool isManual = false, ManualResourceLoader* loader = 0);*/
         ~Mesh();
 
 		// NB All methods below are non-virtual since they will be
@@ -897,9 +898,9 @@ namespace Ogre {
         MeshPtr() : SharedPtr<Mesh>() {}
         explicit MeshPtr(Mesh* rep) : SharedPtr<Mesh>(rep) {}
         MeshPtr(const MeshPtr& r) : SharedPtr<Mesh>(r) {} 
-        MeshPtr(const ResourcePtr& r);
+        //MeshPtr(const ResourcePtr& r);
         /// Operator used to convert a ResourcePtr to a MeshPtr
-        MeshPtr& operator=(const ResourcePtr& r);
+        //MeshPtr& operator=(const ResourcePtr& r);
     protected:
         /// Override destroy since we need to delete Mesh after fully defined
         void destroy(void);

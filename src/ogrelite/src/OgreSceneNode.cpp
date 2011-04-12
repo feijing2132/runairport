@@ -444,27 +444,27 @@ namespace Ogre {
 		return static_cast<SceneNode*>(this->createChild(name, inTranslate, inRotate));
 	}
     //-----------------------------------------------------------------------
-    void SceneNode::findLights(LightList& destList, Real radius, uint32 lightMask) const
-    {
-        // No any optimisation here, hope inherits more smart for that.
-        //
-        // If a scene node is static and lights have moved, light list won't change
-        // can't use a simple global boolean flag since this is only called for
-        // visible nodes, so temporarily visible nodes will not be updated
-        // Since this is only called for visible nodes, skip the check for now
-        //
-        if (mCreator)
-        {
-            // Use SceneManager to calculate
-            mCreator->_populateLightList(this, radius, destList, lightMask);
-        }
-        else
-        {
-            destList.clear();
-        }
-    }
+    //void SceneNode::findLights(LightList& destList, Real radius, uint32 lightMask) const
+    //{
+    //    // No any optimisation here, hope inherits more smart for that.
+    //    //
+    //    // If a scene node is static and lights have moved, light list won't change
+    //    // can't use a simple global boolean flag since this is only called for
+    //    // visible nodes, so temporarily visible nodes will not be updated
+    //    // Since this is only called for visible nodes, skip the check for now
+    //    //
+    //    if (mCreator)
+    //    {
+    //        // Use SceneManager to calculate
+    //        mCreator->_populateLightList(this, radius, destList, lightMask);
+    //    }
+    //    else
+    //    {
+    //        destList.clear();
+    //    }
+    //}
     //-----------------------------------------------------------------------
-    void SceneNode::setAutoTracking(bool enabled, SceneNode* target, 
+    /*void SceneNode::setAutoTracking(bool enabled, SceneNode* target, 
         const Vector3& localDirectionVector,
         const Vector3& offset)
     {
@@ -480,7 +480,7 @@ namespace Ogre {
         }
         if (mCreator)
             mCreator->_notifyAutotrackingSceneNode(this, enabled);
-    }
+    }*/
     //-----------------------------------------------------------------------
     void SceneNode::setFixedYawAxis(bool useFixed, const Vector3& fixedAxis)
     {
@@ -650,25 +650,25 @@ namespace Ogre {
         }
     }
 	//-----------------------------------------------------------------------
-	void SceneNode::setDebugDisplayEnabled(bool enabled, bool cascade)
-	{
-		ObjectMap::iterator oi, oiend;
-		oiend = mObjectsByName.end();
-		for (oi = mObjectsByName.begin(); oi != oiend; ++oi)
-		{
-			oi->second->setDebugDisplayEnabled(enabled);
-		}
+	//void SceneNode::setDebugDisplayEnabled(bool enabled, bool cascade)
+	//{
+	//	ObjectMap::iterator oi, oiend;
+	//	oiend = mObjectsByName.end();
+	//	for (oi = mObjectsByName.begin(); oi != oiend; ++oi)
+	//	{
+	//		oi->second->setDebugDisplayEnabled(enabled);
+	//	}
 
-		if (cascade)
-		{
-			ChildNodeMap::iterator i, iend;
-			iend = mChildren.end();
-			for (i = mChildren.begin(); i != iend; ++i)
-			{
-				static_cast<SceneNode*>(i->second)->setDebugDisplayEnabled(enabled, cascade);
-			}
-		}
-	}
+	//	if (cascade)
+	//	{
+	//		ChildNodeMap::iterator i, iend;
+	//		iend = mChildren.end();
+	//		for (i = mChildren.begin(); i != iend; ++i)
+	//		{
+	//			static_cast<SceneNode*>(i->second)->setDebugDisplayEnabled(enabled, cascade);
+	//		}
+	//	}
+	//}
     //-----------------------------------------------------------------------
     void SceneNode::flipVisibility(bool cascade)
     {

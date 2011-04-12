@@ -104,14 +104,50 @@ void Win32GLRenderWindowCanvas::create( const String& name,const NameValueMap* m
 		OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR, 
 		"wglCreateContext failed: " + translateWGLError(), "Win32Window::create");
 
-	if(GLRenderCanvas* pInitCanvas = mGLSupport.getInitCanvas())
+	if(GLRenderWindowCanvas* pInitCanvas = mGLSupport.getInitCanvas())
 	{
 		pInitCanvas->getGLContext()->setCurrent();	
 		HGLRC old_context = wglGetCurrentContext();
 		if (!wglShareLists(old_context, mGlrc))
 			OGRE_EXCEPT(Exception::ERR_RENDERINGAPI_ERROR, "wglShareLists() failed", " Win32Window::create");
 	}
+	
 
 	mContext = new Win32Context(mHDC, mGlrc);
 }
+
+void Win32GLRenderWindowCanvas::_endFrame()
+{	
+	__super::_endFrame();
+	SwapBuffers(mHDC);
+}
+
+void Win32GLRenderWindowCanvas::_beginFrame()
+{
+	RECT rc;
+	// top and left represent outer window position
+	GetWindowRect(mHWnd, &rc);
+	//mTop = rc.top;
+	//mLeft = rc.left;
+	// width and height represent drawable area only
+	GetClientRect(mHWnd, &rc);
+	mWidth = rc.right;
+	mHeight = rc.bottom;
+
+	__super::_beginFrame();
+}
+
+void GLRenderWindowCanvas::_beginFrame()
+{
+	mContext->setCurrent();	
+	glViewport(0,0,mWidth,mHeight);
+	glClearColor(0,0,0,0);	
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void GLRenderWindowCanvas::_endFrame()
+{
+	mContext->endCurrent();
+}
+
 END_NAMESPACE_OGRELITE

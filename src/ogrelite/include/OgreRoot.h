@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "OgreSingleton.h"
 #include "OgreString.h"
 #include "OgreSceneManagerEnumerator.h"
-#include "OgreResourceGroupManager.h"
+//#include "OgreResourceGroupManager.h"
 #include "OgreLodStrategyManager.h"
 #include "OgreWorkQueue.h"
 

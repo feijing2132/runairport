@@ -19,6 +19,7 @@ public:
 	RenderCanvasSharedPtr createRenderCanvas(const String &name,const NameValueMap* miscParams=NULL );
 	void destroyCanvas(const String& sName,bool bForce = false);
 	RenderCanvasSharedPtr getRenderCanvas(const String& sName){ return mCanvasMap[sName];}
+
 	std::map<String, inst_ptr<RenderCanvas> > mCanvasMap;	
 	//
 protected:

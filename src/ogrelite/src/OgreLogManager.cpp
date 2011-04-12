@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -----------------------------------------------------------------------------
 */
-//#include "OgreStableHeaders.h"
+#include "OgreStableHeaders.h"
 
 #include "OgreLogManager.h"
 #include "OgreException.h"
@@ -64,7 +64,7 @@ namespace Ogre {
     {
 		OGRE_LOCK_AUTO_MUTEX
 
-        Log* newLog = OGRE_NEW Log(name, debuggerOutput, suppressFileOutput);
+        Log* newLog = new Log(name, debuggerOutput, suppressFileOutput);
 
         if( !mDefaultLog || defaultLog )
         {

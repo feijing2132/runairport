@@ -454,10 +454,10 @@ namespace Ogre {
         @param enabled Whether the objects are to display debug info or not
         @param cascade If true, this setting cascades into child nodes too.
         */
-        virtual void setDebugDisplayEnabled(bool enabled, bool cascade = true);
+       // virtual void setDebugDisplayEnabled(bool enabled, bool cascade = true);
 
 		/// As Node::getDebugRenderable, except scaling is automatically determined
-		virtual DebugRenderable* getDebugRenderable();
+		//virtual DebugRenderable* getDebugRenderable();
 
 
 

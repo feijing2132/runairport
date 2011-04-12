@@ -84,8 +84,11 @@
     <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="RenderProcess.cpp" />
     <ClCompile Include="RenderViewport.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="src\OgreCamera.cpp" />
     <ClCompile Include="src\OgreColourValue.cpp" />
     <ClCompile Include="src\OgreException.cpp" />
+    <ClCompile Include="src\OgreFrustum.cpp" />
     <ClCompile Include="src\OgreGLSupport.cpp" />
     <ClCompile Include="src\OgreLog.cpp" />
     <ClCompile Include="src\OgreLogManager.cpp" />
@@ -93,8 +96,10 @@
     <ClCompile Include="src\OgreMatrix3.cpp" />
     <ClCompile Include="src\OgreMatrix4.cpp" />
     <ClCompile Include="src\OgreMemoryNedPooling.cpp" />
+    <ClCompile Include="src\OgreNode.cpp" />
     <ClCompile Include="src\OgrePlane.cpp" />
     <ClCompile Include="src\OgreQuaternion.cpp" />
+    <ClCompile Include="src\OgreSceneNode.cpp" />
     <ClCompile Include="src\OgreString.cpp" />
     <ClCompile Include="src\OgreStringConverter.cpp" />
     <ClCompile Include="src\OgreStringInterface.cpp" />
@@ -111,6 +116,7 @@
     <ClInclude Include="RenderEngine.h" />
     <ClInclude Include="RenderProcess.h" />
     <ClInclude Include="RenderViewport.h" />
+    <ClInclude Include="Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

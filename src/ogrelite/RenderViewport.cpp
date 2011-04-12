@@ -1,10 +1,7 @@
 #include "RenderViewport.h"
+#include "RenderProcess.h"
 
 BEGIN_NAMESPACE_OGRELITE
-
-
-
-
 //////////////////////////////////////////////////////////////////////////
 void RenderCanvas::renderOneFrame()
 {
