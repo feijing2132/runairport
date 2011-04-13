@@ -185,10 +185,7 @@ void glView::keyPressEvent( QKeyEvent *e )
 	}
 }
 
-bool glView::event( QEvent * e )
-{
-	return QWidget::event(e);
-}
+
 
 void glView::timerEvent( QTimerEvent* evt )
 {

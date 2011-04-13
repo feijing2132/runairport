@@ -9,8 +9,11 @@ template <class T>
 class inst_ptr
 {
 public:	
-	inst_ptr():m_ptr(0),nref(0){}
-	//inst_ptr(T* ptr):m_ptr(ptr),nref(0){ }
+	inst_ptr():m_ptr(0),nref(0){}	
+	explicit inst_ptr(inst_ptr& other){ 
+		nref = other.nref;
+		m_ptr = other.release();
+	}
 
 	~inst_ptr()
 	{
@@ -22,6 +25,21 @@ public:
 		destory();
 	}	
 
+	inline bool isNull() const
+	{
+		return !px;
+	}
+
+	inline bool operator!() const
+	{
+		return !px;
+	}
+
+	inline operator bool() const
+	{
+		return !isNull();
+	}
+
 	void operator=(T* ptr)
 	{ 
 		if(nref!=0)
@@ -31,6 +49,14 @@ public:
 		nref = 0;
 		m_ptr = ptr;
 	}	
+	
+	T* release()
+	{
+		T* tmp = m_ptr;
+		m_ptr = 0;
+		nref = 0;
+		return tmp;
+	}
 
 	T & operator*() const  // never throws
 	{
@@ -44,8 +70,8 @@ public:
 		return m_ptr;
 	}
 
-	bool isValid()const{ return m_ptr!=0; }
-	bool isInRef()const{ return nref!=0; }
+	
+	bool is_refed()const{ return nref!=0; }
 	count_type* pn(){ return &nref;}
 	T* get()const{ return m_ptr; }
 
@@ -60,6 +86,7 @@ protected:
 	count_type nref;
 
 private:
+	
 	void operator=(const inst_ptr& other){ assert(false);}
 	
 };
@@ -129,6 +156,21 @@ public:
 		return *px;
 	}
 
+	inline bool isNull() const
+	{
+		return !px;
+	}
+
+	inline bool operator!() const
+	{
+		return !px;
+	}
+
+	inline operator bool() const
+	{
+		return !isNull();
+	}
+
 	T * operator->() const  // never throws
 	{
 		//BOOST_ASSERT(px != 0);
@@ -139,6 +181,8 @@ public:
 	{
 		return px;
 	}
+
+	
 
 	long use_count() const  // never throws
 	{

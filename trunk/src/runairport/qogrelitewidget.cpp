@@ -6,7 +6,7 @@
 using namespace Ogre;
 using namespace OgreLite;
 //////////////////////////////////////////////////////////////////////////
-static String mainCanvas = ("MainCanvas"); 
+static String sMainCanvas = ("MainCanvas"); 
 
 
 BEGIN_NAMESPACE_OGRELITE
@@ -19,17 +19,26 @@ public:
 	QTGLWindowCanvase(QGLWidget* pGlWidget, QTGLRenderEngine* pEngine)
 	{ 
 		mpEngine = pEngine; 
+		mpWidget = pGlWidget;
 	}
 	IRenderEngine* getSystem();
+	virtual void setCurrent(){	mpWidget->makeCurrent();}
+	virtual void endCurrent(){ 	}
+
+	virtual uint32 getWidth()const{ return mpWidget->size().width(); }
+	virtual uint32 getHeight()const{ return mpWidget->size().height();  };
+	virtual void resize(int width, int height){  }
+
 protected:
 	QTGLRenderEngine* mpEngine;
+	QGLWidget* mpWidget;
 };
 
 
 class QTGLRenderEngine : public IRenderEngine
 {
 public:
-
+	
 protected:
 	virtual IRenderCanvas* _createCanvasImpl(const String& sName,const NameValueMap* miscParams=NULL)
 	{
@@ -40,6 +49,10 @@ protected:
 		}
 		return NULL;		
 	}
+	virtual Texture* _createTextureImpl(const String &name,const NameValueMap* miscParams/* =NULL */)
+	{
+		return NULL;
+	}
 };
 
 IRenderEngine* QTGLWindowCanvase::getSystem()
@@ -48,13 +61,16 @@ IRenderEngine* QTGLWindowCanvase::getSystem()
 }
 END_NAMESPACE_OGRELITE
 
+using namespace OgreLite;
 //////////////////////////////////////////////////////////////////////////
 QOgreLiteWidget::QOgreLiteWidget(QWidget *parent)
 	: QGLWidget(parent)
-{
-	mbSetupOgre = false; 	
+{	
 	startTimer(1);
-
+	mpEngine= new QTGLRenderEngine();
+	NameValueMap paremeters;
+	paremeters.set("QGLWidget", (int)this);
+	mpEngine->createRenderCanvas(sMainCanvas,&paremeters);	
 }
 
 QOgreLiteWidget::~QOgreLiteWidget()
@@ -62,35 +78,31 @@ QOgreLiteWidget::~QOgreLiteWidget()
 
 }
 
-void QOgreLiteWidget::paintEvent( QPaintEvent*evt )
-{	
-	if(!mbSetupOgre)
-	{
-		mbSetupOgre = true;
-		SetupOgre();
-	}
-	if (updatesEnabled()) 
-	{
-		RenderCanvasSharedPtr pCanvas = d->pEngine.getRenderCanvas(mainCanvas);
-		pCanvas->renderOneFrame();
-	}
-	
-}
 
-void QOgreLiteWidget::resizeEvent( QResizeEvent* )
-{		
-	update();
-}
-
-
-void QOgreLiteWidget::SetupOgre()
-{
-
-}
 
 void QOgreLiteWidget::timerEvent( QTimerEvent* evt )
 {
 	Q_UNUSED(evt);
 	update();
+}
+
+void QOgreLiteWidget::paintGL()
+{
+	IRenderCanvasSharedPtr thisCanvas = mpEngine->getRenderCanvas(sMainCanvas);
+	if(thisCanvas.get())
+	{
+		thisCanvas->renderOneFrame();
+	}
+}
+
+
+
+void QOgreLiteWidget::resizeGL( int w, int h )
+{
+	
+}
+
+void QOgreLiteWidget::initializeGL()
+{	
 }
 

@@ -53,14 +53,13 @@ public:
 
 	void renderOneFrame();
 protected:
-	virtual void _beginFrame()=0;
-	virtual void _beginViewport(RenderViewport*player)=0;	
+	virtual void _beginFrame()=0;	
 	virtual void _endFrame()=0;
 protected:
 	typedef std::list< RenderViewportSharedPtr > RenderLayerList;
 	RenderLayerList mRenderLayList;
 };
-typedef nodelete_shared_ptr<IRenderCanvas> RenderCanvasSharedPtr;
+typedef nodelete_shared_ptr<IRenderCanvas> IRenderCanvasSharedPtr;
 //////////////////////////////////////////////////////////////////////////
 
 

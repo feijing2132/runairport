@@ -9,7 +9,7 @@ BEGIN_NAMESPACE_OGRELITE
 
 
 
-RenderCanvasSharedPtr IRenderEngine::createRenderCanvas( const String &name,const NameValueMap* miscParams/*=NULL */ )
+IRenderCanvasSharedPtr IRenderEngine::createRenderCanvas( const String &name,const NameValueMap* miscParams/*=NULL */ )
 {
 	IRenderCanvas* pCanavs = _createCanvasImpl(name,miscParams);
 	if(pCanavs)

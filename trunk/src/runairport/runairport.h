@@ -3,6 +3,30 @@
 
 #include <QtGui/QMainWindow>
 #include "ui_runairport.h"
+#include "glview.h"
+#include "qogrelitewidget.h"
+
+QT_BEGIN_NAMESPACE
+
+class dUi_runairportClass : public Ui_runairportClass
+{
+public:
+	QVBoxLayout *ogreLayout;	
+	//QWidget ogreWidget;
+public:
+	void setupOgreWidget()
+	{
+		ogreLayout =new QVBoxLayout;
+		/*ogreWidget.setGeometry (100,100,640,480) ;
+		ogreWidget.setLayout(ogreLayout);*/
+		centralWidget->setLayout(ogreLayout);
+		ogreLayout->addWidget(new glView(centralWidget));
+		ogreLayout->addWidget(new QOgreLiteWidget(centralWidget));
+		//ogreWidget.show();
+	}
+};
+
+QT_END_NAMESPACE
 
 class runairport : public QMainWindow
 {
@@ -13,7 +37,7 @@ public:
 	~runairport();
 
 private:
-	Ui::runairportClass ui;
+	dUi_runairportClass ui;
 };
 
 #endif // RUNAIRPORT_H

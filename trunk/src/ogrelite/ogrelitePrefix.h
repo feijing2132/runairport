@@ -9,8 +9,6 @@
 
 
 BEGIN_NAMESPACE_OGRELITE
-
-
 	class RenderProcess;
 	class NameValueMap 
 	{
@@ -49,4 +47,8 @@ BEGIN_NAMESPACE_OGRELITE
 	public:
 		NameValuePairList mMap;
 	};	
+
+
+	class IRenderCanvas;
+	class IRenderEngine;
 END_NAMESPACE_OGRELITE
