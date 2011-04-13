@@ -88,7 +88,6 @@
     <ClCompile Include="src\OgreCamera.cpp" />
     <ClCompile Include="src\OgreColourValue.cpp" />
     <ClCompile Include="src\OgreException.cpp" />
-    <ClCompile Include="src\OgreFrustum.cpp" />
     <ClCompile Include="src\OgreGLSupport.cpp" />
     <ClCompile Include="src\OgreLog.cpp" />
     <ClCompile Include="src\OgreLogManager.cpp" />

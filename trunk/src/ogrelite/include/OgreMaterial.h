@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "OgrePrerequisites.h"
 
 //#include "OgreResource.h"
+#include "OgreSharedPtr.h"
 #include "OgreIteratorWrappers.h"
 #include "OgreCommon.h"
 #include "OgreColourValue.h"

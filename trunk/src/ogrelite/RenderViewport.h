@@ -17,17 +17,17 @@ class RenderViewport
 public:
 	RenderViewport() 
 		:mpRenerProcess(NULL)
-		,mbVisible(true)
+		,mbShow(true)
 	{
 	}
 	virtual void renderTo(IRenderCanvas* pCanvas);
-	bool isVisible()const{ return mbVisible; }
-	void setVisible(bool b){ mbVisible = b; }
+	bool isShow()const{ return mbShow; }
+	void show(bool b){ mbShow = b; }
 	void setClearEveryFrame( unsigned int buffers = FBT_COLOUR | FBT_DEPTH);
-protected:	
-	RenderProcess* mpRenerProcess;		
 	// Actual dimensions, based on target dimensions
 	int mActLeft, mActTop, mActWidth, mActHeight;	
+protected:	
+	RenderProcess* mpRenerProcess;		
 	/// Viewport orientation
 	int mOrientation;
 	/// Background options
@@ -35,11 +35,11 @@ protected:
 	float mClearDepth;
 	int mClearStencil;
 	unsigned int mClearBuffers;	
-	bool mbVisible;
+	bool mbShow;
 };
 
 
-typedef nodelete_shared_ptr<RenderViewport> RenderViewportSharedPtr;
+typedef ref_ptr<RenderViewport> RenderViewportSharedPtr;
 
 //render target
 // window support or software support(FBO) which have , have buffers like pixel buffer , stencil buffer, depth buffer..
@@ -54,12 +54,13 @@ public:
 	void renderOneFrame();
 protected:
 	virtual void _beginFrame()=0;	
+	virtual void _beginViewport(RenderViewport* pVp)=0;
 	virtual void _endFrame()=0;
 protected:
 	typedef std::list< RenderViewportSharedPtr > RenderLayerList;
 	RenderLayerList mRenderLayList;
 };
-typedef nodelete_shared_ptr<IRenderCanvas> IRenderCanvasSharedPtr;
+typedef ref_ptr<IRenderCanvas> IRenderCanvasSharedPtr;
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -69,7 +70,7 @@ class Texture
 public:
 
 };
-typedef nodelete_shared_ptr<Texture> TextureSharedPtr;
+typedef ref_ptr<Texture> TextureSharedPtr;
 
 
 
