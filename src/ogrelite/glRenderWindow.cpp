@@ -24,7 +24,7 @@ public:
 	void create(const String& name, const NameValueMap* miscParams=NULL);
 	HDC getHDC(){ return mHDC; }	
 
-	virtual void _beginFrame();
+	virtual void _beginFrame();	
 	virtual void _endFrame();
 protected:
 	HWND mHWnd;
@@ -173,4 +173,9 @@ void Win32GLRenderWindowCanvas::_beginFrame()
 
 
 
+
+void IGLRenderCanvas::_beginViewport( RenderViewport* pVp )
+{
+	glViewport(pVp->mActTop,pVp->mActLeft,pVp->mActWidth,pVp->mActHeight);
+}
 END_NAMESPACE_OGRELITE

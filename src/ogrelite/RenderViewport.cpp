@@ -10,7 +10,7 @@ void IRenderCanvas::renderOneFrame()
 	for(RenderLayerList::iterator itr=mRenderLayList.begin();itr!=mRenderLayList.end();++itr)
 	{
 		RenderViewportSharedPtr& shptr=*itr;
-		if(shptr.get() && shptr->isVisible() )
+		if(shptr.get() && shptr->isShow() )
 		{			
 			//_beginViewport(shptr.get());
 			shptr->renderTo(this);

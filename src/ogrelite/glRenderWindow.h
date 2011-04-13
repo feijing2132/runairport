@@ -15,6 +15,7 @@ BEGIN_NAMESPACE_OGRELITE
 
 	protected:
 		virtual void _beginFrame(){ setCurrent(); }
+		virtual void _beginViewport(RenderViewport* pVp);
 		virtual void _endFrame(){ endCurrent(); }
 
 	};
