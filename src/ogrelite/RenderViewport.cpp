@@ -12,7 +12,7 @@ void IRenderCanvas::renderOneFrame()
 		RenderViewportSharedPtr& shptr=*itr;
 		if(shptr.get() && shptr->isVisible() )
 		{			
-			_beginViewport(shptr.get());
+			//_beginViewport(shptr.get());
 			shptr->renderTo(this);
 		}
 	}

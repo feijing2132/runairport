@@ -9,6 +9,7 @@ BEGIN_NAMESPACE_OGRELITE
 class IRenderEngine
 {
 public:
+	virtual ~IRenderEngine(){}
 	//texture manager
 	TextureSharedPtr createTexture(const String& sName,const NameValueMap* miscParams=NULL);
 	void destoryTexture(const String& sName,bool bForce = false);
@@ -16,9 +17,9 @@ public:
 	std::map<String, inst_ptr<Texture> > mTextureMap;
 
 	//the sub canvas from the prime	
-	RenderCanvasSharedPtr createRenderCanvas(const String &name,const NameValueMap* miscParams=NULL );
+	IRenderCanvasSharedPtr createRenderCanvas(const String &name,const NameValueMap* miscParams=NULL );
 	void destroyCanvas(const String& sName,bool bForce = false);
-	RenderCanvasSharedPtr getRenderCanvas(const String& sName){ return mCanvasMap[sName];}
+	IRenderCanvasSharedPtr getRenderCanvas(const String& sName){ return mCanvasMap[sName];}
 
 	std::map<String, inst_ptr<IRenderCanvas> > mCanvasMap;	
 	//

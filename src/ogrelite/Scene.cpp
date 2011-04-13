@@ -27,7 +27,7 @@ SceneNode* Scene::createSceneNode( const String& name )
 	if ( itrFind != mSceneNodes.end())
 	{		
 		SceneNodeInstPtr& instPtr = itrFind->second;
-		if( instPtr.isInRef() )
+		if( instPtr.is_refed() )
 		{
 			OGRE_EXCEPT(
 			Exception::ERR_DUPLICATE_ITEM,
