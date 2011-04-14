@@ -6,6 +6,7 @@ runairport::runairport(QWidget *parent, Qt::WFlags flags)
 {
 	ui.setupUi(this);
 	ui.setupOgreWidget();
+	
 }
 
 runairport::~runairport()

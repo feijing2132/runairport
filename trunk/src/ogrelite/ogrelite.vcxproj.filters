@@ -97,6 +97,7 @@
     <ClCompile Include="src\OgreCamera.cpp">
       <Filter>applayer</Filter>
     </ClCompile>
+    <ClCompile Include="Win32GLRenderWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ogrelitePrefix.h" />
@@ -108,5 +109,6 @@
       <Filter>devicelayer\opengl</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Win32GLRenderWindow.h" />
   </ItemGroup>
 </Project>

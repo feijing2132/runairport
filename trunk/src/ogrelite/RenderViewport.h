@@ -47,9 +47,9 @@ class IRenderEngine;
 class IRenderCanvas
 {
 public:	
-	virtual uint32 getWidth()const=0;
-	virtual uint32 getHeight()const=0;
+	virtual void getSize(uint32& width, uint32& height)const=0;	
 	virtual IRenderEngine* getSystem()=0;
+	virtual ~IRenderCanvas(){}
 
 	void renderOneFrame();
 protected:

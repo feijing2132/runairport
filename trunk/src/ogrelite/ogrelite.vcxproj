@@ -107,6 +107,7 @@
     <ClCompile Include="src\OgreVector4.cpp" />
     <ClCompile Include="src\OgreWin32Context.cpp" />
     <ClCompile Include="src\OgreWin32GLSupport.cpp" />
+    <ClCompile Include="Win32GLRenderWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glRenderWindow.h" />
@@ -116,6 +117,7 @@
     <ClInclude Include="RenderProcess.h" />
     <ClInclude Include="RenderViewport.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Win32GLRenderWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,9 +7,9 @@
 
 #include "OgreWin32GLSupport.h"
 //#include "OgreGLTexture.h"
-//#include "OgreWin32Window.h"
+#include "OgreWin32Window.h"
 #include "OgreWin32RenderTexture.h"
-
+#include "../Win32GLRenderWindow.h"
 using namespace Ogre;
 
 #if OGRE_THREAD_SUPPORT != 1
@@ -318,15 +318,15 @@ namespace Ogre {
 	}
 
 
-	/*OgreLite::IRenderCanvas* Win32GLSupport::newRenderCanvas(const String &name, OgreLite::IRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams)
+	OgreLite::IGLRenderCanvas* Win32GLSupport::newRenderCanvas(const String &name, OgreLite::IRenderEngine* renderSystem,const OgreLite::NameValueMap *miscParams)
 	{
 		
-		OgreLite::Win32GLRenderWindowCanvas* window = new OgreLite::Win32GLRenderWindowCanvas(renderSystem);
+		OgreLite::Win32GLRenderWindowCanvas* window = new OgreLite::Win32GLRenderWindowCanvas((OgreLite::Win32GLRenderEngine*)renderSystem);
 		window->create(name, miscParams);
 		if(!mInitialWindow)
 			mInitialWindow = window;
 		return window;
-	}*/
+	}
 
 	void Win32GLSupport::stop()
 	{
@@ -593,6 +593,8 @@ namespace Ogre {
 	{
 
 	}
+
+	
 	String translateWGLError()
 	{
 		int winError = GetLastError();

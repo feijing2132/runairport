@@ -25,10 +25,16 @@ public:
 	virtual void setCurrent(){	mpWidget->makeCurrent();}
 	virtual void endCurrent(){ 	}
 
-	virtual uint32 getWidth()const{ return mpWidget->size().width(); }
-	virtual uint32 getHeight()const{ return mpWidget->size().height();  };
-	virtual void resize(int width, int height){  }
 
+	virtual void getSize(uint32& width, uint32& height)const
+	{ 
+		const QGLContext *pCtx = mpWidget->context();
+		if(pCtx)
+		{
+			width = pCtx->device()->width();
+			height = pCtx->device()->height();
+		}
+	}
 protected:
 	QTGLRenderEngine* mpEngine;
 	QGLWidget* mpWidget;
@@ -68,8 +74,11 @@ QOgreLiteWidget::QOgreLiteWidget(QWidget *parent)
 {	
 	startTimer(1);
 	mpEngine= new QTGLRenderEngine();
+	
+	
 	NameValueMap paremeters;
-	paremeters.set("QGLWidget", (int)this);
+
+	paremeters.set("QGLWidget", (int)this );
 	mpEngine->createRenderCanvas(sMainCanvas,&paremeters);	
 }
 

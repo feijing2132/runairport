@@ -58,7 +58,7 @@ THE SOFTWARE.
 //#include "OgreQuaternion.h"
 //#include "OgreResource.h"
 //#include "OgreSerializer.h"
-//#include "OgreSharedPtr.h"
+#include "OgreSharedPtr.h"
 //#include "OgreSimpleRenderable.h"
 //#include "OgreSimpleSpline.h"
 //#include "OgreSingleton.h"
