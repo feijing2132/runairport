@@ -4,7 +4,7 @@
 BEGIN_NAMESPACE_OGRELITE
 //////////////////////////////////////////////////////////////////////////
 
-#include "OgreSharedPtr.h"
+
 
 typedef long count_type;
 
@@ -20,10 +20,14 @@ public:
 		count_type nown;		 
 	};
 
-	explicit s_ptr(T* ptr):pref(new shared_count_handle(ptr)){}
+	/*s_ptr(int ptr):pref(new shared_count_handle(ptr)){}*/
+	explicit s_ptr(T* ptr):pref(0)
+	{
+		if(ptr){ pref = new shared_count_handle(ptr); }
+	}
 	
 	T* get()const{ return (T*)( pref?pref->ptr:0); }
-	
+
 	inline bool isValid()const{ return pref?pref->ptr:false; }
 	inline bool isNull() const {	return !isValid();	}
 	inline bool operator!() const {	return isNull();	}
@@ -36,14 +40,17 @@ public:
 	{		
 		return get();
 	}
+	bool is_refed()const{ return pref?pref->nref!=0:false; }
+
+	shared_count_handle* pref;	
 
 protected:
-	shared_count_handle* pref;	
 	s_ptr():pref(0){}
 	//inline bool is_trash()const{ return pref?(!pref->nown && !pref->nref):false; }
+public:
 	inline void own(){ if(pref){ ++pref->nown; } }
 	inline void ref(){ if(pref){ ++pref->nref;} }
-	inline void reset(){ pref = 0; }
+	
 	
 	inline void unown()
 	{ 
@@ -72,17 +79,17 @@ protected:
 			}
 		} 
 	}
-
+protected:
 	void destoryObj()
 	{		
-		T* pt= (T*)pref->ptr;
-		pref->ptr = 0;
-		delete pt;		
+		T* ptmp= 0;		
+		std::swap( (T*&)pref->ptr,ptmp);
+		delete ptmp;		
 	}
 	void destory()
 	{
-		shared_count_handle* preftmp = pref;
-		pref = 0;
+		shared_count_handle* preftmp = 0;
+		std::swap(pref,preftmp);
 		delete preftmp;
 	}
 };
@@ -107,19 +114,28 @@ public:
 	{
 		unown();	
 	}	
-	void operator=(inst_ptr& other)
-	{ 		
-		s_ptr<T> tmp = *this;
-		pref = other.pref;
-		tmp.unown();
-		own();
-	}
+	
 	void operator=(s_ptr& other)
 	{ 
 		s_ptr<T> tmp = *this;
 		pref = other.pref;
-		tmp.unown();
 		own();
+		tmp.unown();		
+	}
+	void operator=(inst_ptr& other)
+	{ 		
+		s_ptr<T> tmp = *this;
+		pref = other.pref;		
+		own();
+		tmp.unown();
+	}	
+	void operator = (T* pt)
+	{
+		if(pt!=get())
+		{			
+			s_ptr<T> other(pt);
+			*this = other;		
+		}
 	}
 private:	
 	
@@ -140,19 +156,31 @@ public:
 	ref_ptr(s_ptr& other):s_ptr(other){
 		ref();
 	}
+	ref_ptr(ref_ptr& other):s_ptr(other){
+		ref();
+	}
 	void operator=(ref_ptr& other)
 	{ 		
 		s_ptr<T> tmp = *this;
 		pref = other.pref;
-		tmp.unref();
 		ref();
+		tmp.unref();
 	}
 	void operator=(s_ptr& other)
 	{ 
 		s_ptr<T> tmp = *this;
-		pref = other.pref;
-		tmp.unref();
+		pref = other.pref;		
 		ref();
+		tmp.unref();
+	}
+
+	void operator = (T* pt)
+	{
+		if(pt!=get())
+		{			
+			s_ptr<T> other(pt);
+			*this = other;		
+		}
 	}
 	~ref_ptr(){ unref(); }
 private:	
