@@ -11,7 +11,7 @@ BEGIN_NAMESPACE_OGRELITE
 class RenderViewport;
 //viewport layer to canvas 
 class IRenderCanvas;
-class RenderProcess;
+class IRenderProcess;
 class RenderViewport 
 {
 public:
@@ -26,7 +26,7 @@ public:
 	// Actual dimensions, based on target dimensions
 	int mActLeft, mActTop, mActWidth, mActHeight;	
 protected:	
-	RenderProcess* mpRenerProcess;		
+	IRenderProcess* mpRenerProcess;		
 	/// Viewport orientation
 	int mOrientation;
 	/// Background options

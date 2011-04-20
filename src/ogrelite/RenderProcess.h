@@ -5,28 +5,28 @@
 BEGIN_NAMESPACE_OGRELITE
 	///virtual base class represent a render operation to  
 	//class 
-class RenderViewport;
-class RenderProcess
+class IRenderEngine;
+class IRenderProcess
 {
 public:
-	virtual void render(RenderViewport* pdest)=0;
-	virtual ~RenderProcess(){}
+	virtual void render()=0;
+	virtual ~IRenderProcess(){}
 protected:
 	String sDesc;
 };
 
 // a group of render process
-class RenderProcessSquence : public RenderProcess
+class RenderProcessSquence : public IRenderProcess
 {
 protected:	
 	//bool m_bParalle; //no effect yet
-	void render(RenderViewport* pdest);
+	void render();
 	virtual void preRenderSeq(){}
 	virtual void postRenderSeq(){}
 protected:
-	typedef std::vector<RenderProcess*> SequenceProcessList;
+	typedef std::vector<IRenderProcess*> SequenceProcessList;
 	SequenceProcessList mSequenceProcesses;
-	void processRenderSeq(RenderViewport* pdest);
+	void processRenderSeq();
 };
 
 END_NAMESPACE_OGRELITE

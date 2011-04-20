@@ -26,7 +26,7 @@ void IRenderCanvas::renderOneFrame()
 void RenderViewport::renderTo( IRenderCanvas* pCanvas )
 {
 	if(mpRenerProcess)
-		mpRenerProcess->render(this);
+		mpRenerProcess->render();
 }
 
 END_NAMESPACE_OGRELITE

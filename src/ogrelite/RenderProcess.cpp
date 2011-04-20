@@ -1,18 +1,18 @@
 #include "RenderProcess.h"
 
 BEGIN_NAMESPACE_OGRELITE
-void RenderProcessSquence::render(RenderViewport* pdest)
+void RenderProcessSquence::render()
 {
 	preRenderSeq();
-	processRenderSeq(pdest);
+	processRenderSeq();
 	postRenderSeq();
 }
 
-void RenderProcessSquence::processRenderSeq( RenderViewport* pdest )
+void RenderProcessSquence::processRenderSeq()
 {
 	for(SequenceProcessList::iterator itr= mSequenceProcesses.begin();itr!=mSequenceProcesses.end();++itr)
 	{
-		(*itr)->render(pdest);
+		(*itr)->render();
 	}	
 }
 
