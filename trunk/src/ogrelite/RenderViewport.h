@@ -22,8 +22,7 @@ public:
 	}
 	virtual void renderTo(IRenderCanvas* pCanvas);
 	bool isShow()const{ return mbShow; }
-	void show(bool b){ mbShow = b; }
-	void setClearEveryFrame( unsigned int buffers = FBT_COLOUR | FBT_DEPTH);
+	void show(bool b){ mbShow = b; }	
 	// Actual dimensions, based on target dimensions
 	int mActLeft, mActTop, mActWidth, mActHeight;	
 protected:	
@@ -31,10 +30,6 @@ protected:
 	/// Viewport orientation
 	int mOrientation;
 	/// Background options
-	ColourValue mClearColour;
-	float mClearDepth;
-	int mClearStencil;
-	unsigned int mClearBuffers;	
 	bool mbShow;
 };
 
@@ -43,6 +38,18 @@ typedef ref_ptr<RenderViewport> RenderViewportSharedPtr;
 
 //render target
 // window support or software support(FBO) which have , have buffers like pixel buffer , stencil buffer, depth buffer..
+
+class BackGround
+{
+public:
+	enum Type
+	{
+		_NONE,   //
+		_SINGLE_COLOR, //
+		_
+	};
+};
+
 class IRenderEngine;
 class IRenderCanvas
 {
