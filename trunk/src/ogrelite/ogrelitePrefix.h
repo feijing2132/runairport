@@ -9,19 +9,15 @@
 
 
 BEGIN_NAMESPACE_OGRELITE
-	class RenderProcess;
+	class IRenderProcess;
 	class NameValueMap 
 	{
 	public:
 		NameValueMap(){}
 		NameValueMap(const NameValuePairList& other){  mMap = other; }
-		void set(const String& sKey, const String& sValue){  mMap[sKey] = sValue; }
-		
+		void set(const String& sKey, const String& sValue){  mMap[sKey] = sValue; }		
 		template<class T>
 		void set(const String& sKey, const T& tValue){ mMap[sKey] = StringConverter::toString(tValue); }
-	
-		
-
 		bool get(const String& sKey, String& sValue)const
 		{
 			NameValuePairList::const_iterator itrFind = mMap.find(sKey);				

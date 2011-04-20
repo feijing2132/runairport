@@ -1,0 +1,11 @@
+<map version="0.9.0">
+<!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
+<node CREATED="1303288859250" ID="ID_1870483347" MODIFIED="1303288870875" TEXT="CoreDesign">
+<node CREATED="1303288872937" HGAP="39" ID="ID_788184827" MODIFIED="1303289192062" POSITION="right" TEXT="FObject" VSHIFT="-55">
+<node CREATED="1303288882312" HGAP="29" ID="ID_575041697" MODIFIED="1303289095078" TEXT="Functions" VSHIFT="-10">
+<node CREATED="1303289336000" HGAP="30" ID="ID_949280192" MODIFIED="1303290052125" TEXT="showTo" VSHIFT="-28"/>
+</node>
+<node CREATED="1303289100656" HGAP="32" ID="ID_390982868" MODIFIED="1303289189843" TEXT="Attributes" VSHIFT="-1"/>
+</node>
+</node>
+</map>
