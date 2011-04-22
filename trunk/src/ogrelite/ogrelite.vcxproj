@@ -112,7 +112,6 @@
   <ItemGroup>
     <ClInclude Include="glRenderWindow.h" />
     <ClInclude Include="ogrelitePrefix.h" />
-    <ClInclude Include="ogreliteptr.h" />
     <ClInclude Include="RenderEngine.h" />
     <ClInclude Include="RenderProcess.h" />
     <ClInclude Include="RenderViewport.h" />

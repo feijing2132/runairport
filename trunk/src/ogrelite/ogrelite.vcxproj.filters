@@ -101,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ogrelitePrefix.h" />
-    <ClInclude Include="ogreliteptr.h" />
     <ClInclude Include="RenderEngine.h" />
     <ClInclude Include="RenderViewport.h" />
     <ClInclude Include="RenderProcess.h" />
