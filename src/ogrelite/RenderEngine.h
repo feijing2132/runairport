@@ -1,7 +1,7 @@
 #pragma once
 #include "ogrelitePrefix.h"
 #include "RenderViewport.h"
-#include "ogreliteptr.h"
+#include "../core/s_ptr.h"
 
 
 BEGIN_NAMESPACE_OGRELITE

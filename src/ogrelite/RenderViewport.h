@@ -1,6 +1,6 @@
 #pragma once
 #include "ogrelitePrefix.h"
-#include "ogreliteptr.h"
+#include "../core/s_ptr.h"
 #include "OgreColourValue.h"
 #include "OgreCommon.h"
 

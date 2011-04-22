@@ -39,7 +39,7 @@ THE SOFTWARE.
 //#include "OgreAnimable.h"
 #include "OgreAny.h"
 #include "OgreUserObjectBindings.h"
-#include "../ogreliteptr.h"
+
 
 namespace Ogre {
 

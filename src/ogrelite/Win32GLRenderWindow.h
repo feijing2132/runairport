@@ -1,5 +1,5 @@
 #pragma once
-#include "ogreliteptr.h"
+#include "../core/s_ptr.h"
 #include "OgreWin32Context.h"
 #include "OgreWin32GLSupport.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "ogrelitePrefix.h"
-#include "ogreliteptr.h"
+#include "../core/s_ptr.h"
 
 #include <OgreSceneNode.h>
 #include <OgreCamera.h>
