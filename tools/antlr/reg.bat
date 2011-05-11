@@ -1,0 +1,1 @@
+xcopy antlr-*.jar "%JAVA_HOME%\lib\ext\" /Y 
