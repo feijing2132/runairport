@@ -156,8 +156,7 @@
       <a href="http://libnurbs.sourceforge.net/">http://libnurbs.sourceforge.net/</a>
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 </node>
 <node CREATED="1303788575214" HGAP="90" ID="ID_266060296" MODIFIED="1303788577324" TEXT="OpenCASCADE " VSHIFT="-3"/>
 </node>
@@ -201,6 +200,10 @@
   </body>
 </html></richcontent>
 </node>
+</node>
+<node CREATED="1305175442197" ID="ID_1653794766" MODIFIED="1305175459541" POSITION="left" TEXT="Text">
+<node CREATED="1305175447197" ID="ID_886684541" MODIFIED="1305175451103" TEXT="Boost::regex"/>
+<node CREATED="1305175459541" ID="ID_1098444228" MODIFIED="1305175462275" TEXT="PCRE"/>
 </node>
 </node>
 </map>
