@@ -4,109 +4,16 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="applayer">
-      <UniqueIdentifier>{8dfd8c03-590b-4c20-a6f9-b98b461d9967}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="devicelayer">
-      <UniqueIdentifier>{1951bf95-881c-407e-912d-2c2773ffa60e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="devicelayer\opengl">
-      <UniqueIdentifier>{0bd714b4-576f-4a20-81ab-6d57f62c1bad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="devicelayer\directx9">
-      <UniqueIdentifier>{35886e67-904a-4cdd-806e-afbf8f437a83}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\OgreWin32Context.cpp">
-      <Filter>devicelayer\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreGLSupport.cpp">
-      <Filter>devicelayer\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreWin32GLSupport.cpp">
-      <Filter>devicelayer\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="GL\src\glew.cpp">
-      <Filter>devicelayer\opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="GL\src\OgreGLContext.cpp">
-      <Filter>devicelayer\opengl</Filter>
-    </ClCompile>
     <ClCompile Include="RenderEngine.cpp" />
-    <ClCompile Include="src\OgreMatrix4.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreException.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreLog.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreLogManager.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreVector4.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreVector2.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreVector3.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreQuaternion.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreMatrix3.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreMath.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreStringInterface.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreString.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreStringConverter.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgrePlane.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreColourValue.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreMemoryNedPooling.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
     <ClCompile Include="RenderViewport.cpp" />
     <ClCompile Include="RenderProcess.cpp" />
-    <ClCompile Include="glRenderWindow.cpp">
-      <Filter>devicelayer\opengl</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="src\OgreSceneNode.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreNode.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OgreCamera.cpp">
-      <Filter>applayer</Filter>
-    </ClCompile>
     <ClCompile Include="Win32GLRenderWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ogrelitePrefix.h" />
     <ClInclude Include="RenderEngine.h" />
     <ClInclude Include="RenderViewport.h" />
     <ClInclude Include="RenderProcess.h" />
-    <ClInclude Include="glRenderWindow.h">
-      <Filter>devicelayer\opengl</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Win32GLRenderWindow.h" />
   </ItemGroup>

@@ -78,40 +78,13 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="glRenderWindow.cpp" />
-    <ClCompile Include="GL\src\glew.cpp" />
-    <ClCompile Include="GL\src\OgreGLContext.cpp" />
     <ClCompile Include="RenderEngine.cpp" />
     <ClCompile Include="RenderProcess.cpp" />
     <ClCompile Include="RenderViewport.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="src\OgreCamera.cpp" />
-    <ClCompile Include="src\OgreColourValue.cpp" />
-    <ClCompile Include="src\OgreException.cpp" />
-    <ClCompile Include="src\OgreGLSupport.cpp" />
-    <ClCompile Include="src\OgreLog.cpp" />
-    <ClCompile Include="src\OgreLogManager.cpp" />
-    <ClCompile Include="src\OgreMath.cpp" />
-    <ClCompile Include="src\OgreMatrix3.cpp" />
-    <ClCompile Include="src\OgreMatrix4.cpp" />
-    <ClCompile Include="src\OgreMemoryNedPooling.cpp" />
-    <ClCompile Include="src\OgreNode.cpp" />
-    <ClCompile Include="src\OgrePlane.cpp" />
-    <ClCompile Include="src\OgreQuaternion.cpp" />
-    <ClCompile Include="src\OgreSceneNode.cpp" />
-    <ClCompile Include="src\OgreString.cpp" />
-    <ClCompile Include="src\OgreStringConverter.cpp" />
-    <ClCompile Include="src\OgreStringInterface.cpp" />
-    <ClCompile Include="src\OgreVector2.cpp" />
-    <ClCompile Include="src\OgreVector3.cpp" />
-    <ClCompile Include="src\OgreVector4.cpp" />
-    <ClCompile Include="src\OgreWin32Context.cpp" />
-    <ClCompile Include="src\OgreWin32GLSupport.cpp" />
     <ClCompile Include="Win32GLRenderWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="glRenderWindow.h" />
-    <ClInclude Include="ogrelitePrefix.h" />
     <ClInclude Include="RenderEngine.h" />
     <ClInclude Include="RenderProcess.h" />
     <ClInclude Include="RenderViewport.h" />

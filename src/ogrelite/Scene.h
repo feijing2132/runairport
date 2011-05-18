@@ -2,17 +2,13 @@
 #include "ogrelitePrefix.h"
 #include "../core/s_ptr.h"
 
-#include <OgreSceneNode.h>
-#include <OgreCamera.h>
-#include <OgreEntity.h>
-#include <OgreSceneManager.h>
 
 BEGIN_NAMESPACE_OGRELITE
 typedef inst_ptr<SceneNode> SceneNodeInstPtr;
 typedef inst_ptr<Camera> CameraInstPtr;
 
 
-class Scene : public SceneManager
+class Scene
 {
 public:
 	Scene(void);
@@ -30,8 +26,7 @@ protected:
 	SceneNodeMapType mSceneNodes;	
 	//typedef HashMap<String, CameraInstPtr> CameraMapType;
 	//CameraMapType mCameraMap;
-
-	std::map<String, inst_ptr<MovableObjectFactory> > mMovableObjCollectionMap;
+	
 };
 
 END_NAMESPACE_OGRELITE

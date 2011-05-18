@@ -15,24 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="STime.h">
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RAObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SProcess.h">
+    <ClInclude Include="s_ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SMessage.h">
+    <ClInclude Include="geodefine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="STime.cpp">
+    <ClCompile Include="RAObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SProcess.cpp">
+    <ClCompile Include="s_ptr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SMessage.cpp">
+    <ClCompile Include="geodefine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
