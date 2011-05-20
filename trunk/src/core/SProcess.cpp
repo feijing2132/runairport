@@ -23,3 +23,8 @@ void SEngine::dispatchMail()
 		mSystime = curMail.tschTime;
 	}
 }
+
+void SEngine::discardProcMail( SProcess* pProc )
+{
+	mMailPool.remove_if( MessageMail::ProcEqual(pProc) );
+}
