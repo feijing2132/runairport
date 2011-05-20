@@ -22,6 +22,15 @@ struct MessageMail
 			return m1.tschTime < m2.tschTime;
 		}
 	};
+	struct ProcEqual
+	{
+		ProcEqual(SProcess* pProc):mpProc(pProc){}
+		bool operator()(const MessageMail& m1)const
+		{
+			return m1.pFromProc == mpProc;
+		}
+		SProcess* mpProc;
+	};
 };
 
 //simulation process
@@ -32,28 +41,38 @@ public:
 	void post(const MessageMail& mail);
 };
 
+//////////////////////////////////////////////////////////////////////////
 class STickTimer : public SProcess
 {
 public:
 	virtual void receive(const MessageMail& mail)
 	{
-		MessageMail next
-		post(mail.tschTime+m_interval);
+		//only accept self mail
+		if(mail.pFromProc==this)
+		{
+			MessageMail nextMail;
+			nextMail.pFromProc = this;
+			nextMail.pToProcs = mListeners;
+			nextMail.tschTime = mail.tschTime + m_interval;
+			post(nextMail);
+		}
 	}
-	std::vector<SProcess*> 
+	std::vector<SProcess*> mListeners;
 	STime m_interval;
 };
 
-
+//////////////////////////////////////////////////////////////////////////
 class SEngine
 {
 public:
 	//dispatch all mail to the process
 	void dispatchMail();
 	void addMail(const MessageMail& mail);
+	void discardProcMail(SProcess* pProc);
 	
 protected: 
 	typedef std::list<MessageMail> MailList;
 	MailList mMailPool;	
 	STime mSystime;
+	STickTimer mTickTimer;
 };

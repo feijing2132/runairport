@@ -27,15 +27,30 @@
     <ClInclude Include="geodefine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SMessage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="STime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RAObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="s_ptr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="geodefine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="STime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SMessage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SProcess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

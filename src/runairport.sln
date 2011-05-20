@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "runairport", "runairport\ru
 		{3782ECA8-9220-4BC3-92CA-D14D77A7A84F} = {3782ECA8-9220-4BC3-92CA-D14D77A7A84F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "core\core.vcxproj", "{B9B49EB7-908D-41E8-A4DF-C5B06E69672F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "core\core.vcxproj", "{60F3E23F-7A9D-4BF4-BD90-058C02CA1798}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +24,10 @@ Global
 		{E2FA403B-3286-487E-A737-5ADB74B879A3}.Debug|Win32.Build.0 = Debug|Win32
 		{E2FA403B-3286-487E-A737-5ADB74B879A3}.Release|Win32.ActiveCfg = Release|Win32
 		{E2FA403B-3286-487E-A737-5ADB74B879A3}.Release|Win32.Build.0 = Release|Win32
-		{B9B49EB7-908D-41E8-A4DF-C5B06E69672F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B9B49EB7-908D-41E8-A4DF-C5B06E69672F}.Debug|Win32.Build.0 = Debug|Win32
-		{B9B49EB7-908D-41E8-A4DF-C5B06E69672F}.Release|Win32.ActiveCfg = Release|Win32
-		{B9B49EB7-908D-41E8-A4DF-C5B06E69672F}.Release|Win32.Build.0 = Release|Win32
+		{60F3E23F-7A9D-4BF4-BD90-058C02CA1798}.Debug|Win32.ActiveCfg = Debug|Win32
+		{60F3E23F-7A9D-4BF4-BD90-058C02CA1798}.Debug|Win32.Build.0 = Debug|Win32
+		{60F3E23F-7A9D-4BF4-BD90-058C02CA1798}.Release|Win32.ActiveCfg = Release|Win32
+		{60F3E23F-7A9D-4BF4-BD90-058C02CA1798}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
