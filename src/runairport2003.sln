@@ -1,0 +1,31 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "core\core.vcproj", "{A803947D-D9D1-4D06-B0A2-A3025087FBDE}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "T1", "..\test\T1\T1.vcproj", "{B95192AD-5C4D-46AE-A6E4-D9F665578D20}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{A803947D-D9D1-4D06-B0A2-A3025087FBDE}.Debug.ActiveCfg = Debug|Win32
+		{A803947D-D9D1-4D06-B0A2-A3025087FBDE}.Debug.Build.0 = Debug|Win32
+		{A803947D-D9D1-4D06-B0A2-A3025087FBDE}.Release.ActiveCfg = Release|Win32
+		{A803947D-D9D1-4D06-B0A2-A3025087FBDE}.Release.Build.0 = Release|Win32
+		{B95192AD-5C4D-46AE-A6E4-D9F665578D20}.Debug.ActiveCfg = Debug|Win32
+		{B95192AD-5C4D-46AE-A6E4-D9F665578D20}.Debug.Build.0 = Debug|Win32
+		{B95192AD-5C4D-46AE-A6E4-D9F665578D20}.Release.ActiveCfg = Release|Win32
+		{B95192AD-5C4D-46AE-A6E4-D9F665578D20}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
