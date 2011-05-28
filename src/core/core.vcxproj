@@ -54,7 +54,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\SDK\boost\include\boost-1_46_1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\WORK\Codes\ARCCommon\Boost\include\boost-1_46_1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -88,6 +88,7 @@
     <ClInclude Include="SProcess.h" />
     <ClInclude Include="STime.h" />
     <ClInclude Include="s_ptr.h" />
+    <ClInclude Include="Units.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="geodefine.cpp" />
@@ -95,6 +96,7 @@
     <ClCompile Include="SProcess.cpp" />
     <ClCompile Include="STime.cpp" />
     <ClCompile Include="s_ptr.cpp" />
+    <ClCompile Include="Units.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
