@@ -53,7 +53,7 @@ public:
 			MessageMail nextMail;
 			nextMail.pFromProc = this;
 			nextMail.pToProcs = mListeners;
-			nextMail.tschTime = mail.tschTime + m_interval;
+			//nextMail.tschTime = mail.tschTime + m_interval;
 			post(nextMail);
 		}
 	}
