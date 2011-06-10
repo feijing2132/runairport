@@ -7,72 +7,93 @@
 class SMessage;
 class STime;
 
-class SProcess;
-struct MessageMail
-{
-	std::vector<SProcess*> pToProcs; //to all or 
-	STime tschTime;
-	SMessage msendMsg;		
-	SProcess* pFromProc;
+class SAgent;
 
-	struct Timeless
-	{
-		bool operator()(const MessageMail& m1, const MessageMail& m2)
-		{
-			return m1.tschTime < m2.tschTime;
-		}
-	};
-	struct ProcEqual
-	{
-		ProcEqual(SProcess* pProc):mpProc(pProc){}
-		bool operator()(const MessageMail& m1)const
-		{
-			return m1.pFromProc == mpProc;
-		}
-		SProcess* mpProc;
-	};
-};
 
 //simulation process
-class SProcess
+class SAgent
 {
+public:	
+	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)=0;
+
 public:
-	virtual void receive(const MessageMail& mail);
-	void post(const MessageMail& mail);
+	void ClearOutBox(){ m_outBox.clear(); }
+	void AddOutMsg(const SMessage& s);
+	void LoopSendoutMsg(const STime& t);//loop send message out;
+	void AddListener(SAgent* pF);
+	void RemoveListener(SAgent* pF);
+protected:
+	void _sendmsgout(const SMessage& s);
+	void _loopEvent();
+	//message out box;
+	std::list<SMessage> m_outBox;
+	std::vector<SAgent*> m_listeners;
 };
 
-//////////////////////////////////////////////////////////////////////////
-class STickTimer : public SProcess
+
+class STickTimer : public SAgent
 {
 public:
-	virtual void receive(const MessageMail& mail)
+	void Start(const STime& t)
 	{
-		//only accept self mail
-		if(mail.pFromProc==this)
-		{
-			MessageMail nextMail;
-			nextMail.pFromProc = this;
-			nextMail.pToProcs = mListeners;
-			//nextMail.tschTime = mail.tschTime + m_interval;
-			post(nextMail);
-		}
+		SMessage startMsg;
+		startMsg.m_tSendTime = t;
+		startMsg.m_dest.push_back(this);
+		AddOutMsg(startMsg);
 	}
-	std::vector<SProcess*> mListeners;
-	STime m_interval;
+	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)
+	{
+		if(pFrom!=this)
+			return;
+		SMessage newMsg = msg;
+		newMsg.m_dest.push_back(this);
+		newMsg.m_tSendTime += STime(12.0);
+		AddOutMsg(newMsg);
+	}
 };
+
 
 //////////////////////////////////////////////////////////////////////////
 class SEngine
 {
-public:
-	//dispatch all mail to the process
-	void dispatchMail();
-	void addMail(const MessageMail& mail);
-	void discardProcMail(SProcess* pProc);
-	
+public:	
+	void Loop();	
+	const STime& getCurrentTime()const{ return mSystime; }
+	void AddAgentEvent(SAgent* pAgent, const STime& t);
+
+	static SEngine& GetInstance();
 protected: 
-	typedef std::list<MessageMail> MailList;
-	MailList mMailPool;	
+	struct SEvent
+	{
+		STime m_time;
+		SAgent* m_pAgent;		
+		void Process()
+		{
+			m_pAgent->LoopSendoutMsg(m_time);
+		}		
+	};
+
+	struct SameAgentEvent
+	{
+		SameAgentEvent(SAgent* pAgent):mpAgent(pAgent){}
+		bool operator()(const SEvent& evt)
+		{
+			return mpAgent == evt.m_pAgent;
+		}
+		SAgent* mpAgent;
+	};
+	struct EventTimeLess
+	{
+		bool operator()(const SEvent& evt1, const SEvent& evt2)const
+		{
+			return evt1.m_time < evt2.m_time;
+		}
+	};
+	
+
+
+	typedef std::list<SEvent> EventList;
+	EventList mEventsPool;	
 	STime mSystime;
-	STickTimer mTickTimer;
+
 };

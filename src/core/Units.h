@@ -11,7 +11,7 @@ namespace boost
 	{
 	
 		typedef derived_dimension<length_base_dimension,2>::type  area_dimension;
-	typedef derived_dimension<mass_base_dimension,1,
+		typedef derived_dimension<mass_base_dimension,1,
 		length_base_dimension,2,
 			time_base_dimension,-2>::type   energy_dimension;
 	
@@ -23,6 +23,9 @@ namespace boost
 			typedef unit<energy_dimension,system>   energy;
 
 		}
+
+		typedef make_scaled_unit<si::time, scale<10, static_rational<-9> > >::type nanosecond;
+
 	}
 }
 
@@ -34,8 +37,7 @@ namespace ark
 	public:
 		static const boost::units::si::length& meter;//= boost::units::si::meter;
 		static const boost::units::si::mass& kilogram;// = boost::units::si::kilogram;
-
-		//typedef make_scaled_unit<si::time, scale<10, static_rational<-9> > >::type nanosecond;
+		static const boost::units::si::time& second;
 
 		typedef boost::units::quantity<boost::units::si::dimensionless> Value;
 		typedef boost::units::quantity<boost::units::si::length> Length; //length in meter;
@@ -79,17 +81,7 @@ namespace ark
 
 		typedef base_unit<mass_dim,0> kg;
 		typedef base_unit<mass_dim,1> g;
-
-
-
-
-		typedef boost::units::make_system< meter, kg > system;
-		
-		template<class T, class S>
-		struct convert_worker
-		{
 			
-		};
 
 	}
 }
