@@ -1,15 +1,6 @@
 #include  "../../src/core/Units.h"
 #include "../../src/core/SProcess.h"
 
-class SAirflight : public SAgent
-{
-public:
-	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)
-	{
-
-	}
-
-};
 
 
 class SPassenger : public SAgent
@@ -22,52 +13,66 @@ public:
 
 };
 
-class SServiceVehicle : public SAgent
+//words between check in service and the client
+enum emCheckInMsgAtom
+{
+	//client
+	_arrivalAtServer,
+	
+	//server
+	_endService,
+};
+class SCheckInServer : public SAgent
 {
 public:
+
 	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)
 	{
+		
+		{
+			
+		}
 
 	}
+	//in going process 
+	class SCheckInSVCProcess : public  SAgent
+	{
+	public:
+		SPassenger* pClient;
 
-};
-//
-class SServiceProcess
-{
-public:
-
-};
-
-class SAirTrafficController : public SAgent
-{
-public:
+	};
+	std::vector<SCheckInSVCProcess*> m_svcProcs;
 
 
+	int nMaxSvc;
 };
 
-//runways
-class SRunwaysInAirport
+
+class SAirport : public SAgent
 {
 public:
 	
-};
-//taxiways
-class STaxiwaysInAirport
-{
 
+	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)
+	{
+		if(pFrom==this)
+		{
+			switch(msg.m_msgAtom)
+			{
+			case GenNextPax:
+				{
+						
+				}
+				break;
+			default:
+				NULL;
+			}
+		}
+	}
+	
 };
 
-//stands
-class SStandsInAirport
-{
 
-};
-
-//Airport
-class SAirport
-{
-public:
-};
 
 
 int main()

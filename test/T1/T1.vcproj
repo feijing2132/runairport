@@ -19,7 +19,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="E:\WORK\Codes\ARCCommon\Boost\include\boost-1_46_1"
+				AdditionalIncludeDirectories="&quot;C:\Users\Developer\Desktop\ARCCommon\Boost\include\boost-1_46_1&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
