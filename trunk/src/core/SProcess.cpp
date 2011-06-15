@@ -9,7 +9,8 @@ void SEngine::Loop()
 		SEvent curEvt = mEventsPool.front();
 		mEventsPool.pop_front();
 		mSystime = curEvt.m_time;
-		curEvt.Process();		
+		//
+		curEvt.m_pAgent->_LoopSendoutMsg(curEvt.m_time);
 	}
 }
 
@@ -36,6 +37,7 @@ void SEngine::AddAgentEvent( SAgent* pAgent, const STime& t )
 
 }
 
+
 void SAgent::_loopEvent()
 {
 	if(!m_outBox.empty())
@@ -44,20 +46,21 @@ void SAgent::_loopEvent()
 	}
 }
 
-void SAgent::LoopSendoutMsg(const STime& t) /*loop send message out */
+void SAgent::_LoopSendoutMsg(const STime& t) /*loop send message out */
 {
 	if(!m_outBox.empty())
-	{
-		SMessage fmsg = m_outBox.front();		
-		if(t == fmsg.m_tSendTime) //check if the time is match
+	{		
+		if(t == m_outBox.front().m_tSendTime) //check if the time is match
 		{
+			SMessage fmsg = m_outBox.front();
 			m_outBox.pop_front();
 			if(fmsg.m_dest.empty())
 			{
 				fmsg.m_dest = m_listeners;
 			}
 			_sendmsgout(fmsg);
-		}		
+		}	
+		
 		_loopEvent();
 	}
 }

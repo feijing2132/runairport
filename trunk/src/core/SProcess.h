@@ -8,20 +8,21 @@ class SMessage;
 class STime;
 
 class SAgent;
-
+class SProcess;
 
 //simulation process
 class SAgent
 {
 public:	
 	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)=0;
-
 public:
 	void ClearOutBox(){ m_outBox.clear(); }
 	void AddOutMsg(const SMessage& s);
-	void LoopSendoutMsg(const STime& t);//loop send message out;
+	
 	void AddListener(SAgent* pF);
 	void RemoveListener(SAgent* pF);
+
+	void _LoopSendoutMsg(const STime& t);
 protected:
 	void _sendmsgout(const SMessage& s);
 	void _loopEvent();
@@ -30,6 +31,19 @@ protected:
 	std::vector<SAgent*> m_listeners;
 };
 
+
+class SProcess
+{
+public:
+	SProcess(SAgent* pParent):mpParent(pParent){}
+	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)
+	{
+			
+	}
+
+
+	SAgent* mpParent;
+};
 
 class STickTimer : public SAgent
 {
@@ -58,21 +72,17 @@ class SEngine
 {
 public:	
 	void Loop();	
+
+	static SEngine& GetInstance();
 	const STime& getCurrentTime()const{ return mSystime; }
 	void AddAgentEvent(SAgent* pAgent, const STime& t);
 
-	static SEngine& GetInstance();
 protected: 
 	struct SEvent
 	{
 		STime m_time;
-		SAgent* m_pAgent;		
-		void Process()
-		{
-			m_pAgent->LoopSendoutMsg(m_time);
-		}		
+		SAgent* m_pAgent;				
 	};
-
 	struct SameAgentEvent
 	{
 		SameAgentEvent(SAgent* pAgent):mpAgent(pAgent){}
@@ -89,11 +99,8 @@ protected:
 			return evt1.m_time < evt2.m_time;
 		}
 	};
-	
-
 
 	typedef std::list<SEvent> EventList;
 	EventList mEventsPool;	
 	STime mSystime;
-
 };
