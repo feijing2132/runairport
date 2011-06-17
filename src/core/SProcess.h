@@ -10,11 +10,12 @@ class STime;
 class SAgent;
 class SProcess;
 
-//simulation process
+//in simulation an agent  is the object that can  communicate with each other by  send time msg
+
 class SAgent
 {
 public:	
-	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)=0;
+	virtual void OnMsg(SAgent* pFrom, const SMessage& msg){}
 public:
 	void ClearOutBox(){ m_outBox.clear(); }
 	void AddOutMsg(const SMessage& s);
@@ -22,52 +23,22 @@ public:
 	void AddListener(SAgent* pF);
 	void RemoveListener(SAgent* pF);
 
-	void _LoopSendoutMsg(const STime& t);
+	void _outMsgLoop(const STime& t);
 protected:
-	void _sendmsgout(const SMessage& s);
-	void _loopEvent();
+	void _sendMsgout(const SMessage& s);
+	void _loop();
 	//message out box;
 	std::list<SMessage> m_outBox;
 	std::vector<SAgent*> m_listeners;
+
+	SAgent(){}
 };
 
 
-class SProcess
-{
-public:
-	SProcess(SAgent* pParent):mpParent(pParent){}
-	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)
-	{
-			
-	}
-
-
-	SAgent* mpParent;
-};
-
-class STickTimer : public SAgent
-{
-public:
-	void Start(const STime& t)
-	{
-		SMessage startMsg;
-		startMsg.m_tSendTime = t;
-		startMsg.m_dest.push_back(this);
-		AddOutMsg(startMsg);
-	}
-	virtual void OnMsg(SAgent* pFrom, const SMessage& msg)
-	{
-		if(pFrom!=this)
-			return;
-		SMessage newMsg = msg;
-		newMsg.m_dest.push_back(this);
-		newMsg.m_tSendTime += STime(12.0);
-		AddOutMsg(newMsg);
-	}
-};
 
 
 //////////////////////////////////////////////////////////////////////////
+//two kinds events 
 class SEngine
 {
 public:	
@@ -78,7 +49,7 @@ public:
 	void AddAgentEvent(SAgent* pAgent, const STime& t);
 
 protected: 
-	struct SEvent
+	struct SAgentEvent
 	{
 		STime m_time;
 		SAgent* m_pAgent;				
@@ -86,7 +57,7 @@ protected:
 	struct SameAgentEvent
 	{
 		SameAgentEvent(SAgent* pAgent):mpAgent(pAgent){}
-		bool operator()(const SEvent& evt)
+		bool operator()(const SAgentEvent& evt)
 		{
 			return mpAgent == evt.m_pAgent;
 		}
@@ -94,13 +65,13 @@ protected:
 	};
 	struct EventTimeLess
 	{
-		bool operator()(const SEvent& evt1, const SEvent& evt2)const
+		bool operator()(const SAgentEvent& evt1, const SAgentEvent& evt2)const
 		{
 			return evt1.m_time < evt2.m_time;
 		}
 	};
 
-	typedef std::list<SEvent> EventList;
+	typedef std::list<SAgentEvent> EventList;
 	EventList mEventsPool;	
 	STime mSystime;
 };
