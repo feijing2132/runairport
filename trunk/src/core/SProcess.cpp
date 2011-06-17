@@ -6,11 +6,11 @@ void SEngine::Loop()
 {
 	while(!mEventsPool.empty())
 	{
-		SEvent curEvt = mEventsPool.front();
+		SAgentEvent curEvt = mEventsPool.front();
 		mEventsPool.pop_front();
 		mSystime = curEvt.m_time;
 		//
-		curEvt.m_pAgent->_LoopSendoutMsg(curEvt.m_time);
+		curEvt.m_pAgent->_outMsgLoop(mSystime);
 	}
 }
 
@@ -26,9 +26,9 @@ SEngine& SEngine::GetInstance()
 
 void SEngine::AddAgentEvent( SAgent* pAgent, const STime& t )
 {
-	//EventList::iterator itr = std::remove_if(mEventsPool.begin(),mEventsPool.end(),SameAgentEvent(pAgent) );
-	//mEventsPool.erase(itr,mEventsPool.end());
-	SEvent newEvt;
+//EventList::iterator itr = std::remove_if(mEventsPool.begin(),mEventsPool.end(),SameAgentEvent(pAgent) );
+//mEventsPool.erase(itr,mEventsPool.end());
+	SAgentEvent newEvt;
 	newEvt.m_pAgent = pAgent;
 	newEvt.m_time = t;
 
@@ -38,15 +38,9 @@ void SEngine::AddAgentEvent( SAgent* pAgent, const STime& t )
 }
 
 
-void SAgent::_loopEvent()
-{
-	if(!m_outBox.empty())
-	{
-		SEngine::GetInstance().AddAgentEvent(this, m_outBox.front().m_tSendTime);
-	}
-}
 
-void SAgent::_LoopSendoutMsg(const STime& t) /*loop send message out */
+
+void SAgent::_outMsgLoop(const STime& t) /*loop send message out */
 {
 	if(!m_outBox.empty())
 	{		
@@ -58,10 +52,10 @@ void SAgent::_LoopSendoutMsg(const STime& t) /*loop send message out */
 			{
 				fmsg.m_dest = m_listeners;
 			}
-			_sendmsgout(fmsg);
+			_sendMsgout(fmsg);
 		}	
 		
-		_loopEvent();
+		_loop();
 	}
 }
 
@@ -71,12 +65,12 @@ void SAgent::AddOutMsg( const SMessage& s )
 	bool bLoopEvt = (itr==m_outBox.begin());	
 	m_outBox.insert(itr,s);
 	if(bLoopEvt)
-		_loopEvent();
+		_loop();
 	
 }
 
 //
-void SAgent::_sendmsgout( const SMessage& s )
+void SAgent::_sendMsgout( const SMessage& s )
 {
 	//
 	std::cout<<("Message Send Out")<<std::endl;
@@ -98,4 +92,9 @@ void SAgent::AddListener( SAgent* pF )
 	std::vector<SAgent*>::iterator itr  = std::find(m_listeners.begin(),m_listeners.end(),pF);
 	if(itr==m_listeners.end())
 		m_listeners.push_back(pF);
+}
+
+void SAgent::_loop()
+{
+
 }
