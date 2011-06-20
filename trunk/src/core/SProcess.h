@@ -3,6 +3,7 @@
 #include "SMessage.h"
 #include <list>
 #include <vector>
+#include <string>
 
 class SMessage;
 class STime;
@@ -15,7 +16,7 @@ class SProcess;
 class SAgent
 {
 public:	
-	virtual void OnMsg(SAgent* pFrom, const SMessage& msg){}
+	virtual void OnMsg(SAgent* pFrom, const String& msg){}
 public:
 	void ClearOutBox(){ m_outBox.clear(); }
 	void AddOutMsg(const SMessage& s);
@@ -47,6 +48,8 @@ public:
 	static SEngine& GetInstance();
 	const STime& getCurrentTime()const{ return mSystime; }
 	void AddAgentEvent(SAgent* pAgent, const STime& t);
+
+	static void sendMsgcall(SAgent* pFrom, SAgent* pTo, const String& msg );
 
 protected: 
 	struct SAgentEvent

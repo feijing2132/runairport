@@ -1,4 +1,5 @@
 #pragma once
+#include <stdlib.h>
 
 class STime
 {
@@ -36,5 +37,14 @@ public:
 	}
 
 	long m_nanosecond;
+
+	STime random()const
+	{
+		if(m_nanosecond>0)
+		{
+			return STime(rand()%m_nanosecond);
+		}
+		return STime(0);
+	}
 };
 
