@@ -4,12 +4,15 @@
 #include "STime.h"
 #include <typeinfo>
 
+typedef std::string String;
+
 class SAgent;
 class SMessage
 {
 public:
 	STime m_tSendTime;
 	std::vector<SAgent*> m_dest; //if m_dest is empty send to followers;	
+	String m_msg;
 
 	struct TimeLess
 	{

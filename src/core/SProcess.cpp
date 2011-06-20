@@ -37,6 +37,10 @@ void SEngine::AddAgentEvent( SAgent* pAgent, const STime& t )
 
 }
 
+void SEngine::sendMsgcall( SAgent* pFrom, SAgent* pTo, const String& msg )
+{
+	pTo->OnMsg(pFrom,msg);
+}
 
 
 
@@ -77,7 +81,7 @@ void SAgent::_sendMsgout( const SMessage& s )
 	for(size_t i=0;i<s.m_dest.size();++i)
 	{
 		SAgent* pDest = s.m_dest[i];
-		pDest->OnMsg(this, s);
+		SEngine::GetInstance().sendMsgcall(this,pDest,s.m_msg);
 	}
 }
 
@@ -96,5 +100,5 @@ void SAgent::AddListener( SAgent* pF )
 
 void SAgent::_loop()
 {
-
+	
 }
