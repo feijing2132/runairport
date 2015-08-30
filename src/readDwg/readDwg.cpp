@@ -25,6 +25,8 @@
  */
 
 #include <dwg.h>
+#include <iostream>
+using namespace std;
 //#include "suffix.c"
 
 void
@@ -59,7 +61,7 @@ load_dwg(char *filename)
       Dwg_Entity_LINE *line;
       Dwg_Entity_CIRCLE *circle;
       Dwg_Entity_TEXT *text;
-
+	  unsigned char *layerName = NULL;
       switch (dwg.object[i].type)
         {
       case DWG_TYPE_LINE:
@@ -73,7 +75,19 @@ load_dwg(char *filename)
       case DWG_TYPE_TEXT:
         text = dwg.object[i].tio.entity->tio.TEXT;
         add_text(text->insertion_pt.x, text->insertion_pt.y, text->text_value);
+		layerName = dwg.object[i].tio.entity->layer->obj->tio.entity->tio.BLOCK->name;
+		cout<<"text:"<<text->text_value<<endl;
+		cout<<"layerName:"<<layerName<<endl<<endl;
         break;
+	  case DWG_TYPE_LAYER:
+	  case DWG_TYPE_LAYER_CONTROL:
+	  case DWG_TYPE_BLOCK_CONTROL:
+	  case DWG_TYPE_BLOCK:
+		 /* text = dwg.object[i].tio.entity->tio.;
+		  add_text(text->insertion_pt.x, text->insertion_pt.y, text->text_value);*/
+		  int d;
+		  d=34;
+		  break;
         }
     }
   dwg_free(&dwg);
@@ -84,8 +98,9 @@ int
 main (int argc, char *argv[])
 {
 //  REQUIRE_INPUT_FILE_ARG (argc);
-	char *dwg = "C:\\Users\\liupo\\Desktop\\libredwg\\trunk\\examples\\example.dwg";
+	char *dwg = "C:\\Users\\Administrator\\Downloads\\line and text-2010-112007.dwg";
 	//char *dwg = "C:\\shared-Mac-mini-Porter\\lineandtext-2010.dwg";
   load_dwg (dwg);
+  system("PAUSE");
   return 0;
 }

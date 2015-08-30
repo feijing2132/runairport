@@ -2731,7 +2731,7 @@ dwg_decode_add_object(Dwg_Data * dwg, Bit_Chain * dat,
     dwg_decode_SPLINE(dat, obj);
     break;
   case DWG_TYPE_REGION:
-//    dwg_decode_REGION(dat, obj);
+    dwg_decode_REGION(dat, obj);
     break;
   case DWG_TYPE_3DSOLID:
     dwg_decode__3DSOLID(dat, obj);

@@ -1,0 +1,4 @@
+src/libredwg/Debug/*
+objs/Debug/*
+src/readDwg/Debug/*
+bin/Debug/*
