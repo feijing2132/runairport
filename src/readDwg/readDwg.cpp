@@ -61,6 +61,7 @@ load_dwg(char *filename)
       Dwg_Entity_LINE *line;
       Dwg_Entity_CIRCLE *circle;
       Dwg_Entity_TEXT *text;
+	  Dwg_Entity_MTEXT *mtext;
 	  unsigned char *layerName = NULL;
       switch (dwg.object[i].type)
         {
@@ -73,10 +74,17 @@ load_dwg(char *filename)
         add_circle(circle->center.x, circle->center.y, circle->radius);
         break;
       case DWG_TYPE_TEXT:
-        text = dwg.object[i].tio.entity->tio.TEXT;
+		text = dwg.object[i].tio.entity->tio.TEXT;
         add_text(text->insertion_pt.x, text->insertion_pt.y, text->text_value);
 		layerName = dwg.object[i].tio.entity->layer->obj->tio.entity->tio.BLOCK->name;
 		cout<<"text:"<<text->text_value<<endl;
+		cout<<"layerName:"<<layerName<<endl<<endl;
+        break;
+	  case DWG_TYPE_MTEXT:
+        mtext = dwg.object[i].tio.entity->tio.MTEXT;
+        add_text(mtext->insertion_pt.x, mtext->insertion_pt.y, mtext->text);
+		layerName = dwg.object[i].tio.entity->layer->obj->tio.entity->tio.BLOCK->name;
+		cout<<"mtext:"<<mtext->text<<endl;
 		cout<<"layerName:"<<layerName<<endl<<endl;
         break;
 	  case DWG_TYPE_LAYER:
@@ -98,7 +106,7 @@ int
 main (int argc, char *argv[])
 {
 //  REQUIRE_INPUT_FILE_ARG (argc);
-	char *dwg = "C:\\Users\\Administrator\\Downloads\\line and text-2010-112007.dwg";
+	char *dwg = "Drawing1.dwg";
 	//char *dwg = "C:\\shared-Mac-mini-Porter\\lineandtext-2010.dwg";
   load_dwg (dwg);
   system("PAUSE");
